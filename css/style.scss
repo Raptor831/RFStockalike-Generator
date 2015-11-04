@@ -1,0 +1,320 @@
+/*!
+Theme Name: RF Stockalike
+Description: RF Stockalike
+Author: Raptor831
+version: 1.0
+Tags: Custom Design
+*/
+
+@import "reset"; // HTML5 Boilerplate CSS Reset
+@import "bourbon/bourbon";
+@import "base/base";
+
+
+// Neat variables
+$max-width: 1280px;
+$gutter: em(20px);
+$grid-columns: 4; // Mobile first
+
+@import "neat/neat";
+
+// Variables
+
+$mobile: new-breakpoint(max-width 559px 4);
+$tablet: new-breakpoint(min-width 560px 8);
+$tabletOnly: new-breakpoint(min-width 560px max-width 959px 8);
+$desktop: new-breakpoint(min-width 960px 12);
+$largeDesktop: new-breakpoint(min-width 1200px 12);
+
+$mainColor: #9eac1a;
+$secondaryColor: #fff;
+$accentColor: #cad22d;
+$black: #262626;
+
+$standardBorder: 4px solid #333;
+
+
+@import "lib"; // Mixin library, add yours to _lib.scss
+@import "wordpress"; // WP default styles
+/*------------
+GLOBAL STYLES
+------------*/
+body {
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 1px;
+}
+.container {
+  @include outer-container;
+  padding: 0 10px;
+}
+ul,ol {
+  list-style-type: none;
+  padding:0;
+  margin:0;
+}
+a {
+  text-decoration: none;
+
+  &:hover {
+
+  }
+  &:focus {
+    outline: none;
+  }
+}
+h1, h2, h3, h4, h5, h6 {
+  //color: $mainColor;
+  font-weight: bold;
+  //font-family: $fontstackAlt;
+  margin: .5em 0;
+}
+img { width: auto; max-width: 100%; height: auto; }
+blockquote {
+  padding: 0 1em;
+  border: $standardBorder;
+}
+
+/* Clearfix */
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.goal {
+  background: green;
+}
+
+$flash-red: #FBE3E4;
+$flash-yellow: #FFF6BF;
+$flash-green: #E6EFC2;
+
+%flash-base {
+  display: block;
+  font-weight: bold;
+  margin-bottom: $base-spacing / 2;
+  padding: $base-spacing / 2;
+}
+
+$flashes: (alert: $flash-yellow, error: $flash-red, notice: lighten($base-accent-color, 40), success: $flash-green);
+
+@each $flash, $color in $flashes {
+  .flash#{$flash} {
+    @extend %flash-base;
+    background: $color;
+    color: darken($color, 60);
+
+    a {
+      color: darken($color, 70);
+      border-bottom: 1px solid transparentize(darken($color, 70), .7);
+
+      &:hover {
+        color: darken($color, 90);
+      }
+    }
+  }
+}
+
+button {
+  margin: .5em 0;
+}
+
+h1 button {
+  margin: 0 10px;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 10px;
+}
+
+
+/*------------
+HEADER STYLES
+------------*/
+header {
+  background: #333;
+  color: #ccc;
+  font-weight: bold;
+  a {
+    color: #ccc;
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+header nav {
+  ul {
+    position: relative;
+    li {
+      display: inline-block;
+      position: relative;
+      a {
+        padding: .5em 5px;
+        display: block;
+      }
+    }
+    li:hover > ul {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    ul {
+      visibility: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #333;
+      padding: 0 .5em .5em;
+      margin-left: -.5em;
+      width: 200px;
+      transition: visibility 0.2s linear, opacity 0.2s linear;
+      opacity: 0;
+      li {
+        display: block;
+        a {
+          padding: 0 5px;
+        }
+      }
+    }
+  }
+}
+
+
+/*------------
+HOMEPAGE STYLES
+------------*/
+
+
+/*------------
+CONTENT STYLES
+------------*/
+.main-content {
+  @include span-columns(4);
+  @include media($tablet) {
+    @include span-columns(4);
+  }
+  @include media($desktop) {
+    @include span-columns(7);
+  }
+
+  #configs {
+    .config {
+      padding: 5px 10px;
+      background: #f6f6f6;
+      &:nth-child(even) {
+        background: #eee;
+      }
+    }
+  }
+
+  .field {
+    .description {
+      font-size: .7em;
+      font-style: italic;
+      line-height: 1.2em;
+    }
+    .output {
+      font-weight: bold;
+    }
+  }
+}
+
+.full-width .main-content {
+  @include span-columns(4);
+}
+
+#selectable {
+  height: 800px;
+  overflow: scroll;
+  margin: 1em 0;
+}
+
+#filters {
+  @extend .container;
+  .filter {
+    @include span-columns(4);
+    @include media($tablet) {
+      @include span-columns(3 of 12);
+      &:first-child {
+        @include span-columns(6 of 12);
+      }
+    }
+  }
+}
+
+.half, .third {
+  @extend .container;
+  padding: 0;
+}
+
+.half {
+  .field {
+    @include span-columns(4);
+    @include media($tablet) {
+      @include span-columns(4);
+    }
+  }
+}
+
+.third {
+  .field {
+    @include span-columns(4);
+    @include media($tablet) {
+      @include span-columns(4 of 12);
+    }
+  }
+}
+
+.special .field {
+  @include omega(2n);
+}
+
+.throttle .field {
+  @include span-columns(4);
+  @include media($tablet) {
+    @include span-columns(5 of 12);
+  }
+}
+
+/*------------
+SIDEBAR STYLES
+------------*/
+aside#main-sidebar {
+  @include span-columns(4);
+  @include media($tablet) {
+    @include span-columns(4);
+  }
+  @include media($desktop) {
+    @include span-columns(5);
+  }
+}
+
+/*------------
+FOOTER STYLES
+------------*/
+#copyright {
+  background: #666;
+  color: #fff;
+}
+
+/*------------
+HOMEPAGE STYLES
+------------*/
+#content.front-page {
+  .main-content, #main-sidebar {
+    @include span-columns(4);
+  }
+  #main-sidebar {
+    .widget {
+      @include span-columns(4);
+      @include media($tablet) {
+        @include span-columns(4 of 12);
+        @include omega(3n);
+      }
+    }
+  }
+}
+
+/*------------
+IE FIXES
+------------*/

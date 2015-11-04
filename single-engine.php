@@ -1,0 +1,320 @@
+<?php get_header();?>
+
+    <section id="content" ng-app="rfstockalike" ng-controller="rfEngineController">
+
+      <div class="container">
+
+        <div class="main-content">
+          <input type="hidden" value="<?php echo wp_create_nonce('wp_json'); ?>" id="rfstockalike_nonce" />
+          <?php //one_time_import(); ?>
+          <?php if ( have_posts() ): while ( have_posts() ) : the_post(); ?>
+          <script>
+          window.post_id = <?php echo $post->ID; ?>;
+          </script>
+            <article>
+              <h1 class="page-title"><span ng-bind-html="engine.title"></span><button id="change-title" class="small" ng-click="changeTitle(engine)">Edit Title</button></h1>
+
+              <button id="select">Select Config for Copying</button>
+              <?php //the_content(); ?>
+              <p><span class="flasherror" ng-repeat="error in errors" ng-bind="error"></span><span class="flashsuccess" ng-repeat="success in successes" ng-bind="success"></span></p>
+              <form>
+                <h2>Basic Data</h2>
+                <div class="field">
+                  <label for="engine_id">Engine ID</label>
+                  <input type="text" id="engine_id" name="engine_id" ng-model="engine.meta.ksprfs.ksprfs_engine_id" />
+                </div>
+                <div class="field">
+                  <label for="engine_name">New Name</label>
+                  <input type="text" id="engine_name" name="engine_name" ng-model="engine.meta.ksprfs.ksprfs_engine_name" />
+                </div>
+                <div class="field">
+                  <label for="engine_desc">Description</label>
+                  <textarea id="engine_desc" name="engine_desc" ng-model="engine.meta.ksprfs.ksprfs_engine_desc"></textarea>
+                </div>
+                <div class="half">
+                  <div class="field select">
+                    <label for="engine_flow">Engine Flow Mode</label>
+                    <select id="engine_flow" name="engine_flow" ng-model="engine.meta.ksprfs.ksprfs_engine_flow">
+              					<option value="STACK_PRIORITY_SEARCH">Current Stage Only, Respect Crossfeed</option>
+              					<option value="STAGE_PRIORITY_FLOW">All Vessel, Stage Priority</option>
+              					<option value="ALL_VESSEL">All Vessel, Ignore Crossfeed</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="third">
+                  <div class="field select">
+                    <label for="engine_tech_level">Tech Level</label>
+                    <select id="engine_tech_level" name="engine_tech_level" ng-model="engine.meta.ksprfs.ksprfs_engine_tech_level" ng-change="doCalcs(engine)">
+                      <option ng-show="engine.meta.ksprfs.ksprfs_type !== 'nuclear-thermal'" value="start">Start</option>
+                      <option ng-show="engine.meta.ksprfs.ksprfs_type !== 'nuclear-thermal'" value="1">Basic Rocketry</option>
+                      <option ng-show="engine.meta.ksprfs.ksprfs_type !== 'nuclear-thermal'" value="2">General Rocketry</option>
+                      <option value="3">Advanced Rocketry</option>
+                      <option value="4">Heavy Rocketry</option>
+                      <option value="5">Heavier Rocketry</option>
+                      <option value="6">Very Heavy Rocketry</option>
+                      <option value="7">Experimental Rocketry</option>
+                      <option ng-show="engine.meta.ksprfs.ksprfs_type === 'nuclear-thermal'" value="8">Experimental Rocketry (for NTRs)</option>
+                    </select>
+                  </div>
+                  <div class="field select">
+                    <label for="engine_type">Engine Type</label>
+                    <select name="engine_type" id="engine_type" ng-model="engine.meta.ksprfs.ksprfs_type" ng-change="doCalcs(engine)">
+                      <option value="launch">Launch</option>
+                      <option value="launch-plus">Launch Plus</option>
+                      <option value="upper">Upper</option>
+                      <option value="upper-plus">Upper Plus</option>
+                      <option value="orbital">Orbital</option>
+                      <option value="nuclear-thermal">Nuclear Thermal</option>
+                      <option value="solid" selected="selected">Solid</option>
+                      <option value="solid-plus">Solid Plus</option>
+                      <option value="aerospike">Aerospike</option>
+                      <option value="jet">Jet</option>
+                      <option value="rcs">RCS</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Cost</label>
+                    <div>$ {{engine.meta.ksprfs.engineCost | number}}</div>
+                  </div>
+                </div>
+                <div class="third" ng-show="engine.meta.ksprfs.ksprfs_type === 'rcs'">
+                  <div class="field">
+                    <label for="rcs_nozzles">Number of RCS Nozzles</label>
+                    <input type="number" min="1" step="1" id="rcs_nozzles" name="rcs_nozzles" ng-model="engine.meta.ksprfs.ksprfs_rcs_nozzles" />
+                  </div>
+                  <div class="field">
+                    <button ng-click="rcsDefault(engine)">Default RCS Setup</button>
+                  </div>
+                  <div class="field">
+                    <button ng-click="rcsMass(engine)">Calculate RCS Mass</button>
+                  </div>
+                </div>
+                <h2>Performance Data</h2>
+                <div class="half">
+                  <div class="field">
+                    <label for="engine_mass">Mass</label>
+                    <input type="number" min="0.001" step="0.001" id="engine_mass" name="engine_mass" ng-model="engine.meta.ksprfs.ksprfs_engine_mass" ng-change="doCalcs(engine)" />
+                  </div>
+                  <div class="field">
+                    <label for="engine_extra_mass">Extra Mass</label>
+                    <input type="number" min="0" step="0.001" id="engine_extra_mass" name="engine_extra_mass" ng-model="engine.meta.ksprfs.ksprfs_engine_extra_mass" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="engine_thrust">Thrust (kN)</label>
+                  <input type="number" min="0" step="0.001" id="engine_thrust" name="engine_thrust" ng-model="engine.meta.ksprfs.ksprfs_engine_thrust" ng-change="doCalcs(engine)" />
+                </div>
+                <div class="half special" ng-show="engine.meta.ksprfs.ksprfs_type !== 'rcs'">
+                  <div class="field" ng-show="engine.meta.ksprfs.ksprfs_type !== 'solid' && engine.meta.ksprfs.ksprfs_type !== 'solid-plus'">
+                    <label>Thrust-to-Weight Ratio</label>
+                    <p id="twr" ng-bind="engine.meta.ksprfs.engine_twr | number:2" class="" ng-class="{flashsuccess: engine.meta.ksprfs.engine_twr_within_goal, flasherror: !engine.meta.ksprfs.engine_twr_within_goal}"></p>
+                  </div>
+                  <div class="field" ng-show="engine.meta.ksprfs.ksprfs_type !== 'solid' && engine.meta.ksprfs.ksprfs_type !== 'solid-plus'">
+                    <label>Goal Thrust-to-Weight Ratio</label>
+                    <p id="gtwr" ng-bind="engine.meta.ksprfs.engine_gtwr | number:2" ng-class="{flashsuccess: engine.meta.ksprfs.engine_twr_within_goal, flasherror: !engine.meta.ksprfs.engine_twr_within_goal}"></p>
+                  </div>
+                  <div class="field" ng-show="engine.meta.ksprfs.ksprfs_type === 'solid' || engine.meta.ksprfs.ksprfs_type === 'solid-plus'">
+                    <label>Percentage Case</label>
+                    <p id="percent-case" ng-bind="engine.meta.ksprfs.engine_percent_case | number:2" ng-class="{flashsuccess: engine.meta.ksprfs.engine_percent_case_within_goal, flasherror: !engine.meta.ksprfs.engine_percent_case_within_goal}"></p>
+                  </div>
+                  <div class="field" ng-show="engine.meta.ksprfs.ksprfs_type === 'solid' || engine.meta.ksprfs.ksprfs_type === 'solid-plus'">
+                    <label>Goal Percentage Case</label>
+                    <p id="gpercent-case" ng-bind="engine.meta.ksprfs.engine_goal_percent_case | number:2" ng-class="{flashsuccess: engine.meta.ksprfs.engine_percent_case_within_goal}"></p>
+                  </div>
+                </div>
+                <div class="half">
+                  <div class="field">
+                    <label for="engine_ispslm">I<sub>sp</sub> Sea Level Multiplier</label>
+                    <input type="number" min="0.5" max="1.5" step="0.001" id="engine_ispslm" name="engine_ispslm" ng-model="engine.meta.ksprfs.ksprfs_engine_ispslm" ng-change="doCalcs(engine)" />
+                    <p>Base I<sub>sp</sub> Sea Level: <span class="output" ng-bind="engine.meta.ksprfs.resultIspSL | number:2"></span></p>
+                  </div>
+                  <div class="field">
+                    <label for="engine_ispvm">I<sub>sp</sub> Vacuum Multiplier</label>
+                    <input type="number" min="0.5" max="1.5" step="0.001" id="engine_ispvm" name="engine_ispvm" ng-model="engine.meta.ksprfs.ksprfs_engine_ispvm" ng-change="doCalcs(engine)" />
+                    <p>Base I<sub>sp</sub> Vacuum: <span class="output" ng-bind="engine.meta.ksprfs.resultIspV | number:2"></span></p>
+                  </div>
+                </div>
+                <div class="half">
+                  <div class="field">
+                    <label for="engine_throttle_type">Throttle Options</label>
+                    <select name="engine_throttle_type" id="engine_throttle_type" ng-model="engine.meta.ksprfs.ksprfs_engine_throttle_type" ng-change="doCalcs(engine)">
+                      <option value="full-throttle">Fully Throttleable</option>
+                      <option value="use-default">Use Default Throttle</option>
+                      <option value="use-default-tech">Use Default Throttle After Tech Level</option>
+                      <option value="custom-throttle">Custom Throttle</option>
+                      <option value="unthrottleable">Unthrottleable</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <div class="" ng-show="engine.meta.ksprfs.ksprfs_engine_throttle_type === 'use-default-tech'">
+                      <label for="engine_throttle_tl">Throttle Tech Level</label>
+                      <select id="engine_throttle_tl" name="engine_throttle_tl" ng-model="engine.meta.ksprfs.ksprfs_engine_throttle_tl" ng-change="doCalcs(engine)">
+                        <option ng-show="engine.meta.ksprfs.ksprfs_type !== 'nuclear-thermal'" value="start">Start</option>
+                        <option ng-show="engine.meta.ksprfs.ksprfs_type !== 'nuclear-thermal'" value="1">Basic Rocketry</option>
+                        <option ng-show="engine.meta.ksprfs.ksprfs_type !== 'nuclear-thermal'" value="2">General Rocketry</option>
+                        <option value="3">Advanced Rocketry</option>
+                        <option value="4">Heavy Rocketry</option>
+                        <option value="5">Heavier Rocketry</option>
+                        <option value="6">Very Heavy Rocketry</option>
+                        <option value="7">Experimental Rocketry</option>
+                        <option ng-show="engine.meta.ksprfs.ksprfs_type === 'nuclear-thermal'" value="8">Experimental Rocketry (for NTRs)</option>
+                      </select>
+                    </div>
+                    <div class="" ng-show="engine.meta.ksprfs.ksprfs_engine_throttle_type === 'custom-throttle'">
+                      <label for="engine_throttle">Minimum Throttle Factor</label>
+                      <input type="number" min="0" max="1" step="0.01" id="engine_throttle" name="engine_throttle" ng-model="engine.meta.ksprfs.ksprfs_engine_throttle" ng-change="doCalcs(engine)" />
+                      <p class="description">Between 0 and 1. (i.e. 0.6 or 0.2)</p>
+                    </div>
+                  </div>
+                </div>
+                <h2>Configs</h2>
+                <div class="repeater" id="configs">
+                  <div class="config" ng-repeat="config in engine.meta.ksprfs.ksprfs_engine_configs">
+                    <h3>Config {{$index+1}}</h3>
+                    <div class="third">
+                      <div class="field select">
+                        <label for="engine_configs_{{$index}}">Mixture</label>
+                        <select name="engine_configs_{{$index}}" id="engine_configs_{{$index}}_config_mixture" ng-model="config.config_mixture" ng-options="mix.ID as mix.title for mix in mixtures" ng-change="doCalcs(engine)"></select>
+                      </div>
+                      <div class="field">
+                        <label for="engine_configs_{{$index}}_config_ratio">Mass Ratio</label>
+                        <input type="number" min="0" step="0.01" id="engine_configs_{{$index}}_config_ratio" name="engine_configs_{{$index}}_config_ratio" ng-model="config.config_ratio" ng-change="doCalcs(engine)" />
+                      </div>
+                      <div class="field">
+                        <label for="engine_configs_{{$index}}_config_tech_node">Tech Node</label>
+                        <input type="text" id="engine_configs_{{$index}}_config_tech_node" name="engine_configs_{{$index}}_config_tech_node" ng-model="config.config_tech_node" />
+                      </div>
+                    </div>
+                    <div class="half">
+                      <div class="field select">
+                        <label for="engine_configs_{{$index}}_thrust_curve">Thrust Curve</label>
+                        <select name="engine_configs_{{$index}}_thrust_curve" id="engine_configs_{{$index}}_thrust_curve" ng-model="config.config_thrust_curve" ng-change="doCalcs(engine)">
+                          <option value="0">Stock (no curve)</option>
+                          <option value="1">Increasing</option>
+                          <option value="2">Steady</option>
+                          <option value="3">Steady Dip</option>
+                          <option value="4">Decreasing</option>
+                          <option value="5">Decreasing Dip</option>
+                          <option value="6">Pulse-Steady</option>
+                          <option value="-1">Custom...</option>
+                        </select>
+                      </div>
+                      <div class="field" ng-show="config.config_thrust_curve === '-1'">
+                        <label for="engine_configs_{{$index}}_custom_curve">Custom Curve</label>
+                        <textarea id="engine_configs_{{$index}}_custom_curve" name="engine_configs_{{$index}}_custom_curve" ng-model="config.config_custom_curve"></textarea>
+                      </div>
+                    </div>
+                    <button ng-show="engine.meta.ksprfs.ksprfs_engine_configs.length > 1" index="{{$index}}" ng-click="removeConfig(engine,$index)">Remove Config</button>
+                  </div>
+                  <button ng-click="addConfig(engine)">Add Config</button>
+                </div>
+                <h2>Misc. Options</h2>
+                <div class="third">
+                  <div class="field cb">
+                    <label for="engine_mefx">ModuleEngineFX</label>
+                    <input type="checkbox" id="engine_mefx" name="engine_mefx" ng-model="engine.meta.ksprfs.ksprfs_engine_mefx"/>
+                  </div>
+                  <div class="field cb">
+                    <label for="engine_bimodal">Bimodal</label>
+                    <input type="checkbox" id="engine_bimodal" name="engine_bimodal" ng-model="engine.meta.ksprfs.ksprfs_engine_bimodal" ng-change="doCalcs(engine)" />
+                  </div>
+                  <div class="field cb">
+                    <label for="engine_ffsc">Full Flow Staged Cycle</label>
+                    <input type="checkbox" id="engine_ffsc" name="engine_ffsc" ng-model="engine.meta.ksprfs.ksprfs_engine_ffsc" ng-change="doCalcs(engine)" />
+                  </div>
+                </div>
+                <div class="field code">
+                  <label for="engine_patch">Engine Patch</label>
+                  <textarea id="engine_patch" name="engine_patch" ng-model="engine.meta.ksprfs.ksprfs_engine_patch"></textarea>
+                </div>
+                <div class="field code">
+                  <label for="engine_config_patch">Per Config Patch</label>
+                  <textarea id="engine_config_patch" name="engine_config_patch" ng-model="engine.meta.ksprfs.ksprfs_engine_config_patch"></textarea>
+                </div>
+                <h2>Tank Options</h2>
+                <div class="third">
+                  <div class="field cb">
+                    <label for="engine_dedicated">Dedicated Tank</label>
+                    <input type="checkbox" id="engine_dedicated" name="engine_dedicated" ng-model="engine.meta.ksprfs.ksprfs_engine_dedicated" disabled /><span class="description">Disabled currently</span>
+                    <p class="description">This engine has an attached tank dedicated to the engine (ex: SRB, FASA Centaur)</p>
+                  </div>
+                  <div class="field">
+                    <label for="engine_mft">Tank Type</label>
+                    <input type="text" id="engine_mft" name="engine_mft" ng-model="engine.meta.ksprfs.ksprfs_engine_mft" ng-change="doCalcs(engine)" />
+                  </div>
+                  <div class="field">
+                    <label for="engine_mft_volume">Tank Volume</label>
+                    <input type="number" min="0" id="engine_mft_volume" name="engine_mft_volume" ng-model="engine.meta.ksprfs.ksprfs_engine_mft_volume" ng-change="doCalcs(engine)" />
+                  </div>
+                </div>
+                <h2>Ullage</h2>
+                <div class="half">
+                  <div class="field cb">
+                    <label for="engine_ignition_mode">Ullage Mode</label>
+                    <select id="engine_ignition_mode" name="engine_ignition_mode" ng-model="engine.meta.ksprfs.ksprfs_engine_ignition_mode" ng-change="doCalcs(engine)" />
+                      <option value="0">None</option>
+                      <option value="1">Use Hypergolic Rules</option>
+                      <option value="2">Ignore Hypergolic Rules</option>
+                    </select>
+                    <p class="description">None turns off ullage. Using hypergolic rules will set ignitions to 1 unless hypergolic fuels are used. Ignoring hypergolic rules will use the defined number of ignitions regardless of fuel types.</p>
+                  </div>
+                  <div class="field" ng-show="engine.meta.ksprfs.ksprfs_engine_ignition_mode != 0">
+                    <label for="engine_ignitions">EI Ignitions</label>
+                    <input type="number" min="-1" id="engine_ignitions" name="engine_ignitions" ng-model="engine.meta.ksprfs.ksprfs_engine_ignitions" ng-change="doCalcs(engine)" />
+                  </div>
+                </div>
+                <button id="default-ignitions" ng-click="defaultIgnitions(engine)">Use Default Ignitions</button>
+                <h2>Vectoring Data</h2>
+                <div class="third">
+                  <div class="field cb">
+                    <label for="engine_vectoring_override">Override Gimball Range</label>
+                    <input type="checkbox" id="engine_vectoring_override" name="engine_vectoring_override" ng-model="engine.meta.ksprfs.ksprfs_engine_vectoring_override" />
+                  </div>
+                  <div class="field cb" ng-show="engine.meta.ksprfs.ksprfs_engine_vectoring_override">
+                    <label for="engine_vectoring_exists">ModuleGimbal Exists?</label>
+                    <input type="checkbox" id="engine_vectoring_exists" name="engine_vectoring_exists" ng-model="engine.meta.ksprfs.ksprfs_engine_vectoring_exists" />
+                    <p class="description">(Check if a ModuleGimbal already exists for this engine)</p>
+                  </div>
+                  <div class="field" ng-show="engine.meta.ksprfs.ksprfs_engine_vectoring_override">
+                    <label for="engine_vectoring">Gimball Range</label>
+                    <input type="number" min="0" id="engine_vectoring" name="engine_vectoring" ng-model="engine.meta.ksprfs.ksprfs_engine_vectoring" />
+                  </div>
+                </div>
+                <h2>ModuleManager Options</h2>
+                <div class="third">
+                  <div class="field">
+                    <label for="mm_needs">ModuleManager :NEEDS[]</label>
+                    <input type="text" id="mm_needs" name="mm_needs" ng-model="engine.meta.ksprfs.ksprfs_mm_needs" />
+                  </div>
+                  <div class="field">
+                    <label for="mm_has">ModuleManager :HAS[]</label>
+                    <input type="text" id="mm_has" name="mm_has" ng-model="engine.meta.ksprfs.ksprfs_mm_has" />
+                  </div>
+                  <div class="field">
+                    <label for="mm_duplicate">ModuleManager Duplicate Part</label>
+                    <input type="text" id="mm_duplicate" name="mm_duplicate" ng-model="engine.meta.ksprfs.ksprfs_mm_duplicate" />
+                  </div>
+                </div>
+                <?php if ( is_user_logged_in() ) { ?>
+                <button id="save" ng-click="saveEngine(engine)">Save Engine</button>
+                <button id="create" ng-click="createEngine(engine)">Create Engine</button>
+                <?php } else { ?>
+                <button id="submit" ng-click="submitEngine(engine)">Submit Engine</button>
+                <!--<input type="submit" value="Submit"/>-->
+                <?php } ?>
+                <p><span class="flasherror" ng-repeat="error in errors" ng-bind="error"></span><span class="flashsuccess" ng-repeat="success in successes" ng-bind="success"></span></p>
+              </form>
+
+            </article>
+          <?php endwhile; // end loop ?>
+          <?php endif; ?>
+
+        </div><!-- end .main-content -->
+
+        <?php get_sidebar('engine'); ?>
+
+      </div><!-- end .container -->
+
+    </section><!-- end #content -->
+
+<?php get_footer(); ?>
