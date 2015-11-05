@@ -27,23 +27,23 @@ get_header(); the_post(); ?>
               <label for="type">Engine Type</label>
               <select id="type" name="type" ng-model="type" ng-change="checkPage()">
                 <option value="">-- All --</option>
-                <option value="2">Launch</option>
-                <option value="3">Launch Plus</option>
-                <option value="4">Upper</option>
-                <option value="5">Upper Plus</option>
-                <option value="8">Orbital</option>
-                <option value="10">Nuclear Thermal</option>
-                <option value="6" selected="selected">Solid</option>
-                <option value="7">Solid Plus</option>
-                <option value="9">Aerospike</option>
-                <option value="11">Jet</option>
+                <option value="launch">Launch</option>
+                <option value="launch-plus">Launch Plus</option>
+                <option value="upper">Upper</option>
+                <option value="upper-plus">Upper Plus</option>
+                <option value="orbital">Orbital</option>
+                <option value="nuclear-thermal">Nuclear Thermal</option>
+                <option value="solid" selected="selected">Solid</option>
+                <option value="solid-plus">Solid Plus</option>
+                <option value="aerospike">Aerospike</option>
+                <option value="jet">Jet</option>
               </select>
             </div>
             <div class="filter">
               <label for="mixture">Mixture</label>
               <select id="mixture" name="mixture" ng-model="mixSearch" ng-change="checkPage()">
                 <option value="">-- All --</option>
-                <option ng-repeat="mix in mixtures" value="{{mix.ID}}">{{mix.title.rendered}}</option>
+                <option ng-repeat="mix in mixtures" value="{{mix.id}}">{{mix.title.rendered}}</option>
               </select>
             </div>
           </div>

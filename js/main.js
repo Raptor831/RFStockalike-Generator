@@ -134,7 +134,7 @@ var rfstockalike = angular.module('rfstockalike', ['ngSanitize']);
 
 rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window', '$filter', function ($scope, $http, $q, $window, $filter) {
     var nonce = RFS.nonce;
-    window.console.log(nonce);
+    //window.console.log(nonce);
     var engineID = $window.post_id;
     $scope.errors = [];
     $scope.successes = [];
@@ -281,7 +281,7 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
 
         var resource = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1');
 
-        var types = $http.get('/wp-json/wp/v2/terms/engine-type');
+        var types = $http.get('/wp-json/wp/v2/terms/engine-type/?per_page=0');
 
         $q.all([post,mix,resource,types]).then( function(ret){
             $scope.types = ret[3].data;
@@ -335,7 +335,8 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
         engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === true ? 'on' : null;
 
         if (!engine.ksprfs.ksprfs_engine_type) { engine.ksprfs.ksprfs_engine_type = []; }
-        engine.ksprfs.ksprfs_engine_type[0] = $scope.getTypeBySlug(engine.ksprfs.ksprfs_type).ID.toString();
+        window.console.log(engine.ksprfs.ksprfs_type);
+        engine.ksprfs.ksprfs_engine_type[0] = $scope.getTypeBySlug(engine.ksprfs.ksprfs_type).id.toString();
     };
 
     $scope.doCalcs = function(engine) {
@@ -633,6 +634,8 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
     };
 
     $scope.getTypeBySlug = function(slug) {
+        window.console.log(slug);
+        window.console.log($scope.types);
         return $filter('filter')($scope.types, function (data) {return data.slug === slug;})[0];
     };
 
@@ -657,17 +660,17 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
 
         //window.console.log(engineData);
 
-        var url = '/wp-json/wp/v2/posts/';
-        if (typeof engine.ID != 'undefined') {
-            url += engine.ID;
+        var url = '/wp-json/wp/v2/engines/';
+        if (typeof engine.id != 'undefined') {
+            url += engine.id;
         }
 
         var req = {
             method: 'PUT',
             url: url,
             transformResponse: function(d, h){ return d; },
-            params: {
-                '_wp_json_nonce': nonce
+            headers: {
+                'X-WP-Nonce': nonce
             },
             data: {
                 'ID': engine.ID,
@@ -782,9 +785,9 @@ rfstockalike.controller('rfEngineListController', ['$scope', '$http', '$q', '$fi
         }
 
         angular.forEach($scope.data, function(value, key){
-            //window.console.log(value);
+            window.console.log(value);
             var result = {};
-            result.ID = value.id;
+            result.id = value.id;
             result.link = value.link;
             result.title = value.title.rendered;
             result.type = value.ksprfs.ksprfs_type;
@@ -795,7 +798,7 @@ rfstockalike.controller('rfEngineListController', ['$scope', '$http', '$q', '$fi
             result.configs = configs;
             $scope.engines.push(result);
         });
-        window.console.log($scope.engines);
+        //window.console.log($scope.engines);
         $scope.loading = false;
     });
 
