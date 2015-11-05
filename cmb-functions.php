@@ -3,7 +3,7 @@ global $cmb2_prefix, $meta_boxes;
 /**
  * Include and setup custom metaboxes and fields. (make sure you copy this file to outside the CMB directory)
  *
- * @category YourThemeOrPlugin
+ * @category RFStockalike-Generator
  * @package  Metaboxes
  * @license  http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link     https://github.com/webdevstudios/Custom-Metaboxes-and-Fields-for-WordPress
