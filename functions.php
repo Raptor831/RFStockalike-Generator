@@ -1,11 +1,11 @@
 <?php
 
-add_filter('auto_update_plugin', '__return_true');
-add_filter('auto_update_theme', '__return_true');
+add_filter( 'auto_update_plugin', '__return_true' );
+add_filter( 'auto_update_theme', '__return_true' );
 add_filter( 'allow_major_auto_core_updates', '__return_true' );
 
-define('WP_DEBUG', true);
-define('WP_DEBUG_DISPLAY', true);
+//define('WP_DEBUG', true);
+//define('WP_DEBUG_DISPLAY', true);
 
 // Clean up the <head>
 function removeHeadLinks() {
