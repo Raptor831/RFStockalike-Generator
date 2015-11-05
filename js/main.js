@@ -131,7 +131,7 @@
 
 var rfstockalike = angular.module('rfstockalike', ['ngSanitize']);
 
-rfstockalike.controller('rfEngineController', function($scope, $http, $q, $window, $filter){
+rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window', '$filter', function($scope, $http, $q, $window, $filter){
 
   var nonce = document.getElementById('rfstockalike_nonce').value;
   var engineID = $window.post_id;
@@ -274,13 +274,13 @@ rfstockalike.controller('rfEngineController', function($scope, $http, $q, $windo
 
   var post;
   if ( engineID ) {
-    post = $http.get('/wp-json/posts/'+engineID);
+    post = $http.get('/wp-json/wp/v2/posts/'+engineID);
 
-    var mix = $http.get('/wp-json/posts/?type[]=mixture&filter[posts_per_page]=-1');
+    var mix = $http.get('/wp-json/wp/v2/posts/?type[]=mixture&filter[posts_per_page]=-1');
 
-    var resource = $http.get('/wp-json/posts/?type[]=resource&filter[posts_per_page]=-1');
+    var resource = $http.get('/wp-json/wp/v2/posts/?type[]=resource&filter[posts_per_page]=-1');
 
-    var types = $http.get('/wp-json/taxonomies/engine_type/terms/');
+    var types = $http.get('/wp-json/wp/v2/taxonomies/engine_type/terms/');
 
     $q.all([post,mix,resource,types]).then( function(ret){
       $scope.types = ret[3].data;
@@ -655,7 +655,7 @@ rfstockalike.controller('rfEngineController', function($scope, $http, $q, $windo
 
     //window.console.log(engineData);
 
-    var url = '/wp-json/posts/';
+    var url = '/wp-json/wp/v2/posts/';
     if (typeof engine.ID != 'undefined') {
       url += engine.ID;
     }
@@ -717,7 +717,7 @@ rfstockalike.controller('rfEngineController', function($scope, $http, $q, $windo
 
     var req = {
       method: 'POST',
-      url: '/wp-json/posts',
+      url: '/wp-json/wp/v2/posts',
       params: {
         '_wp_json_nonce': nonce
       },
@@ -743,9 +743,9 @@ rfstockalike.controller('rfEngineController', function($scope, $http, $q, $windo
 
   };
 
-});
+}]);
 
-rfstockalike.controller('rfEngineListController', function($scope, $http, $q, $filter, $timeout, $window){
+rfstockalike.controller('rfEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', function($scope, $http, $q, $filter, $timeout, $window){
 
   $scope.engines = [];
   $scope.currentPage = 0;
@@ -757,14 +757,14 @@ rfstockalike.controller('rfEngineListController', function($scope, $http, $q, $f
 
   var promises = [];
 
-  //var engines = $http.get('/wp-json/posts/?type[]=engine&filter[posts_per_page]=-1');
+  //var engines = $http.get('/wp-json/wp/v2/posts/?type[]=engine&filter[posts_per_page]=-1');
 
-  var mix = $http.get('/wp-json/posts/?type[]=mixture&filter[posts_per_page]=-1&filter[order]=ASC&filter[orderby]=title');
+  var mix = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1&filter[order]=ASC&filter[orderby]=title');
   promises.push(mix);
 
   var pages = Math.ceil($window.engineCount / $scope.pageSize);
   var count = 1;
-  var baseLink = '/wp-json/posts/?type[]=engine&filter[posts_per_page]='+$scope.pageSize+'&page=';
+  var baseLink = '/wp-json/wp/v2/engines/?filter[posts_per_page]='+$scope.pageSize+'&page=';
 
   for(count; count <= pages; count++) {
     var promise = $http.get(baseLink + count);
@@ -780,13 +780,14 @@ rfstockalike.controller('rfEngineListController', function($scope, $http, $q, $f
     }
 
     angular.forEach($scope.data, function(value, key){
+      window.console.log(value);
       var result = {};
       result.ID = value.ID;
       result.link = value.link;
-      result.title = value.title;
-      result.type = value.terms.engine_type[0].ID;
+      result.title = value.title.rendered;
+      result.type = value.ksprfs.ksprfs_type;
       var configs = [];
-      angular.forEach(value.meta.ksprfs.ksprfs_engine_configs, function(innerValue, innerKey){
+      angular.forEach(value.ksprfs.ksprfs_engine_configs, function(innerValue, innerKey){
         configs.push(innerValue.config_mixture);
       });
       result.configs = configs;
@@ -816,7 +817,7 @@ rfstockalike.controller('rfEngineListController', function($scope, $http, $q, $f
     }, 200);
   };
 
-});
+}]);
 
 rfstockalike.filter('startFrom', function() {
   return function(input, start) {

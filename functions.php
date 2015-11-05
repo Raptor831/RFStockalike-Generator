@@ -71,7 +71,7 @@ if(!is_admin()) {
     //wp_register_script( 'owl', get_template_directory_uri() . '/js/vendor/owl-carousel-2/owl.carousel.min.js', array('jquery'), '1.0', false );
     wp_register_script( 'angular', get_template_directory_uri() . '/js/vendor/angular.min.js', array('jquery'), '1.3.15', false );
     wp_register_script( 'angular-sanitize', get_template_directory_uri() . '/js/vendor/angular-sanitize.min.js', array('angular'), '1.3', false );
-    wp_register_script( 'main', get_template_directory_uri() . '/js/main.min.js', array('jquery','angular','angular-sanitize'), '1.0', false );
+    wp_register_script( 'main', get_template_directory_uri() . '/js/main.js', array('jquery','angular','angular-sanitize'), '1.0', false );
     //wp_register_script( 'rfstockalike', get_template_directory_uri() . '/js/src/rfstockalike.js', array('angular'), '1.0', false );
 
     //wp_enqueue_script( 'modernizr' );
@@ -126,6 +126,8 @@ function ksprfs_engine() {
     'exclude_from_search' => false,
     'publicly_queryable'  => true,
     'capability_type'     => 'post',
+    'show_in_rest'        => true,
+    'rest_base'           => 'engines',
   );
   register_post_type( 'engine', $args );
 
@@ -277,6 +279,8 @@ function fuel_mixture_post_type() {
     'exclude_from_search' => false,
     'publicly_queryable'  => true,
     'capability_type'     => 'post',
+    'show_in_rest'        => true,
+    'rest_base'           => 'mixtures',
   );
   register_post_type( 'mixture', $args );
 
@@ -321,6 +325,8 @@ function resource_post_type() {
     'exclude_from_search' => false,
     'publicly_queryable'  => true,
     'capability_type'     => 'page',
+    'show_in_rest'        => true,
+    'rest_base'           => 'resources',
   );
   register_post_type( 'resource', $args );
 
@@ -398,6 +404,48 @@ function wp_api_encode_rfs($data,$post,$context){
   return $data;
 }
 add_filter('json_prepare_post', 'wp_api_encode_rfs', 10, 3);
+
+add_action( 'rest_api_init', 'slug_register_ksprfs' );
+function slug_register_ksprfs() {
+	register_api_field( 'engine',
+		'ksprfs',
+		array(
+			'get_callback'    => 'slug_get_ksprfs',
+			'update_callback' => 'slug_update_ksprfs',
+			'schema'          => null,
+		)
+	);
+}
+
+function slug_get_ksprfs( $object, $field_name, $request ) {
+	global $cmb2_prefix;
+	$cf_data = get_post_custom($object['ID']);
+	$new_data = array();
+	foreach ( $cf_data as $key => $single ) {
+		if (0 === strpos($key,$cmb2_prefix)){
+			$value = $single[0];
+			if (is_numeric($value)) {
+				if (is_int($value)) {
+					$value = intval($value);
+				} else {
+					$value = floatval($value);
+				}
+			} elseif ( is_array($value) ) {
+				foreach ( $value as $key => $val ) {
+					if (is_numeric($val)) {
+						if (is_int($val)) {
+							$val = intval($val);
+						} else {
+							$val = floatval($val);
+						}
+					}
+				}
+			}
+			$new_data[$key] = maybe_unserialize($value);
+		}
+	}
+	return $new_data;
+}
 
 function wp_api_save_rfs($post, $data) {
   if ( $data['ksprfs'] ) {
