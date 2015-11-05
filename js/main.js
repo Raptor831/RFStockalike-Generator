@@ -272,13 +272,13 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
 
     var post;
     if ( engineID ) {
-        post = $http.get('/wp-json/wp/v2/posts/'+engineID);
+        post = $http.get('/wp-json/wp/v2/engines/'+engineID);
 
-        var mix = $http.get('/wp-json/wp/v2/posts/?type[]=mixture&filter[posts_per_page]=-1');
+        var mix = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1');
 
-        var resource = $http.get('/wp-json/wp/v2/posts/?type[]=resource&filter[posts_per_page]=-1');
+        var resource = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1');
 
-        var types = $http.get('/wp-json/wp/v2/taxonomies/engine_type/terms/');
+        var types = $http.get('/wp-json/wp/v2/terms/engine-type');
 
         $q.all([post,mix,resource,types]).then( function(ret){
             $scope.types = ret[3].data;
@@ -286,7 +286,7 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
             $scope.mixtures = ret[1].data;
             $scope.engines = ret[0].data;
 
-            if ($scope.engines.ID) {
+            if ($scope.engines.id) {
                 $scope.engine = $scope.engines;
                 $scope.cleanData($scope.engine);
                 $scope.doCalcs($scope.engine);
@@ -302,6 +302,7 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
     }
 
     $scope.cleanData = function(engine) {
+        window.console.log(engine);
         // Checkboxes
         engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === 'on' || engine.ksprfs.ksprfs_engine_mefx == true ? true : false;
         engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === 'on' || engine.ksprfs.ksprfs_engine_bimodal == true ? true : false;
@@ -615,17 +616,17 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
 
     $scope.getResource = function(ID) {
         ID = parseInt(ID);
-        return $filter('filter')($scope.resources, function (data) {return data.ID === ID;})[0];
+        return $filter('filter')($scope.resources, function (data) {return data.id === ID;})[0];
     };
 
     $scope.getMixture = function(ID) {
         ID = parseInt(ID);
-        return $filter('filter')($scope.mixtures, function (data) {return data.ID === ID;})[0];
+        return $filter('filter')($scope.mixtures, function (data) {return data.id === ID;})[0];
     };
 
     $scope.getType = function(ID) {
         ID = parseInt(ID);
-        return $filter('filter')($scope.types, function (data) {return data.ID === ID;})[0];
+        return $filter('filter')($scope.types, function (data) {return data.id === ID;})[0];
     };
 
     $scope.getTypeBySlug = function(slug) {
@@ -715,7 +716,7 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
 
         var req = {
             method: 'POST',
-            url: '/wp-json/wp/v2/posts',
+            url: '/wp-json/wp/v2/engines',
             params: {
                 '_wp_json_nonce': nonce
             },
