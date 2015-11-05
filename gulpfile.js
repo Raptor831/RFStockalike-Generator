@@ -21,7 +21,7 @@ gulp.task('browser-sync', function(){
 
 // Lint Task
 gulp.task('lint', function() {
-    return gulp.src('js/main.js')
+    return gulp.src('js/src/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default', {verbose: true}));
 });
@@ -40,7 +40,9 @@ gulp.task('sass', function() {
 
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
-    return gulp.src('js/main.js')
+    return gulp.src('js/src/*.js')
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest('js'))
         .pipe(rename('main.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('js'))
