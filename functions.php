@@ -375,6 +375,7 @@ add_action( 'init', 'usage_taxonomy', 0 );
 
 include_once( 'cmb-functions.php' );
 
+// Add custom handlers to the REST API
 add_action( 'rest_api_init', 'slug_register_ksprfs' );
 function slug_register_ksprfs() {
 	register_api_field( array( 'engine', 'mixture', 'resource' ),
@@ -387,6 +388,17 @@ function slug_register_ksprfs() {
 	);
 }
 
+/**
+ * Handler for getting RFS field data.
+ *
+ * @since 0.1.0
+ *
+ * @param array $object The object from the response
+ * @param string $field_name Name of field
+ * @param WP_REST_Request $request Current request
+ *
+ * @return mixed
+ */
 function slug_get_ksprfs( $object, $field_name, $request ) {
 	global $cmb2_prefix;
 	$cf_data = get_post_custom($object->ID);
@@ -417,6 +429,17 @@ function slug_get_ksprfs( $object, $field_name, $request ) {
 	return $new_data;
 }
 
+/**
+ * Handler for updating custom field data.
+ *
+ * @since 0.1.0
+ *
+ * @param mixed $value The value of the field
+ * @param object $object The object from the response
+ * @param string $field_name Name of field
+ *
+ * @return bool|int
+ */
 function slug_update_ksprfs( $value, $object, $field_name ) {
 	if ( !$value ) {
 		return;
