@@ -43,7 +43,7 @@ get_header(); the_post(); ?>
               <label for"mixture">Mixture</label>
               <select id="mixture" name="mixture" ng-model="mixSearch" ng-change="checkPage()">
                 <option value="">-- All --</option>
-                <option ng-repeat="mix in mixtures" value="{{mix.ID}}">{{mix.title}}</option>
+                <option ng-repeat="mix in mixtures" value="{{mix.ID}}">{{mix.title.rendered}}</option>
               </select>
             </div>
           </div>
