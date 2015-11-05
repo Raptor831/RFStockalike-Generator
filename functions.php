@@ -371,7 +371,7 @@ function usage_taxonomy() {
 // Hook into the 'init' action
 add_action( 'init', 'usage_taxonomy', 0 );
 
-include_once('example-functions.php');
+include_once( 'cmb-functions.php' );
 
 function wp_api_encode_rfs($data,$post,$context){
   global $cmb2_prefix;

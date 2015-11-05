@@ -12,7 +12,7 @@
 /**
  * Fires when CMB2 is included/loaded
  *
- * Should be used to to add metaboxes. See example-functions.php
+ * Should be used to to add metaboxes. See cmb-functions.php
  */
 do_action( 'cmb2_init' );
 
