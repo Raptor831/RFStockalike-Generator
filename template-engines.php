@@ -21,10 +21,10 @@ get_header(); the_post(); ?>
 
           <div id="filters">
             <div class="filter">
-              <label for"search">Name Search</label><input id="search" name="search" type="search" ng-model="search" ng-change="checkPage()"/>
+              <label for="search">Name Search</label><input id="search" name="search" type="search" ng-model="search" ng-change="checkPage()"/>
             </div>
             <div class="filter">
-              <label for"type">Engine Type</label>
+              <label for="type">Engine Type</label>
               <select id="type" name="type" ng-model="type" ng-change="checkPage()">
                 <option value="">-- All --</option>
                 <option value="2">Launch</option>
@@ -40,7 +40,7 @@ get_header(); the_post(); ?>
               </select>
             </div>
             <div class="filter">
-              <label for"mixture">Mixture</label>
+              <label for="mixture">Mixture</label>
               <select id="mixture" name="mixture" ng-model="mixSearch" ng-change="checkPage()">
                 <option value="">-- All --</option>
                 <option ng-repeat="mix in mixtures" value="{{mix.ID}}">{{mix.title.rendered}}</option>
