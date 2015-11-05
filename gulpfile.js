@@ -14,7 +14,7 @@ var browserSync = require('browser-sync').create();
 // set up browser-sync
 gulp.task('browser-sync', function(){
   browserSync.init({
-    proxy: 'site.dev',
+    proxy: 'rfstockalike.dev',
     notify: false
   });
 });
@@ -28,12 +28,12 @@ gulp.task('lint', function() {
 
 // Compile Our Sass
 gulp.task('sass', function() {
-    return sass('css/style.scss', { sourcemap: true, style: 'compact' })
+    return sass('css/style.scss', { sourcemap: true, style: 'compressed' })
         .on('error', function (err) {
           console.error('Error!', err.message);
         })
         .pipe(prefix("> 1%", "last 2 versions", "ie > 8"))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('.'))
         .pipe(browserSync.stream());
 });
@@ -57,7 +57,7 @@ gulp.task('scripts-watch', ['lint', 'scripts'], browserSync.reload);
 
 // Watch Files For Changes
 gulp.task('watch', function() {
-    gulp.watch('js/main.js', ['scripts-watch']);
+    gulp.watch('js/main.js', ['lint', 'scripts']);
     gulp.watch('css/*.{scss,sass}', ['sass']);
     gulp.watch('**/*.php', browserSync.reload);
 });
