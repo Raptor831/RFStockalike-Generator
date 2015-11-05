@@ -5,7 +5,6 @@
       <div class="container">
 
         <div class="main-content">
-          <input type="hidden" value="<?php echo wp_create_nonce('wp_json'); ?>" id="rfstockalike_nonce" />
           <?php //one_time_import(); ?>
           <?php if ( have_posts() ): while ( have_posts() ) : the_post(); ?>
           <script>

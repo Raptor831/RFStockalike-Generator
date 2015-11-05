@@ -1,6 +1,8 @@
 var rfstockalike = angular.module('rfstockalike', ['ngSanitize']);
 
-rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window', '$filter', function ($scope, $http, $q, $window, $filter) {var nonce = document.getElementById('rfstockalike_nonce').value;
+rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window', '$filter', function ($scope, $http, $q, $window, $filter) {
+    var nonce = RFS.nonce;
+    window.console.log(nonce);
     var engineID = $window.post_id;
     $scope.errors = [];
     $scope.successes = [];
@@ -586,11 +588,11 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
         var req = {
             method: 'POST',
             url: '/wp-json/wp/v2/engines',
-            params: {
-                '_wp_json_nonce': nonce
+            headers: {
+                'X-WP-Nonce': nonce
             },
             data: {
-                'title': engine.title,
+                'title': engine.title.rendered,
                 'type': 'engine',
                 'status': 'publish',
                 'ksprfs': engineData

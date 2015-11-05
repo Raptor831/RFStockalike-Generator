@@ -54,7 +54,6 @@ if ($obj) {
               <textarea id="engine" ng-model="engine" name="engine" ng-change="parseField()">
 
               </textarea>
-              <input type="hidden" value="<?php echo wp_create_nonce('wp_json'); ?>" id="rfstockalike_nonce" name="_wp_json_nonce" />
               <p ng-bind="parsed.ksprfs"></p>
               <button ng-click="createEngine(parsed)">Save Engine</button>
               <p><span class="flasherror" ng-repeat="error in errors" ng-bind="error"></span><span class="flashsuccess" ng-repeat="success in successes" ng-bind="success"></span></p>

@@ -81,6 +81,7 @@ if(!is_admin()) {
     //wp_enqueue_script( 'rfstockalike' );
     //wp_enqueue_script( 'owl' );
     wp_enqueue_script( 'main' );
+	  wp_localize_script( 'main', 'RFS', array( 'root' => esc_url_raw( rest_url() ), 'nonce' => wp_create_nonce( 'wp_rest' ) ) );
 
     wp_enqueue_style('owlcss', get_template_directory_uri() . '/js/vendor/owl-carousel-2/assets/owl.carousel.css', false );
     //wp_enqueue_style('gfont', 'http://fonts.googleapis.com/css?family=Raleway:400,600,700,900', false );
