@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4980c64-88c2-4ebc-87a7-126e546205fe" name="Default" comment="Save PHPStorm options again">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/rfstockalike.iml" afterPath="$PROJECT_DIR$/.idea/rfstockalike.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="rfstockalike.iws" />
@@ -23,12 +26,12 @@
     <favorites_list name="rfstockalike" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="functions.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/functions.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.25">
-              <caret line="89" column="3" selection-start-line="89" selection-start-column="3" selection-end-line="89" selection-end-column="3" />
+            <state vertical-scroll-proportion="-57.5">
+              <caret line="92" column="56" selection-start-line="92" selection-start-column="56" selection-end-line="92" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -37,68 +40,58 @@
       <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/header.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.7058825">
-              <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
+            <state vertical-scroll-proportion="-16.25">
+              <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cmb-functions.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmb-functions.php">
+      <file leaf-file-name="tabs.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/partials/tabs.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.541666">
-              <caret line="677" column="0" selection-start-line="677" selection-start-column="0" selection-end-line="677" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.04249292">
+              <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gulpfile.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="24" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
+            <state vertical-scroll-proportion="-2.5">
+              <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rfstockalike.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/src/rfstockalike.js">
+      <file leaf-file-name="engine-config.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/partials/engine-config.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.592592">
-              <caret line="660" column="51" selection-start-line="660" selection-start-column="51" selection-end-line="660" selection-end-column="51" />
+            <state vertical-scroll-proportion="-1.25">
+              <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/src/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="121" column="19" selection-start-line="121" selection-start-column="19" selection-end-line="121" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="template-submit.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-submit.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.041667">
-              <caret line="56" column="45" selection-start-line="56" selection-start-column="45" selection-end-line="56" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="template-engines.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="template-engines.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/template-engines.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3186969">
-              <caret line="30" column="64" selection-start-line="30" selection-start-column="64" selection-end-line="30" selection-end-column="64" />
+            <state vertical-scroll-proportion="-34.291668">
+              <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="engine-list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/partials/engine-list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.25">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -107,24 +100,41 @@
       <file leaf-file-name="single-engine.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/single-engine.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.4545455">
-              <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
+            <state vertical-scroll-proportion="-7.5">
+              <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="engine-config.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/engine-config.php">
+      <file leaf-file-name="engine-single.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/partials/engine-single.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="29.921568">
-              <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
+            <state vertical-scroll-proportion="-183.75">
+              <caret line="294" column="10" selection-start-line="294" selection-start-column="10" selection-end-line="294" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sidebar-engine.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sidebar-engine.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.25">
+              <caret line="10" column="21" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -140,13 +150,19 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/engine-config.php" />
         <option value="$PROJECT_DIR$/cmb-functions.php" />
-        <option value="$PROJECT_DIR$/header.php" />
-        <option value="$PROJECT_DIR$/functions.php" />
         <option value="$PROJECT_DIR$/js/src/main.js" />
         <option value="$PROJECT_DIR$/single-engine.php" />
         <option value="$PROJECT_DIR$/template-submit.php" />
-        <option value="$PROJECT_DIR$/js/src/rfstockalike.js" />
         <option value="$PROJECT_DIR$/template-engines.php" />
+        <option value="$PROJECT_DIR$/js/src/rfstockalike.js" />
+        <option value="$PROJECT_DIR$/header.php" />
+        <option value="$PROJECT_DIR$/footer.php" />
+        <option value="$PROJECT_DIR$/partials/engine-config.html" />
+        <option value="$PROJECT_DIR$/partials/engine-single.html" />
+        <option value="$PROJECT_DIR$/partials/engine-list.html" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/functions.php" />
+        <option value="$PROJECT_DIR$/partials/tabs.html" />
       </list>
     </option>
   </component>
@@ -240,6 +256,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Problems" />
         <subPane subId="Project Files">
@@ -283,31 +300,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rfstockalike" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rfstockalike" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="partials" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -316,6 +314,224 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../wordpress-default" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.gitignore</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/package.json</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/064baa7fb886002649cafafaca0291a7d145d98d/_new-breakpoint.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/064baa7fb886002649cafafaca0291a7d145d98d/_private.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/0913687d01cce73902a6afd532ee9c8394a38c8f/_base.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/0913687d01cce73902a6afd532ee9c8394a38c8f/_buttons.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/0913687d01cce73902a6afd532ee9c8394a38c8f/_forms.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/0913687d01cce73902a6afd532ee9c8394a38c8f/_lists.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/0913687d01cce73902a6afd532ee9c8394a38c8f/_tables.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/0913687d01cce73902a6afd532ee9c8394a38c8f/_typography.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/0913687d01cce73902a6afd532ee9c8394a38c8f/_variables.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/208c2c26cb3e2d50eae08a88248c41ec55ebb6fb/_neat-helpers.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/208c2c26cb3e2d50eae08a88248c41ec55ebb6fb/_neat.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_assign.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_color-lightness.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_flex-grid.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_golden-ratio.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_grid-width.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_modular-scale.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_px-to-em.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_px-to-rem.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_strip-units.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_tint-shade.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_transition-property-name.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/3722389260759ffaca2ed03d35cc5b58f79c142f/_unpack.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/527245e63fc2d0763277cfabc8192f849c994c28/_asset-pipeline.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/527245e63fc2d0763277cfabc8192f849c994c28/_prefixer.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/527245e63fc2d0763277cfabc8192f849c994c28/_px-to-em.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_convert-units.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_gradient-positions-parser.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_is-num.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_linear-angle-parser.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_linear-gradient-parser.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_linear-positions-parser.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_linear-side-corner-parser.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_radial-arg-parser.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_radial-gradient-parser.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_radial-positions-parser.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_render-gradients.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_shape-size-stripper.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/7e3e5abd47ea3155cc22a95e6612ee7565c4ec9b/_str-to-num.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/819bf7b52e0c1cb64a33de16fa4c2ee4de1d56ca/_lib.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/819bf7b52e0c1cb64a33de16fa4c2ee4de1d56ca/_reset.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/819bf7b52e0c1cb64a33de16fa4c2ee4de1d56ca/_wordpress.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/819bf7b52e0c1cb64a33de16fa4c2ee4de1d56ca/style.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_button.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_clearfix.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_directional-values.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_ellipsis.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_font-family.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_hide-text.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_html5-input-types.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_position.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_prefixer.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_retina-image.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_size.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_timing-functions.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_triangle.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/a1d2395db6d4c94141152908fd0988bd88aeefad/_word-wrap.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_box-sizing.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_direction-context.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_display-context.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_fill-parent.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_media.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_omega.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_outer-container.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_pad.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_private.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_row.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_shift.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_span-columns.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_to-deprecate.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/ab1ad425bde80395ec1a5dce2552776e11fe1aa8/_visual-grid.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/afb24baddf71de66388a0fd8ce6ba7bdbf032c3d/_bourbon-deprecated-upcoming.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/afb24baddf71de66388a0fd8ce6ba7bdbf032c3d/_bourbon.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/c854bbcae3f342bc687b61eb447e3890f8dd2f27/_disable-warnings.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/c854bbcae3f342bc687b61eb447e3890f8dd2f27/_grid.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/c854bbcae3f342bc687b61eb447e3890f8dd2f27/_visual-grid.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_animation.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_appearance.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_backface-visibility.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_background-image.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_background.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_border-image.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_border-radius.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_box-sizing.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_calc.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_columns.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_filter.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_flex-box.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_font-face.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_font-feature-settings.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_hidpi-media-query.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_hyphens.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_image-rendering.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_keyframes.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_linear-gradient.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_perspective.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_placeholder.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_radial-gradient.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_transform.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_transition.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/d53555632fb4bb16fa6219638096c3f895c43e19/_user-select.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/f1e0a86be03d0fe87b8b6be559c4698366752619/_button.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/f1e0a86be03d0fe87b8b6be559c4698366752619/_clearfix.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/f1e0a86be03d0fe87b8b6be559c4698366752619/_errors.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/f1e0a86be03d0fe87b8b6be559c4698366752619/_flashes.scssc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.sass-cache/f1e0a86be03d0fe87b8b6be559c4698366752619/_hide-text.scssc</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -487,33 +703,57 @@
       <option name="project" value="LOCAL" />
       <updated>1446763002116</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Set up single-page app paradigm. Remove WP templates in favor of just index.php.">
+      <created>1446844386635</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1446844386635</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Add Angular UI-Router">
+      <created>1446844444057</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1446844444057</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Reformat functions.php to clean up spacing, add a few comments">
+      <created>1446845100990</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1446845100990</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Save PHPStorm options again">
+      <created>1446846674718</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1446846674718</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="422" y="68" width="2017" height="1222" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.49797103" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.502029" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25275362" sideWeight="0.5035398" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.49797103" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.502029" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25275362" sideWeight="0.5035398" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2207595" sideWeight="0.50527704" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2207595" sideWeight="0.49472296" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32920355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22278482" sideWeight="0.5105541" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22278482" sideWeight="0.48944592" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24985507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25275362" sideWeight="0.5035398" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25275362" sideWeight="0.5035398" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -552,7 +792,11 @@
     <MESSAGE value="Use better cookie authentication for submissions" />
     <MESSAGE value="Change engine types to return all when called, adjust types in list to use slug instead of ID" />
     <MESSAGE value="Save PHPStorm options" />
-    <option name="LAST_COMMIT_MESSAGE" value="Save PHPStorm options" />
+    <MESSAGE value="Set up single-page app paradigm. Remove WP templates in favor of just index.php." />
+    <MESSAGE value="Add Angular UI-Router" />
+    <MESSAGE value="Reformat functions.php to clean up spacing, add a few comments" />
+    <MESSAGE value="Save PHPStorm options again" />
+    <option name="LAST_COMMIT_MESSAGE" value="Save PHPStorm options again" />
   </component>
   <component name="WordPressConfiguration" doNotAskConfigAgain="true" enabled="true">
     <wordpressPath>$PROJECT_DIR$/../../..</wordpressPath>
@@ -562,10 +806,82 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.php">
+    <entry file="file://$PROJECT_DIR$/functions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.125">
-          <caret line="13" column="40" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="89" column="3" selection-start-line="89" selection-start-column="3" selection-end-line="89" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmb-functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="677" column="0" selection-start-line="677" selection-start-column="0" selection-end-line="677" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="24" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/rfstockalike.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="660" column="51" selection-start-line="660" selection-start-column="51" selection-end-line="660" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="121" column="19" selection-start-line="121" selection-start-column="19" selection-end-line="121" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-submit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="45" selection-start-line="56" selection-start-column="45" selection-end-line="56" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-engines.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/single-engine.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/engine-config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -620,9 +936,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-          <folding>
-            <marker date="1446762795000" expanded="true" signature="32272:32973" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -631,7 +945,6 @@
         <state split_layout="SPLIT">
           <first_editor vertical-scroll-proportion="0.2658789">
             <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -641,7 +954,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.0">
           <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -649,7 +961,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -657,7 +968,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -665,7 +975,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -677,34 +986,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/engine-config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="29.921568">
-          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.7058825">
-          <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmb-functions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.541666">
+        <state vertical-scroll-proportion="0.0">
           <caret line="677" column="0" selection-start-line="677" selection-start-column="0" selection-end-line="677" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.25">
-          <caret line="89" column="3" selection-start-line="89" selection-start-column="3" selection-end-line="89" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -719,32 +1004,112 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/template-submit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.041667">
+        <state vertical-scroll-proportion="0.0">
           <caret line="56" column="45" selection-start-line="56" selection-start-column="45" selection-end-line="56" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/single-engine.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.4545455">
-          <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/rfstockalike.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.592592">
-          <caret line="660" column="51" selection-start-line="660" selection-start-column="51" selection-end-line="660" selection-end-column="51" />
+        <state vertical-scroll-proportion="-2.7777777">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/footer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.625">
+          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/engine-config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-39.375">
+          <caret line="63" column="16" selection-start-line="0" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sidebar-engine.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.25">
+          <caret line="10" column="21" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partials/engine-config.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.25">
+          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/single-engine.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partials/engine-single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-183.75">
+          <caret line="294" column="10" selection-start-line="294" selection-start-column="10" selection-end-line="294" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template-engines.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3186969">
-          <caret line="30" column="64" selection-start-line="30" selection-start-column="64" selection-end-line="30" selection-end-column="64" />
+        <state vertical-scroll-proportion="-34.291668">
+          <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partials/engine-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.25">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.5">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-57.5">
+          <caret line="92" column="56" selection-start-line="92" selection-start-column="56" selection-end-line="92" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.25">
+          <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partials/tabs.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.04249292">
+          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
           <folding />
         </state>
       </provider>

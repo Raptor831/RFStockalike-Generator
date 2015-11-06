@@ -20,5 +20,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="angularjs-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="rfstockalike node_modules" level="project" />
   </component>
 </module>
