@@ -273,15 +273,11 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
         {"config_mixture":888,"config_ratio":0,"config_tech_node":""}
     ];
 
-    var post;
     if ( engineID ) {
-        post = $http.get('/wp-json/wp/v2/engines/'+engineID);
-
-        var mix = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1');
-
-        var resource = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1');
-
-        var types = $http.get('/wp-json/wp/v2/terms/engine-type/?per_page=0');
+        var post = $http.get('/wp-json/wp/v2/engines/'+engineID),
+            mix = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1'),
+            resource = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1'),
+            types = $http.get('/wp-json/wp/v2/terms/engine-type/?per_page=0');
 
         $q.all([post,mix,resource,types]).then( function(ret){
             $scope.types = ret[3].data;
@@ -294,8 +290,7 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
                 $scope.cleanData($scope.engine);
                 $scope.doCalcs($scope.engine);
             } else {
-                var i;
-                for(i = 0; i < $scope.engines.length; i++) {
+                for(var i = 0; i < $scope.engines.length; i++) {
                     $scope.cleanData($scope.engines[i]);
                     $scope.doCalcs($scope.engines[i]);
                 }

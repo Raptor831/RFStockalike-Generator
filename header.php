@@ -19,10 +19,12 @@
   </head>
   <body <?php body_class(); ?>>
 
+    <div class="app-container" ng-app="rfstockalike">
+
     <header>
       <div class="container">
         <nav role="navigation" id="header-nav" class="navigation">
-          <?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
+          <?php //wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
         </nav>
       </div>
     </header>
