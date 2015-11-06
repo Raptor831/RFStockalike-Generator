@@ -1,6 +1,6 @@
-var rfstockalike = angular.module('rfstockalike', ['ngSanitize']);
+var rfstockalikeControllers = angular.module('rfstockalikeControllers', ['ngSanitize']);
 
-rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window', '$filter', function ($scope, $http, $q, $window, $filter) {
+rfstockalikeControllers.controller('RFEngineController', ['$scope', '$http', '$q', '$window', '$filter', function ($scope, $http, $q, $window, $filter) {
     var nonce = RFS.nonce;
     //window.console.log(nonce);
     var engineID = $window.post_id;
@@ -613,7 +613,7 @@ rfstockalike.controller('rfEngineController', ['$scope', '$http', '$q', '$window
 
 }]);
 
-rfstockalike.controller('rfEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', function($scope, $http, $q, $filter, $timeout, $window){
+rfstockalikeControllers.controller('RFEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', function($scope, $http, $q, $filter, $timeout, $window){
 
     $scope.engines = [];
     $scope.currentPage = 0;
@@ -687,7 +687,7 @@ rfstockalike.controller('rfEngineListController', ['$scope', '$http', '$q', '$fi
 
 }]);
 
-rfstockalike.filter('startFrom', function() {
+rfstockalikeControllers.filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int
         if (input.length < start) {

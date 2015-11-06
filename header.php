@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1" />
     <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
+    <base href="<?php $url_info = parse_url( home_url() ); echo trailingslashit( $url_info['path'] ); ?>">
     <title><?php wp_title(); ?></title>
 
     <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri();?>/images/favicon.png" />
@@ -19,7 +20,7 @@
   </head>
   <body <?php body_class(); ?>>
 
-    <div class="app-container" ng-app="rfstockalike">
+    <div class="app-container" ng-app="rfsApp">
 
     <header>
       <div class="container">

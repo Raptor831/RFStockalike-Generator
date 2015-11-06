@@ -92,8 +92,9 @@ if ( ! is_admin() ) {
 
 		// Set up nonce for Angular-based authentication
 		wp_localize_script( 'main', 'RFS', array(
-			'root'  => esc_url_raw( rest_url() ),
-			'nonce' => wp_create_nonce( 'wp_rest' )
+			'root'     => esc_url_raw( rest_url() ),
+			'nonce'    => wp_create_nonce( 'wp_rest' ),
+			'partials' => trailingslashit( get_template_directory_uri() ) . 'partials/'
 		) );
 
 		wp_enqueue_style( 'owlcss', get_template_directory_uri() . '/js/vendor/owl-carousel-2/assets/owl.carousel.css', false );
