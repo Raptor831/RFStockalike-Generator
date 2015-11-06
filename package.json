@@ -1,5 +1,5 @@
 {
-  "name": "RFStockalike Generator",
+  "name": "RFStockalike-Generator",
   "version": "1.0.0",
   "description": "Generator app for Kerbal Space Program Real Fuels engine configs in the stockalike style.",
   "main": "index.js",
