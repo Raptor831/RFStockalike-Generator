@@ -1,0 +1,27 @@
+{
+  "name": "RFStockalike-Generator",
+  "description": "Generator app for Kerbal Space Program Real Fuels engine configs in the stockalike style.",
+  "main": "index.js",
+  "authors": [
+    "Raptor831"
+  ],
+  "license": "CC-BY-NC",
+  "homepage": "https://github.com/Raptor831/RFStockalike-Generator",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-latest": "~1.3.5",
+    "angular-sanitize": "~1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "angular": "~1.4.7"
+  }
+}
