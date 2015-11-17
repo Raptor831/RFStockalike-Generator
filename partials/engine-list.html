@@ -37,9 +37,11 @@
     <button ng-disabled="currentPage >= filteredEngines.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next</button>
 </nav>
 
-<article ng-repeat="engine in filteredEngines = (engines | filter: { title: search, type: type, configs: mixSearch }) | startFrom:currentPage*pageSize | limitTo:pageSize">
+<article>
 
-    <h4><a href="{{engine.link}}"><span ng-bind-html="engine.title"></span></a></h4>
+    <h4 ng-repeat="engine in filteredEngines = (engines | filter: { title: search, type: type, configs: mixSearch }) | startFrom:currentPage*pageSize | limitTo:pageSize">
+        <a href="{{engine.link}}"><span ng-bind-html="engine.title"></span></a>
+    </h4>
 
 </article>
 
