@@ -17,7 +17,7 @@ rfsApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function
             views: {
                 'main-tab' : {
                     templateUrl: RFS.partials + 'home.html',
-                    controller: 'RFEngineListController'
+                    //controller: 'RFEngineListController'
                 }
             }
         })
@@ -27,6 +27,15 @@ rfsApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function
                 'main-tab' : {
                     templateUrl: RFS.partials + 'engine-list.html',
                     controller: 'RFEngineListController'
+                }
+            }
+        })
+        .state('tabs.singleEngine', {
+            url: 'engines/:id',
+            views: {
+                'main-tab': {
+                    templateUrl: RFS.partials + 'engine-single.html',
+                    controller: 'RFEngineController'
                 }
             }
         });

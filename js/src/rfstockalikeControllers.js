@@ -1,9 +1,9 @@
 var rfstockalikeControllers = angular.module('rfstockalikeControllers', ['ngSanitize']);
 
-rfstockalikeControllers.controller('RFEngineController', ['$scope', '$http', '$q', '$window', '$filter', function ($scope, $http, $q, $window, $filter) {
+rfstockalikeControllers.controller('RFEngineController', ['$scope', '$http', '$q', '$window', '$filter', '$stateParams', function ($scope, $http, $q, $window, $filter, $stateParams) {
     var nonce = RFS.nonce;
     //window.console.log(nonce);
-    var engineID = $window.post_id;
+    var engineID = $stateParams.id;
 
     if ( engineID ) {
         var post = $http.get('/wp-json/wp/v2/engines/'+engineID),
@@ -304,7 +304,7 @@ rfstockalikeControllers.controller('RFEngineController', ['$scope', '$http', '$q
     };
 
     $scope.rcsDefault = function(engine) {
-        engine.ksprfs.ksprfs_engine_configs = rcsDefaultConfigs;
+        engine.ksprfs.ksprfs_engine_configs = $scope.rcsDefaultConfigs;
         engine.ksprfs.ksprfs_engine_tech_level = 1;
         engine.ksprfs.ksprfs_engine_ispvm = 1;
         engine.ksprfs.ksprfs_engine_ispslm = 1;
@@ -481,18 +481,20 @@ rfstockalikeControllers.controller('RFEngineListController', ['$scope', '$http',
     $scope.pageSize = 20;
     $scope.loading = true;
 
-    window.console.log($scope.thrustCurves);
+    //window.console.log($scope.thrustCurves);
 
     var promises = [];
 
     //var engines = $http.get('/wp-json/wp/v2/posts/?type[]=engine&filter[posts_per_page]=-1');
 
-    $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1&filter[order]=ASC&filter[orderby]=title')
-        .success(function(data){
-            $scope.mixtures = data;
-            window.console.log($scope.mixtures[0]);
-        });
-    //promises.push(mix);
+    if( !$scope.mixtures ) {
+        $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1&filter[order]=ASC&filter[orderby]=title')
+            .success(function (data) {
+                $scope.mixtures = data;
+                window.console.log($scope.mixtures[0]);
+            });
+        //promises.push(mix);
+    }
 
     var baseLink = '/wp-json/wp/v2/engines/?filter[posts_per_page]=' + $scope.pageSize;
 
@@ -707,7 +709,7 @@ rfstockalikeControllers.controller('RFBaseController', ['$scope', function($scop
         'jet':['J',null,0,true],
         'rcs':['L',$scope.rcsIsp,0,true]};
 
-    var rcsDefaultConfigs = [
+    $scope.rcsDefaultConfigs = [
         {"config_mixture":135,"config_ratio":0,"config_tech_node":""},
         {"config_mixture":134,"config_ratio":0,"config_tech_node":""},
         {"config_mixture":178,"config_ratio":1.6,"config_tech_node":""},
@@ -717,6 +719,8 @@ rfstockalikeControllers.controller('RFBaseController', ['$scope', function($scop
         {"config_mixture":180,"config_ratio":1.7,"config_tech_node":""},
         {"config_mixture":888,"config_ratio":0,"config_tech_node":""}
     ];
+
+    //window.console.log($scope.thrustCurves);
 }]);
 
 rfstockalikeControllers.filter('startFrom', function() {

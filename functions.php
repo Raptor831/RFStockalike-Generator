@@ -78,7 +78,7 @@ if ( ! is_admin() ) {
 			'jquery',
 			'angular',
 			'angular-sanitize'
-		), '2.0', false );
+		), time(), false );
 		//wp_register_script( 'rfstockalike', get_template_directory_uri() . '/js/src/rfstockalike.js', array('angular'), '1.0', false );
 
 		//wp_enqueue_script( 'modernizr' );
