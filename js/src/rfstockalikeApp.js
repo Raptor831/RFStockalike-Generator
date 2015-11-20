@@ -36,6 +36,9 @@ rfsApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function
                 'main-tab': {
                     templateUrl: RFS.partials + 'engine-single.html',
                     controller: 'RFEngineController'
+                },
+                'config-sidebar@tabs.singleEngine': {
+                    templateUrl: RFS.partials + 'engine-config.html'
                 }
             }
         });

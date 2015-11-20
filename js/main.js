@@ -168,6 +168,9 @@ rfsApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function
                 'main-tab': {
                     templateUrl: RFS.partials + 'engine-single.html',
                     controller: 'RFEngineController'
+                },
+                'config-sidebar@tabs.singleEngine': {
+                    templateUrl: RFS.partials + 'engine-config.html'
                 }
             }
         });
@@ -666,50 +669,57 @@ rfstockalikeControllers.controller('RFEngineController', ['$scope', '$http', '$q
 
 rfstockalikeControllers.controller('RFEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', function($scope, $http, $q, $filter, $timeout, $window){
 
-    $scope.engines = [];
+    // Set some global List variables
     $scope.currentPage = 0;
     $scope.pageSize = 20;
     $scope.loading = true;
 
-    //window.console.log($scope.thrustCurves);
-
+    // prepare the promises array
     var promises = [];
 
-    //var engines = $http.get('/wp-json/wp/v2/posts/?type[]=engine&filter[posts_per_page]=-1');
-
+    // Get mixtures if they do not already exist
     if( !$scope.mixtures ) {
         $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1&filter[order]=ASC&filter[orderby]=title')
             .success(function (data) {
-                $scope.mixtures = data;
-                window.console.log($scope.mixtures[0]);
+                $scope.setMixtures(data);
             });
-        //promises.push(mix);
     }
 
-    var baseLink = '/wp-json/wp/v2/engines/?filter[posts_per_page]=' + $scope.pageSize;
+    // Get engines if enginesList doesn't have anything
+    if ( $scope.enginesList.length < 1 ) {
 
-    $http.get(baseLink).success(function(data, status, headers){
-        angular.forEach(data, function( value, key ){
-            $scope.engines.push( $scope.prepareEngine(value) );
-        });
+        var baseLink = '/wp-json/wp/v2/engines/?filter[posts_per_page]=' + $scope.pageSize;
 
-        //$scope.enginePages = headers('X-WP-TotalPages');
-        $scope.engineCount = headers('X-WP-Total');
+        $http.get(baseLink).success(function (data, status, headers) {
+            angular.forEach(data, function (value, key) {
+                // set up the engines list
+                $scope.enginesList.push($scope.prepareEngineList(value));
+                // push to the global engines as well
+                $scope.engines.push(value);
+            });
 
-        var pages = Math.ceil($scope.engineCount / $scope.pageSize);
-        var count = 2;
+            //$scope.enginePages = headers('X-WP-TotalPages');
+            $scope.engineCount = headers('X-WP-Total');
 
-        for(count; count <= pages; count++) {
-            var promise = $http.get(baseLink + '?filter[posts_per_page]=' + $scope.pageSize + '&page=' + count)
-                .success(function(data){
-                    angular.forEach(data, function( value, key ){
-                        $scope.engines.push( $scope.prepareEngine(value) );
+            var pages = Math.ceil($scope.engineCount / $scope.pageSize);
+            var count = 2;
+
+            for (count; count <= pages; count++) {
+                var promise = $http.get(baseLink + '?filter[posts_per_page]=' + $scope.pageSize + '&page=' + count)
+                    .success(function (data) {
+                        angular.forEach(data, function (value, key) {
+                            $scope.enginesList.push($scope.prepareEngineList(value));
+                        });
                     });
-                });
-            promises.push(promise);
-        }
-        $q.all(promises).then( function(){ $scope.loading = false; } );
-    });
+                promises.push(promise);
+            }
+            $q.all(promises).then(function () {
+                $scope.loading = false;
+            });
+        });
+    } else {
+        $scope.loading = false;
+    }
     /*$q.all(promises).then( function(ret){
         $scope.mixtures = ret[0].data;
 
@@ -740,7 +750,7 @@ rfstockalikeControllers.controller('RFEngineListController', ['$scope', '$http',
 
     // Actions
 
-    $scope.prepareEngine = function(engine) {
+    $scope.prepareEngineList = function(engine) {
         var result = {};
         result.title = engine.title.rendered;
         result.link = engine.link;
@@ -772,10 +782,12 @@ rfstockalikeControllers.controller('RFEngineListController', ['$scope', '$http',
 
 }]);
 
-rfstockalikeControllers.controller('RFBaseController', ['$scope', function($scope) {
+rfstockalikeControllers.controller('RFBaseController', ['$scope', '$http', function($scope, $http) {
     $scope.errors = [];
     $scope.successes = [];
     $scope.math = Math;
+    $scope.enginesList = [];
+    $scope.engines = [];
 
     $scope.thrustCurves = {
         '0' : "",
@@ -911,6 +923,19 @@ rfstockalikeControllers.controller('RFBaseController', ['$scope', function($scop
     ];
 
     //window.console.log($scope.thrustCurves);
+
+    $scope.setEngines = function(engines) {
+        $scope.engines = engines;
+    };
+
+    $scope.setEnginesList = function(engines) {
+        $scope.enginesList = engines;
+    };
+
+    $scope.setMixtures = function(mixtures) {
+        $scope.mixtures = mixtures;
+    };
+
 }]);
 
 rfstockalikeControllers.filter('startFrom', function() {

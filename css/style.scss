@@ -304,7 +304,7 @@ HOMEPAGE STYLES
   .main-content, #main-sidebar {
     @include span-columns(4);
   }
-  #main-sidebar {
+  .main-sidebar {
     .widget {
       @include span-columns(4);
       @include media($tablet) {
