@@ -4,7 +4,7 @@
     <list default="true" id="f4980c64-88c2-4ebc-87a7-126e546205fe" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.scss" afterPath="$PROJECT_DIR$/css/style.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/engine-single.html" afterPath="$PROJECT_DIR$/partials/engine-single.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/engine-config.html" afterPath="$PROJECT_DIR$/partials/engine-config.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css.map" afterPath="$PROJECT_DIR$/style.css.map" />
     </list>
@@ -48,10 +48,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="engine-single.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="engine-single.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/partials/engine-single.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.858156">
+            <state vertical-scroll-proportion="-23.26923">
               <caret line="295" column="61" selection-start-line="295" selection-start-column="61" selection-end-line="295" selection-end-column="61" />
               <folding />
             </state>
@@ -61,8 +61,8 @@
       <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/style.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.230769">
-              <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="0" />
+            <state vertical-scroll-proportion="-16.076923">
+              <caret line="228" column="16" selection-start-line="228" selection-start-column="16" selection-end-line="228" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -88,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="engine-config.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="engine-config.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/partials/engine-config.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.3076923">
-              <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -146,7 +146,6 @@
         <option value="$PROJECT_DIR$/template-submit.php" />
         <option value="$PROJECT_DIR$/template-engines.php" />
         <option value="$PROJECT_DIR$/footer.php" />
-        <option value="$PROJECT_DIR$/partials/engine-config.html" />
         <option value="$PROJECT_DIR$/header.php" />
         <option value="$PROJECT_DIR$/js/src/rfstockalike.js" />
         <option value="$PROJECT_DIR$/js/src/app.js" />
@@ -158,8 +157,9 @@
         <option value="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" />
         <option value="$PROJECT_DIR$/partials/engine-form.html" />
         <option value="$PROJECT_DIR$/js/src/rfstockalikeApp.js" />
-        <option value="$PROJECT_DIR$/css/style.scss" />
         <option value="$PROJECT_DIR$/partials/engine-single.html" />
+        <option value="$PROJECT_DIR$/css/style.scss" />
+        <option value="$PROJECT_DIR$/partials/engine-config.html" />
       </list>
     </option>
   </component>
@@ -519,7 +519,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448059198431</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Style config sidebar properly">
+      <created>1448059250867</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1448059250867</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -588,7 +594,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../../../../../.." />
     </ignored-roots>
-    <MESSAGE value="Changing gulpfile.js to compress css and changing scripts watch task." />
     <MESSAGE value="More gulpfile refactorings to replace CodeKit useage" />
     <MESSAGE value="Refactoring the engine list code for new REST API" />
     <MESSAGE value="Fixing gulpfile to watch correct files" />
@@ -613,7 +618,8 @@
     <MESSAGE value="Add bower.json with appropriate dependencies." />
     <MESSAGE value="More tweaking with routes" />
     <MESSAGE value="Set up persistent data, add config sidebar to single engine route" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set up persistent data, add config sidebar to single engine route" />
+    <MESSAGE value="Style config sidebar properly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Style config sidebar properly" />
   </component>
   <component name="WordPressConfiguration" doNotAskConfigAgain="true" enabled="true">
     <wordpressPath>$PROJECT_DIR$/../../..</wordpressPath>
@@ -975,14 +981,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/partials/engine-config.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3076923">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeApp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -993,16 +991,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/style.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.230769">
-          <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="0" />
+        <state vertical-scroll-proportion="-16.076923">
+          <caret line="228" column="16" selection-start-line="228" selection-start-column="16" selection-end-line="228" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/partials/engine-single.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.858156">
+        <state vertical-scroll-proportion="-23.26923">
           <caret line="295" column="61" selection-start-line="295" selection-start-column="61" selection-end-line="295" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partials/engine-config.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
           <folding />
         </state>
       </provider>
