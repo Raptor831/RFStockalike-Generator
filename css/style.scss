@@ -279,7 +279,7 @@ CONTENT STYLES
 /*------------
 SIDEBAR STYLES
 ------------*/
-aside#main-sidebar {
+aside.main-sidebar {
   @include span-columns(4);
   @include media($tablet) {
     @include span-columns(4);
