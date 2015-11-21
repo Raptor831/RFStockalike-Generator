@@ -83,7 +83,7 @@
       IspSL = {{config.ispSL_mult | number:4}}
       IspV = {{config.ispV_mult | number:4}}
       throttle = {{engine.finalThrottle}}
-      <span ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != 0">ModuleEngineIgnitor
+      <span ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != '0'">ModuleEngineIgnitor
       {
         ignitionsAvailable = {{config.ignitions}}
         useUllageSimulation = {{config.ullage}}

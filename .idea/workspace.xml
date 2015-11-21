@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f4980c64-88c2-4ebc-87a7-126e546205fe" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/engine-single.html" afterPath="$PROJECT_DIR$/partials/engine-single.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.min.js" afterPath="$PROJECT_DIR$/js/main.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" afterPath="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/engine-config.html" afterPath="$PROJECT_DIR$/partials/engine-config.html" />
     </list>
     <ignored path="rfstockalike.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,16 +28,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="tabs.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/partials/tabs.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="30" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="rfstockalikeApp.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeApp.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -48,17 +41,27 @@
       <file leaf-file-name="rfstockalikeControllers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeControllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="756" column="3" selection-start-line="756" selection-start-column="3" selection-end-line="756" selection-end-column="3" />
+            <state vertical-scroll-proportion="-6.703704">
+              <caret line="52" column="9" selection-start-line="52" selection-start-column="9" selection-end-line="52" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="engine-single.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cmb-functions.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmb-functions.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="7.700155">
+              <caret line="677" column="0" selection-start-line="677" selection-start-column="0" selection-end-line="677" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="engine-single.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/partials/engine-single.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5888717">
+            <state vertical-scroll-proportion="-14.653846">
               <caret line="241" column="51" selection-start-line="241" selection-start-column="51" selection-end-line="241" selection-end-column="51" />
               <folding />
             </state>
@@ -98,8 +101,8 @@
       <file leaf-file-name="engine-config.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/partials/engine-config.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.4150944">
-              <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+            <state vertical-scroll-proportion="-3.8867924">
+              <caret line="85" column="69" selection-start-line="85" selection-start-column="69" selection-end-line="85" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -164,9 +167,9 @@
         <option value="$PROJECT_DIR$/partials/engine-form.html" />
         <option value="$PROJECT_DIR$/css/style.scss" />
         <option value="$PROJECT_DIR$/js/src/rfstockalikeApp.js" />
-        <option value="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" />
-        <option value="$PROJECT_DIR$/partials/engine-config.html" />
         <option value="$PROJECT_DIR$/partials/engine-single.html" />
+        <option value="$PROJECT_DIR$/partials/engine-config.html" />
+        <option value="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" />
       </list>
     </option>
   </component>
@@ -594,7 +597,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448071910471</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Fix markup error">
+      <created>1448076803451</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1448076803451</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -664,7 +673,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../../../../../.." />
     </ignored-roots>
-    <MESSAGE value="Update package.json for real project settings" />
     <MESSAGE value="Rename example-functions to cmb-functions" />
     <MESSAGE value="Change meta info in cmb-functions to reflect real project" />
     <MESSAGE value="Refactor titles, refactor &lt;object&gt;.meta.ksprfs to &lt;object&gt;.ksprfs" />
@@ -689,7 +697,8 @@
     <MESSAGE value="Switch first span to ng-hide." />
     <MESSAGE value="Adjust config spacing, make selectable again." />
     <MESSAGE value="Continue adjusting config indentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Continue adjusting config indentation" />
+    <MESSAGE value="Fix markup error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix markup error" />
   </component>
   <component name="WordPressConfiguration" doNotAskConfigAgain="true" enabled="true">
     <wordpressPath>$PROJECT_DIR$/../../..</wordpressPath>
@@ -933,13 +942,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmb-functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="677" column="0" selection-start-line="677" selection-start-column="0" selection-end-line="677" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-submit.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1059,26 +1061,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeControllers.js">
+    <entry file="file://$PROJECT_DIR$/partials/engine-single.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="756" column="3" selection-start-line="756" selection-start-column="3" selection-end-line="756" selection-end-column="3" />
+        <state vertical-scroll-proportion="-14.653846">
+          <caret line="241" column="51" selection-start-line="241" selection-start-column="51" selection-end-line="241" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/partials/engine-config.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.4150944">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+        <state vertical-scroll-proportion="-3.8867924">
+          <caret line="85" column="69" selection-start-line="85" selection-start-column="69" selection-end-line="85" selection-end-column="69" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/partials/engine-single.html">
+    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeControllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5888717">
-          <caret line="241" column="51" selection-start-line="241" selection-start-column="51" selection-end-line="241" selection-end-column="51" />
+        <state vertical-scroll-proportion="-6.703704">
+          <caret line="52" column="9" selection-start-line="52" selection-start-column="9" selection-end-line="52" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmb-functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="7.700155">
+          <caret line="677" column="0" selection-start-line="677" selection-start-column="0" selection-end-line="677" selection-end-column="0" />
           <folding />
         </state>
       </provider>

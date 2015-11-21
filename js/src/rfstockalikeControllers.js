@@ -51,6 +51,9 @@ angular.module('rfstockalikeControllers', ['ngSanitize'])
         if ( !engine.ksprfs.ksprfs_engine_flow ) {
             engine.ksprfs.ksprfs_engine_flow = 'STACK_PRIORITY_SEARCH';
         }
+
+        engine.ksprfs.ksprfs_engine_ignition_mode = engine.ksprfs.ksprfs_engine_ignition_mode.toString();
+        engine.ksprfs.ksprfs_engine_tech_level = engine.ksprfs.ksprfs_engine_tech_level.toString();
     };
 
     $scope.prepareSaveData = function(engine) {
@@ -240,7 +243,7 @@ angular.module('rfstockalikeControllers', ['ngSanitize'])
             // Do EI configs
             var ignitions, typeOverride, finalIgnitions;
             ignitions = engine.ksprfs.ksprfs_engine_ignitions;
-            typeOverride = engine.ksprfs.ksprfs_engine_ignition_mode;
+            typeOverride = parseInt(engine.ksprfs.ksprfs_engine_ignition_mode);
             if ( !ignitions ) { ignitions = 0; }
             if ( typeOverride > 1 ) {
                 finalIgnitions = ignitions;
@@ -305,10 +308,10 @@ angular.module('rfstockalikeControllers', ['ngSanitize'])
 
     $scope.rcsDefault = function(engine) {
         engine.ksprfs.ksprfs_engine_configs = $scope.rcsDefaultConfigs;
-        engine.ksprfs.ksprfs_engine_tech_level = 1;
+        engine.ksprfs.ksprfs_engine_tech_level = "1";
         engine.ksprfs.ksprfs_engine_ispvm = 1;
         engine.ksprfs.ksprfs_engine_ispslm = 1;
-        engine.ksprfs.ksprfs_engine_ignition_mode = 0;
+        engine.ksprfs.ksprfs_engine_ignition_mode = "0";
         engine.ksprfs.ksprfs_engine_flow = 'STAGE_PRIORITY_FLOW';
         $scope.rcsMass(engine); // includes doCalcs()
     };
