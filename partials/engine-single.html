@@ -238,10 +238,10 @@
         <div class="half">
             <div class="field cb">
                 <label for="engine_ignition_mode">Ullage Mode</label>
-                <select id="engine_ignition_mode" name="engine_ignition_mode" ng-model="engine.ksprfs.ksprfs_engine_ignition_mode" ng-change="doCalcs(engine)" />
-                <option value="0">None</option>
-                <option value="1">Use Hypergolic Rules</option>
-                <option value="2">Ignore Hypergolic Rules</option>
+                <select id="engine_ignition_mode" name="engine_ignition_mode" ng-model="engine.ksprfs.ksprfs_engine_ignition_mode" ng-change="doCalcs(engine)">
+                    <option value="0">None</option>
+                    <option value="1">Use Hypergolic Rules</option>
+                    <option value="2">Ignore Hypergolic Rules</option>
                 </select>
                 <p class="description">None turns off ullage. Using hypergolic rules will set ignitions to 1 unless hypergolic fuels are used. Ignoring hypergolic rules will use the defined number of ignitions regardless of fuel types.</p>
             </div>
