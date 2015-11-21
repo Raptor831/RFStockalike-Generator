@@ -11,26 +11,26 @@
   {{engine.ksprfs.ksprfs_engine_patch}}
   @MODULE[<span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">ModuleEngine*</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">ModuleRCS*</span>]
   {
-  <span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">@name = ModuleEnginesRF
-      @maxThrust = {{math.round(engine.ksprfs.ksprfs_engine_thrust * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_thrust_mult)}}</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">@name = ModuleRCSFX
-      @thrusterPower = {{math.round(1000 * engine.ksprfs.ksprfs_engine_thrust * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_thrust_mult) / 1000}}</span>
-  @heatProduction = {{math.round(engine.ksprfs.engine_heat)}}
-  @atmosphereCurve
-  {
-  @key,0 = 0 {{math.round(engine.ksprfs.resultIspV * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_ispv_mult)}}
-  @key,1 = 1 {{math.round(engine.ksprfs.resultIspSL * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_ispsl_mult)}}
-  }
-  !PROPELLANT[LiquidFuel] {}
-  !PROPELLANT[Oxidizer] {}
-  !PROPELLANT[MonoPropellant] {}
-  PROPELLANT
-  {
-  name = {{getFuel(getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture)).title.rendered}}
-  ratio = {{engine.ksprfs.ksprfs_engine_configs[0].fuelRatio | number:6}}
-  DrawGauge = True
-  <span ng-show="engine.ksprfs.ksprfs_type !== 'solid' && engine.ksprfs.ksprfs_type !== 'solid-plus'">%ResourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}</span>
-  }
-  <span ng-show="getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_oxidizer">PROPELLANT
+    <span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">@name = ModuleEnginesRF
+    @maxThrust = {{math.round(engine.ksprfs.ksprfs_engine_thrust * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_thrust_mult)}}</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">@name = ModuleRCSFX
+    @thrusterPower = {{math.round(1000 * engine.ksprfs.ksprfs_engine_thrust * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_thrust_mult) / 1000}}</span>
+    @heatProduction = {{math.round(engine.ksprfs.engine_heat)}}
+    @atmosphereCurve
+    {
+      @key,0 = 0 {{math.round(engine.ksprfs.resultIspV * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_ispv_mult)}}
+      @key,1 = 1 {{math.round(engine.ksprfs.resultIspSL * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_ispsl_mult)}}
+    }
+    !PROPELLANT[LiquidFuel] {}
+    !PROPELLANT[Oxidizer] {}
+    !PROPELLANT[MonoPropellant] {}
+    PROPELLANT
+    {
+      name = {{getFuel(getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture)).title.rendered}}
+      ratio = {{engine.ksprfs.ksprfs_engine_configs[0].fuelRatio | number:6}}
+      DrawGauge = True
+      <span ng-show="engine.ksprfs.ksprfs_type !== 'solid' && engine.ksprfs.ksprfs_type !== 'solid-plus'">%ResourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}</span>
+    }
+    <span ng-show="getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_oxidizer">PROPELLANT
     {
       name = {{getOxidizer(getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture)).title.rendered}}
       ratio = {{engine.ksprfs.ksprfs_engine_configs[0].oxyRatio | number:6}}

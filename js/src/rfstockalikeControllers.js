@@ -1,6 +1,6 @@
-var rfstockalikeControllers = angular.module('rfstockalikeControllers', ['ngSanitize']);
+angular.module('rfstockalikeControllers', ['ngSanitize'])
 
-rfstockalikeControllers.controller('RFEngineController', ['$scope', '$http', '$q', '$window', '$filter', '$stateParams', function ($scope, $http, $q, $window, $filter, $stateParams) {
+.controller('RFEngineController', ['$scope', '$http', '$q', '$window', '$filter', '$stateParams', function ($scope, $http, $q, $window, $filter, $stateParams) {
     var nonce = RFS.nonce;
     //window.console.log(nonce);
     var engineID = $stateParams.id;
@@ -472,9 +472,9 @@ rfstockalikeControllers.controller('RFEngineController', ['$scope', '$http', '$q
 
     };
 
-}]);
+}])
 
-rfstockalikeControllers.controller('RFEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', function($scope, $http, $q, $filter, $timeout, $window){
+.controller('RFEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', function($scope, $http, $q, $filter, $timeout, $window){
 
     // Set some global List variables
     $scope.currentPage = 0;
@@ -587,9 +587,9 @@ rfstockalikeControllers.controller('RFEngineListController', ['$scope', '$http',
         }, 200);
     };
 
-}]);
+}])
 
-rfstockalikeControllers.controller('RFBaseController', ['$scope', '$http', function($scope, $http) {
+.controller('RFBaseController', ['$scope', '$http', function($scope, $http) {
     $scope.errors = [];
     $scope.successes = [];
     $scope.math = Math;
@@ -743,9 +743,9 @@ rfstockalikeControllers.controller('RFBaseController', ['$scope', '$http', funct
         $scope.mixtures = mixtures;
     };
 
-}]);
+}])
 
-rfstockalikeControllers.filter('startFrom', function() {
+.filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int
         if (input.length < start) {
