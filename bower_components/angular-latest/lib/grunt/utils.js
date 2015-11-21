@@ -11,30 +11,8 @@ var _ = require('lodash');
 
 var CSP_CSS_HEADER = '/* Include this file in your html if you are using the CSP mode. */\n\n';
 
-var PORT_MIN = 8000;
-var PORT_MAX = 9999;
-var TRAVIS_BUILD_NUMBER = parseInt(process.env.TRAVIS_BUILD_NUMBER, 10);
-var getRandomPorts = function() {
-  if (!process.env.TRAVIS) {
-    return [9876, 9877];
-  }
-
-  // Generate two numbers between PORT_MIN and PORT_MAX, based on TRAVIS_BUILD_NUMBER.
-  return [
-    PORT_MIN + (TRAVIS_BUILD_NUMBER % (PORT_MAX - PORT_MIN)),
-    PORT_MIN + ((TRAVIS_BUILD_NUMBER + 100) % (PORT_MAX - PORT_MIN))
-  ];
-};
-
 
 module.exports = {
-
-  init: function() {
-    if (!process.env.TRAVIS) {
-      shell.exec('npm install');
-    }
-  },
-
 
   startKarma: function(config, singleRun, done){
     var browsers = grunt.option('browsers');
@@ -138,7 +116,7 @@ module.exports = {
         .replace(/\\/g, '\\\\')
         .replace(/'/g, "\\'")
         .replace(/\r?\n/g, '\\n');
-      js = "!window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type=\"text/css\">" + css + "</style>');";
+      js = "!window.angular.$$csp() && window.angular.element(document.head).prepend('<style type=\"text/css\">" + css + "</style>');";
       state.js.push(js);
 
       return state;
@@ -312,32 +290,5 @@ module.exports = {
       }
       next();
     };
-  },
-
-  parallelTask: function(args, options) {
-    var task = {
-      grunt: true,
-      args: args,
-      stream: options && options.stream
-    };
-
-    args.push('--port=' + this.sauceLabsAvailablePorts.pop());
-
-    if (args.indexOf('test:e2e') !== -1 && grunt.option('e2e-browsers')) {
-      args.push('--browsers=' + grunt.option('e2e-browsers'));
-    } else if (grunt.option('browsers')) {
-      args.push('--browsers=' + grunt.option('browsers'));
-    }
-
-    if (grunt.option('reporters')) {
-      args.push('--reporters=' + grunt.option('reporters'));
-    }
-
-    return task;
-  },
-
-  // see http://saucelabs.com/docs/connect#localhost
-  sauceLabsAvailablePorts: [9000, 9001, 9080, 9090, 9876],
-  // pseudo-random port numbers for BrowserStack
-  availablePorts: getRandomPorts()
+  }
 };

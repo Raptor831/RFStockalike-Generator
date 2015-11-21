@@ -463,7 +463,7 @@ describe('form', function() {
       doc = jqLite(
         '<form name="parent">' +
           '<div class="ng-form" name="child">' +
-            '<input ng-if="inputPresent" ng-model="modelA" name="inputA" required>' +
+            '<input ng-if="inputPresent" ng-model="modelA" name="inputA" required maxlength="10">' +
           '</div>' +
         '</form>');
       $compile(doc)(scope);
@@ -476,23 +476,75 @@ describe('form', function() {
 
       expect(parent).toBeDefined();
       expect(child).toBeDefined();
+
       expect(parent.$error.required).toEqual([child]);
+      expect(parent.$$success.maxlength).toEqual([child]);
+
       expect(child.$error.required).toEqual([input]);
+      expect(child.$$success.maxlength).toEqual([input]);
+
       expect(doc.hasClass('ng-invalid')).toBe(true);
       expect(doc.hasClass('ng-invalid-required')).toBe(true);
+      expect(doc.hasClass('ng-valid-maxlength')).toBe(true);
       expect(doc.find('div').hasClass('ng-invalid')).toBe(true);
       expect(doc.find('div').hasClass('ng-invalid-required')).toBe(true);
+      expect(doc.find('div').hasClass('ng-valid-maxlength')).toBe(true);
 
       //remove child input
-      scope.inputPresent = false;
-      scope.$apply();
+      scope.$apply('inputPresent = false');
 
       expect(parent.$error.required).toBeFalsy();
+      expect(parent.$$success.maxlength).toBeFalsy();
+
       expect(child.$error.required).toBeFalsy();
+      expect(child.$$success.maxlength).toBeFalsy();
+
       expect(doc.hasClass('ng-valid')).toBe(true);
       expect(doc.hasClass('ng-valid-required')).toBe(false);
+      expect(doc.hasClass('ng-invalid-required')).toBe(false);
+      expect(doc.hasClass('ng-valid-maxlength')).toBe(false);
+      expect(doc.hasClass('ng-invalid-maxlength')).toBe(false);
+
       expect(doc.find('div').hasClass('ng-valid')).toBe(true);
       expect(doc.find('div').hasClass('ng-valid-required')).toBe(false);
+      expect(doc.find('div').hasClass('ng-invalid-required')).toBe(false);
+      expect(doc.find('div').hasClass('ng-valid-maxlength')).toBe(false);
+      expect(doc.find('div').hasClass('ng-invalid-maxlength')).toBe(false);
+    });
+
+    it('should deregister a input that is $pending when it is removed from DOM', function() {
+      doc = jqLite(
+        '<form name="parent">' +
+          '<div class="ng-form" name="child">' +
+            '<input ng-if="inputPresent" ng-model="modelA" name="inputA">' +
+          '</div>' +
+        '</form>');
+      $compile(doc)(scope);
+      scope.$apply('inputPresent = true');
+
+      var parent = scope.parent;
+      var child = scope.child;
+      var input = child.inputA;
+
+      scope.$apply(child.inputA.$setValidity('fake', undefined));
+
+      expect(parent).toBeDefined();
+      expect(child).toBeDefined();
+
+      expect(parent.$pending.fake).toEqual([child]);
+      expect(child.$pending.fake).toEqual([input]);
+
+      expect(doc.hasClass('ng-pending')).toBe(true);
+      expect(doc.find('div').hasClass('ng-pending')).toBe(true);
+
+      //remove child input
+      scope.$apply('inputPresent = false');
+
+      expect(parent.$pending).toBeUndefined();
+      expect(child.$pending).toBeUndefined();
+
+      expect(doc.hasClass('ng-pending')).toBe(false);
+      expect(doc.find('div').hasClass('ng-pending')).toBe(false);
     });
 
   it('should leave the parent form invalid when deregister a removed input', function() {
@@ -829,20 +881,38 @@ describe('form', function() {
 
   it('should rename forms with no parent when interpolated name changes', function() {
     var element = $compile('<form name="name{{nameID}}"></form>')(scope);
-    var element2 = $compile('<div ng-form="name{{nameID}}"></div>')(scope);
+    var element2 = $compile('<div ng-form="ngform{{nameID}}"></div>')(scope);
     scope.nameID = "A";
     scope.$digest();
     var form = element.controller('form');
     var form2 = element2.controller('form');
+    expect(scope.nameA).toBe(form);
+    expect(scope.ngformA).toBe(form2);
     expect(form.$name).toBe('nameA');
-    expect(form2.$name).toBe('nameA');
+    expect(form2.$name).toBe('ngformA');
 
     scope.nameID = "B";
     scope.$digest();
+    expect(scope.nameA).toBeUndefined();
+    expect(scope.ngformA).toBeUndefined();
+    expect(scope.nameB).toBe(form);
+    expect(scope.ngformB).toBe(form2);
     expect(form.$name).toBe('nameB');
-    expect(form2.$name).toBe('nameB');
+    expect(form2.$name).toBe('ngformB');
   });
 
+  it('should rename forms with an initially blank name', function() {
+    var element = $compile('<form name="{{name}}"></form>')(scope);
+    scope.$digest();
+    var form = element.controller('form');
+    expect(scope['']).toBe(form);
+    expect(form.$name).toBe('');
+    scope.name = 'foo';
+    scope.$digest();
+    expect(scope.foo).toBe(form);
+    expect(form.$name).toBe('foo');
+    expect(scope.foo).toBe(form);
+  });
 
   describe('$setSubmitted', function() {
     beforeEach(function() {

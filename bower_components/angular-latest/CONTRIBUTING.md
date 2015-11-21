@@ -1,4 +1,4 @@
-#Contributing to AngularJS
+# Contributing to AngularJS
 
 We'd love for you to contribute to our source code and to make AngularJS even better than it is
 today! Here are the guidelines we'd like you to follow:
@@ -54,7 +54,7 @@ For large fixes, please build and test the documentation before submitting the P
 accidentally introduced any layout or formatting issues. You should also make sure that your commit message
 is labeled "docs:" and follows the **Git Commit Guidelines** outlined below.
 
-If you're just making a small change, don't worry about filing an issue first. Use the friendly blue "Improve this doc" button at the top right of the doc page to fork the repository in-place and make a quick change on the fly. When naming the commit, it is advised to still label it according to the commit guidelines below, by starting the commit message with **docs** and referencing the filename. Since this is not obvious and some changes are made on the fly, this is not strictly necessary and we will understand if this isn't done the first few times. 
+If you're just making a small change, don't worry about filing an issue first. Use the friendly blue "Improve this doc" button at the top right of the doc page to fork the repository in-place and make a quick change on the fly. When naming the commit, it is advised to still label it according to the commit guidelines below, by starting the commit message with **docs** and referencing the filename. Since this is not obvious and some changes are made on the fly, this is not strictly necessary and we will understand if this isn't done the first few times.
 
 ## <a name="submit"></a> Submission Guidelines
 
@@ -87,7 +87,7 @@ Before you submit your pull request consider the following guidelines:
   that relates to your submission. You don't want to duplicate effort.
 * Please sign our [Contributor License Agreement (CLA)](#cla) before sending pull
   requests. We cannot accept code without this.
-* Make your changes in a new git branch
+* Make your changes in a new git branch:
 
      ```shell
      git checkout -b my-fix-branch master
@@ -107,7 +107,7 @@ Before you submit your pull request consider the following guidelines:
      ```
   Note: the optional commit `-a` command line option will automatically "add" and "rm" edited files.
 
-* Build your changes locally to ensure all the tests pass
+* Build your changes locally to ensure all the tests pass:
 
     ```shell
     grunt test
@@ -120,14 +120,14 @@ Before you submit your pull request consider the following guidelines:
     ```
 
 * In GitHub, send a pull request to `angular:master`.
-* If we suggest changes then
+* If we suggest changes then:
   * Make the required updates.
   * Re-run the Angular test suite to ensure tests are still passing.
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
     ```shell
     git rebase master -i
-    git push -f
+    git push origin my-fix-branch -f
     ```
 
 That's it! Thank you for your contribution!
@@ -199,8 +199,13 @@ format that includes a **type**, a **scope** and a **subject**:
 <footer>
 ```
 
+The **header** is mandatory and the **scope** of the header is optional.
+
 Any line of the commit message cannot be longer 100 characters! This allows the message to be easier
 to read on github as well as in various git tools.
+
+### Revert
+If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
 
 ### Type
 Must be one of the following:
@@ -227,14 +232,15 @@ The subject contains succinct description of the change:
 * don't capitalize first letter
 * no dot (.) at the end
 
-###Body
+### Body
 Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes"
 The body should include the motivation for the change and contrast this with previous behavior.
 
-###Footer
+### Footer
 The footer should contain any information about **Breaking Changes** and is also the place to
 reference GitHub issues that this commit **Closes**.
 
+**Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
 A detailed explanation can be found in this [document][commit-message-format].
 

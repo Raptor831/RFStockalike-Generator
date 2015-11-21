@@ -10,12 +10,27 @@ describe('linky', function() {
   }));
 
   it('should do basic filter', function() {
-    expect(linky("http://ab/ (http://a/) <http://a/> http://1.2/v:~-123. c")).
+    expect(linky("http://ab/ (http://a/) <http://a/> http://1.2/v:~-123. c “http://example.com” ‘http://me.com’")).
       toEqual('<a href="http://ab/">http://ab/</a> ' +
               '(<a href="http://a/">http://a/</a>) ' +
               '&lt;<a href="http://a/">http://a/</a>&gt; ' +
-              '<a href="http://1.2/v:~-123">http://1.2/v:~-123</a>. c');
+              '<a href="http://1.2/v:~-123">http://1.2/v:~-123</a>. c ' +
+              '&#8220;<a href="http://example.com">http://example.com</a>&#8221; ' +
+              '&#8216;<a href="http://me.com">http://me.com</a>&#8217;');
     expect(linky(undefined)).not.toBeDefined();
+  });
+
+  it('should be case-insensitive', function() {
+    expect(linky('WWW.example.com')).toEqual('<a href="http://WWW.example.com">WWW.example.com</a>');
+    expect(linky('WWW.EXAMPLE.COM')).toEqual('<a href="http://WWW.EXAMPLE.COM">WWW.EXAMPLE.COM</a>');
+    expect(linky('HTTP://www.example.com')).toEqual('<a href="HTTP://www.example.com">HTTP://www.example.com</a>');
+    expect(linky('HTTP://example.com')).toEqual('<a href="HTTP://example.com">HTTP://example.com</a>');
+    expect(linky('HTTPS://www.example.com')).toEqual('<a href="HTTPS://www.example.com">HTTPS://www.example.com</a>');
+    expect(linky('HTTPS://example.com')).toEqual('<a href="HTTPS://example.com">HTTPS://example.com</a>');
+  });
+
+  it('should handle www.', function() {
+    expect(linky('www.example.com')).toEqual('<a href="http://www.example.com">www.example.com</a>');
   });
 
   it('should handle mailto:', function() {

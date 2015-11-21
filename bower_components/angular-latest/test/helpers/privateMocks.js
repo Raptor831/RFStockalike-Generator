@@ -1,5 +1,33 @@
 'use strict';
 
+/* globals xit */
+
+function baseThey(msg, vals, spec, itFn) {
+  var valsIsArray = angular.isArray(vals);
+
+  angular.forEach(vals, function(val, key) {
+    var m = msg.replace(/\$prop/g, angular.toJson(valsIsArray ? val : key));
+    itFn(m, function() {
+      /* jshint -W040 : ignore possible strict violation due to use of this */
+      spec.call(this, val);
+    });
+  });
+}
+
+function they(msg, vals, spec) {
+  baseThey(msg, vals, spec, it);
+}
+
+function tthey(msg, vals, spec) {
+  baseThey(msg, vals, spec, iit);
+}
+
+function xthey(msg, vals, spec) {
+  baseThey(msg, vals, spec, xit);
+}
+
+
+
 function createMockStyleSheet(doc, wind) {
   doc = doc ? doc[0] : document;
   wind = wind || window;
@@ -27,4 +55,13 @@ function createMockStyleSheet(doc, wind) {
       head.removeChild(node);
     }
   };
+}
+
+function browserSupportsCssAnimations() {
+  var nav = window.navigator.appVersion;
+  if (nav.indexOf('MSIE') >= 0) {
+    var version = parseInt(navigator.appVersion.match(/MSIE ([\d.]+)/)[1]);
+    return version >= 10; //only IE10+ support keyframes / transitions
+  }
+  return true;
 }
