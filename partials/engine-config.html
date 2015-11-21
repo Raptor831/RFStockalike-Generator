@@ -1,5 +1,5 @@
 <pre class="config selectable" >
-<span ng-show="!engine.ksprfs.ksprfs_mm_duplicate">@</span><span ng-show="engine.ksprfs.ksprfs_mm_duplicate">+</span>PART[{{engine.ksprfs.ksprfs_engine_id}}]:<span ng-show="engine.ksprfs.ksprfs_mm_duplicate">BEFORE</span><span ng-show="!engine.ksprfs.ksprfs_mm_duplicate">FOR</span>[RealFuels_StockEngines]<span ng-show="engine.ksprfs.ksprfs_mm_has">:HAS[{{engine.ksprfs.ksprfs_mm_has}}]</span><span ng-show="engine.ksprfs.ksprfs_mm_needs">:NEEDS[{{engine.ksprfs.ksprfs_mm_needs}}]</span> //<span ng-bind-html="engine.title.rendered"></span>
+<span ng-hide="engine.ksprfs.ksprfs_mm_duplicate">@</span><span ng-show="engine.ksprfs.ksprfs_mm_duplicate">+</span>PART[{{engine.ksprfs.ksprfs_engine_id}}]:<span ng-show="engine.ksprfs.ksprfs_mm_duplicate">BEFORE</span><span ng-show="!engine.ksprfs.ksprfs_mm_duplicate">FOR</span>[RealFuels_StockEngines]<span ng-show="engine.ksprfs.ksprfs_mm_has">:HAS[{{engine.ksprfs.ksprfs_mm_has}}]</span><span ng-show="engine.ksprfs.ksprfs_mm_needs">:NEEDS[{{engine.ksprfs.ksprfs_mm_needs}}]</span> //<span ng-bind-html="engine.title.rendered"></span>
 {
 <span ng-show="engine.ksprfs.ksprfs_mm_duplicate">@name = {{engine.ksprfs.ksprfs_mm_duplicate}}</span><span ng-show="engine.ksprfs.ksprfs_engine_name">
   @title = {{engine.ksprfs.ksprfs_engine_name}}</span>
