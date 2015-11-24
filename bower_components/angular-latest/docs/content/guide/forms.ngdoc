@@ -6,11 +6,12 @@
 Controls (`input`, `select`, `textarea`) are ways for a user to enter data.
 A Form is a collection of controls for the purpose of grouping related controls together.
 
-Form and controls provide validation services, so that the user can be notified of invalid input.
-This provides a better user experience, because the user gets instant feedback on how to
-correct the error. Keep in mind that while client-side validation plays an important role
-in providing good user experience, it can easily be circumvented and thus can not be trusted.
-Server-side validation is still necessary for a secure application.
+Form and controls provide validation services, so that the user can be notified of invalid input
+before submitting a form. This provides a better user experience than server-side validation alone
+because the user gets instant feedback on how to correct the error. Keep in mind that while
+client-side validation plays an important role in providing good user experience, it can easily
+be circumvented and thus can not be trusted. Server-side validation is still necessary for a
+secure application.
 
 
 # Simple form
@@ -27,8 +28,8 @@ for other directives to augment its behavior.
         E-mail: <input type="email" ng-model="user.email" /><br />
         Gender: <input type="radio" ng-model="user.gender" value="male" />male
         <input type="radio" ng-model="user.gender" value="female" />female<br />
-        <button ng-click="reset()">RESET</button>
-        <button ng-click="update(user)">SAVE</button>
+        <input type="button" ng-click="reset()" value="Reset" />
+        <input type="submit" ng-click="update(user)" value="Save" />
       </form>
       <pre>form = {{user | json}}</pre>
       <pre>master = {{master | json}}</pre>
@@ -77,29 +78,31 @@ To allow styling of form as well as controls, `ngModel`  adds these CSS classes:
 
 The following example uses the CSS to display validity of each form control.
 In the example both `user.name` and `user.email` are required, but are rendered
-with red background only when they are dirty. This ensures that the user is not distracted
-with an error until after interacting with the control, and failing to satisfy its validity.
+with red background only after the input is blurred (loses focus).
+This ensures that the user is not distracted with an error until after interacting with the control,
+and failing to satisfy its validity.
 
 <example module="formExample">
   <file name="index.html">
     <div ng-controller="ExampleController">
       <form novalidate class="css-form">
-        Name:
-          <input type="text" ng-model="user.name" required /><br />
+        Name: <input type="text" ng-model="user.name" required /><br />
         E-mail: <input type="email" ng-model="user.email" required /><br />
         Gender: <input type="radio" ng-model="user.gender" value="male" />male
         <input type="radio" ng-model="user.gender" value="female" />female<br />
-        <button ng-click="reset()">RESET</button>
-        <button ng-click="update(user)">SAVE</button>
+        <input type="button" ng-click="reset()" value="Reset" />
+        <input type="submit" ng-click="update(user)" value="Save" />
       </form>
+      <pre>form = {{user | json}}</pre>
+      <pre>master = {{master | json}}</pre>
     </div>
 
     <style type="text/css">
-      .css-form input.ng-invalid.ng-dirty {
+      .css-form input.ng-invalid.ng-touched {
         background-color: #FA787E;
       }
 
-      .css-form input.ng-valid.ng-dirty {
+      .css-form input.ng-valid.ng-touched {
         background-color: #78FA89;
       }
     </style>
@@ -131,7 +134,7 @@ A form is an instance of {@link form.FormController FormController}.
 The form instance can optionally be published into the scope using the `name` attribute.
 
 Similarly, an input control that has the {@link ng.directive:ngModel ngModel} directive holds an
-instance of {@link ngModel.NgModelController NgModelController}.Such a control instance
+instance of {@link ngModel.NgModelController NgModelController}. Such a control instance
 can be published as a property of the form instance using the `name` attribute on the input control.
 The name attribute specifies the name of the property on the form instance.
 
@@ -140,35 +143,48 @@ the view using the standard binding primitives.
 
 This allows us to extend the above example with these features:
 
-- RESET button is enabled only if form has some changes
-- SAVE button is enabled only if form has some changes and is valid
-- custom error messages for `user.email` and `user.agree`
+- Custom error message displayed after the user interacted with a control (i.e. when `$touched` is set)
+- Custom error message displayed upon submitting the form (`$submitted` is set), even if the user
+didn't interact with a control
+
 
 <example module="formExample">
   <file name="index.html">
     <div ng-controller="ExampleController">
       <form name="form" class="css-form" novalidate>
         Name:
-          <input type="text" ng-model="user.name" name="uName" required /><br />
+        <input type="text" ng-model="user.name" name="uName" required="" />
+        <br />
+        <div ng-show="form.$submitted || form.uName.$touched">
+          <div ng-show="form.uName.$error.required">Tell us your name.</div>
+        </div>
+
         E-mail:
-          <input type="email" ng-model="user.email" name="uEmail" required/><br />
-        <div ng-show="form.uEmail.$dirty && form.uEmail.$invalid">Invalid:
+        <input type="email" ng-model="user.email" name="uEmail" required="" />
+        <br />
+        <div ng-show="form.$submitted || form.uEmail.$touched">
           <span ng-show="form.uEmail.$error.required">Tell us your email.</span>
           <span ng-show="form.uEmail.$error.email">This is not a valid email.</span>
         </div>
 
-        Gender: <input type="radio" ng-model="user.gender" value="male" />male
-        <input type="radio" ng-model="user.gender" value="female" />female<br />
+        Gender:
+        <input type="radio" ng-model="user.gender" value="male" />male
+        <input type="radio" ng-model="user.gender" value="female" />female
+        <br />
+        <input type="checkbox" ng-model="user.agree" name="userAgree" required="" />
 
-        <input type="checkbox" ng-model="user.agree" name="userAgree" required />
-        I agree: <input ng-show="user.agree" type="text" ng-model="user.agreeSign"
-                  required /><br />
-        <div ng-show="!user.agree || !user.agreeSign">Please agree and sign.</div>
+        I agree:
+        <input ng-show="user.agree" type="text" ng-model="user.agreeSign" required="" />
+        <br />
+        <div ng-show="form.$submitted || form.userAgree.$touched">
+          <div ng-show="!user.agree || !user.agreeSign">Please agree and sign.</div>
+        </div>
 
-        <button ng-click="reset()" ng-disabled="isUnchanged(user)">RESET</button>
-        <button ng-click="update(user)"
-                ng-disabled="form.$invalid || isUnchanged(user)">SAVE</button>
+        <input type="button" ng-click="reset(form)" value="Reset" />
+        <input type="submit" ng-click="update(user)" value="Save" />
       </form>
+      <pre>form = {{user | json}}</pre>
+      <pre>master = {{master | json}}</pre>
     </div>
   </file>
 
@@ -181,12 +197,12 @@ This allows us to extend the above example with these features:
           $scope.master = angular.copy(user);
         };
 
-        $scope.reset = function() {
+        $scope.reset = function(form) {
+          if (form) {
+            form.$setPristine();
+            form.$setUntouched();
+          }
           $scope.user = angular.copy($scope.master);
-        };
-
-        $scope.isUnchanged = function(user) {
-          return angular.equals(user, $scope.master);
         };
 
         $scope.reset();
@@ -282,7 +298,7 @@ after last change.
 
 Angular provides basic implementation for most common HTML5 {@link ng.directive:input input}
 types: ({@link input[text] text}, {@link input[number] number}, {@link input[url] url},
-{@link input[email] email}, {@link input[radio] radio}, {@link input[checkbox] checkbox}),
+{@link input[email] email}, {@link input[date] date}, {@link input[radio] radio}, {@link input[checkbox] checkbox}),
 as well as some directives for validation (`required`, `pattern`, `minlength`, `maxlength`,
 `min`, `max`).
 
@@ -328,7 +344,7 @@ In the following example we create two directives:
       <div>
         Username:
         <input type="text" ng-model="name" name="name" username />{{name}}<br />
-        <span ng-show="form.name.$pending.username">Checking if this name is available ...</span>
+        <span ng-show="form.name.$pending.username">Checking if this name is available...</span>
         <span ng-show="form.name.$error.username">This username is already taken!</span>
       </div>
 

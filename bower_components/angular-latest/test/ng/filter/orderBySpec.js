@@ -79,6 +79,16 @@ describe('Filter: orderBy', function() {
               { a:new Date('01/01/2014'), b:3 }]);
     });
 
+    it('should compare timestamps when sorting dates', function() {
+      expect(orderBy([
+        new Date('01/01/2015'),
+        new Date('01/01/2014')
+      ])).toEqualData([
+        new Date('01/01/2014'),
+        new Date('01/01/2015')
+      ]);
+    });
+
 
     it('should use function', function() {
       expect(
@@ -103,6 +113,43 @@ describe('Filter: orderBy', function() {
       expect(function() {
         return orderBy([{"Tip %": .15}, {"Tip %": .25}, {"Tip %": .40}], '"Tip %\'');
       }).toThrow();
+    });
+
+
+    it('should not reverse array of objects with no predicate', function() {
+      var array = [
+        { id: 2 },
+        { id: 1 },
+        { id: 4 },
+        { id: 3 }
+      ];
+      expect(orderBy(array)).toEqualData(array);
+    });
+
+
+    it('should not reverse array of objects with null prototype and no predicate', function() {
+      var array = [2,1,4,3].map(function(id) {
+        var obj = Object.create(null);
+        obj.id = id;
+        return obj;
+      });
+      expect(orderBy(array)).toEqualData(array);
+    });
+
+
+    it('should sort nulls as Array.prototype.sort', function() {
+      var array = [
+        { id: 2 },
+        null,
+        { id: 3 },
+        null
+      ];
+      expect(orderBy(array)).toEqualData([
+        { id: 2 },
+        { id: 3 },
+        null,
+        null
+      ]);
     });
   });
 
@@ -209,6 +256,43 @@ describe('Filter: orderBy', function() {
       expect(function() {
         return orderBy([{"Tip %": .15}, {"Tip %": .25}, {"Tip %": .40}], '"Tip %\'');
       }).toThrow();
+    });
+
+
+    it('should not reverse array of objects with no predicate', function() {
+      var array = [
+        { id: 2 },
+        { id: 1 },
+        { id: 4 },
+        { id: 3 }
+      ];
+      expect(orderBy(array)).toEqualData(array);
+    });
+
+
+    it('should not reverse array of objects with null prototype and no predicate', function() {
+      var array = [2,1,4,3].map(function(id) {
+        var obj = Object.create(null);
+        obj.id = id;
+        return obj;
+      });
+      expect(orderBy(array)).toEqualData(array);
+    });
+
+
+    it('should sort nulls as Array.prototype.sort', function() {
+      var array = [
+      { id: 2 },
+      null,
+      { id: 3 },
+      null
+      ];
+      expect(orderBy(array)).toEqualData([
+        { id: 2 },
+        { id: 3 },
+        null,
+        null
+      ]);
     });
   });
 });

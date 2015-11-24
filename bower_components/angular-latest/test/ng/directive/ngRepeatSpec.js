@@ -146,6 +146,16 @@ describe('ngRepeat', function() {
     expect(element.text()).toEqual('misko:swe|shyam:set|');
   });
 
+  it('should iterate over on object/map where (key,value) contains whitespaces', function() {
+    element = $compile(
+      '<ul>' +
+        '<li ng-repeat="(  key ,  value  ) in items">{{key}}:{{value}}|</li>' +
+      '</ul>')(scope);
+    scope.items = {me:'swe', you:'set'};
+    scope.$digest();
+    expect(element.text()).toEqual('me:swe|you:set|');
+  });
+
   it('should iterate over an object/map with identical values', function() {
     element = $compile(
       '<ul>' +
@@ -464,6 +474,8 @@ describe('ngRepeat', function() {
         'this',
         'undefined',
         '$parent',
+        '$root',
+        '$id',
         '$index',
         '$first',
         '$middle',
@@ -1071,7 +1083,7 @@ describe('ngRepeat', function() {
     beforeEach(function() {
       element = $compile(
         '<ul>' +
-          '<li ng-repeat="item in items">{{key}}:{{val}}|></li>' +
+          '<li ng-repeat="item in items">{{item}}</li>' +
         '</ul>')(scope);
       a = {};
       b = {};
@@ -1474,7 +1486,7 @@ describe('ngRepeat animations', function() {
         $rootScope.$digest();
 
         expect(element.text()).toBe('123'); // the original order should be preserved
-        $animate.triggerReflow();
+        $animate.flush();
         $timeout.flush(1500); // 1s * 1.5 closing buffer
         expect(element.text()).toBe('13');
 

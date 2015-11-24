@@ -14,7 +14,7 @@ describe('Scope', function() {
 
     it('should expose the constructor', inject(function($rootScope) {
       /* jshint -W103 */
-      if (msie) return;
+      if (msie < 11) return;
       expect($rootScope.__proto__).toBe($rootScope.constructor.prototype);
     }));
 
@@ -1241,6 +1241,13 @@ describe('Scope', function() {
       $rootScope.$evalAsync("log = log + 2");
       $rootScope.$digest();
       expect($rootScope.log).toBe('12');
+    }));
+
+    it('should allow passing locals to the expression', inject(function($rootScope) {
+      $rootScope.log = '';
+      $rootScope.$evalAsync('log = log + a', {a: 1});
+      $rootScope.$digest();
+      expect($rootScope.log).toBe('1');
     }));
 
     it('should run async expressions in their proper context', inject(function($rootScope) {

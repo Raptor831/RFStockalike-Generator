@@ -80,6 +80,8 @@ function currencyFilter($locale) {
  * @description
  * Formats a number as text.
  *
+ * If the input is null or undefined, it will just be returned.
+ * If the input is infinite (Infinity/-Infinity) the Infinity symbol '∞' is returned.
  * If the input is not a number an empty string is returned.
  *
  * @param {number|string} number Number to format.
@@ -150,7 +152,6 @@ function formatNumber(number, pattern, groupSep, decimalSep, fractionSize) {
   if (numStr.indexOf('e') !== -1) {
     var match = numStr.match(/([\d\.]+)e(-?)(\d+)/);
     if (match && match[2] == '-' && match[3] > fractionSize + 1) {
-      numStr = '0';
       number = 0;
     } else {
       formatedText = numStr;
@@ -170,10 +171,6 @@ function formatNumber(number, pattern, groupSep, decimalSep, fractionSize) {
     // inspired by:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
     number = +(Math.round(+(number.toString() + 'e' + fractionSize)).toString() + 'e' + -fractionSize);
-
-    if (number === 0) {
-      isNegative = false;
-    }
 
     var fraction = ('' + number).split(DECIMAL_SEP);
     var whole = fraction[0];
@@ -207,10 +204,14 @@ function formatNumber(number, pattern, groupSep, decimalSep, fractionSize) {
 
     if (fractionSize && fractionSize !== "0") formatedText += decimalSep + fraction.substr(0, fractionSize);
   } else {
-
-    if (fractionSize > 0 && number > -1 && number < 1) {
+    if (fractionSize > 0 && number < 1) {
       formatedText = number.toFixed(fractionSize);
+      number = parseFloat(formatedText);
     }
+  }
+
+  if (number === 0) {
+    isNegative = false;
   }
 
   parts.push(isNegative ? pattern.negPre : pattern.posPre,
@@ -293,6 +294,14 @@ function ampmGetter(date, formats) {
   return date.getHours() < 12 ? formats.AMPMS[0] : formats.AMPMS[1];
 }
 
+function eraGetter(date, formats) {
+  return date.getFullYear() <= 0 ? formats.ERAS[0] : formats.ERAS[1];
+}
+
+function longEraGetter(date, formats) {
+  return date.getFullYear() <= 0 ? formats.ERANAMES[0] : formats.ERANAMES[1];
+}
+
 var DATE_FORMATS = {
   yyyy: dateGetter('FullYear', 4),
     yy: dateGetter('FullYear', 2, 0, true),
@@ -319,10 +328,14 @@ var DATE_FORMATS = {
      a: ampmGetter,
      Z: timeZoneGetter,
     ww: weekGetter(2),
-     w: weekGetter(1)
+     w: weekGetter(1),
+     G: eraGetter,
+     GG: eraGetter,
+     GGG: eraGetter,
+     GGGG: longEraGetter
 };
 
-var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+|H+|h+|m+|s+|a|Z|w+))(.*)/,
+var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+|H+|h+|m+|s+|a|Z|G+|w+))(.*)/,
     NUMBER_STRING = /^\-?\d+$/;
 
 /**
@@ -354,11 +367,13 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d
  *   * `'m'`: Minute in hour (0-59)
  *   * `'ss'`: Second in minute, padded (00-59)
  *   * `'s'`: Second in minute (0-59)
- *   * `'.sss' or ',sss'`: Millisecond in second, padded (000-999)
+ *   * `'sss'`: Millisecond in second, padded (000-999)
  *   * `'a'`: AM/PM marker
  *   * `'Z'`: 4 digit (+sign) representation of the timezone offset (-1200-+1200)
- *   * `'ww'`: ISO-8601 week of year (00-53)
- *   * `'w'`: ISO-8601 week of year (0-53)
+ *   * `'ww'`: Week of year, padded (00-53). Week 01 is the week with the first Thursday of the year
+ *   * `'w'`: Week of year (0-53). Week 1 is the week with the first Thursday of the year
+ *   * `'G'`, `'GG'`, `'GGG'`: The abbreviated form of the era string (e.g. 'AD')
+ *   * `'GGGG'`: The long form of the era string (e.g. 'Anno Domini')
  *
  *   `format` string can also be one of the following predefined
  *   {@link guide/i18n localizable formats}:
@@ -502,25 +517,31 @@ function dateFilter($locale) {
  *   the binding is automatically converted to JSON.
  *
  * @param {*} object Any JavaScript object (including arrays and primitive types) to filter.
+ * @param {number=} spacing The number of spaces to use per indentation, defaults to 2.
  * @returns {string} JSON string.
  *
  *
  * @example
    <example>
      <file name="index.html">
-       <pre>{{ {'name':'value'} | json }}</pre>
+       <pre id="default-spacing">{{ {'name':'value'} | json }}</pre>
+       <pre id="custom-spacing">{{ {'name':'value'} | json:4 }}</pre>
      </file>
      <file name="protractor.js" type="protractor">
        it('should jsonify filtered objects', function() {
-         expect(element(by.binding("{'name':'value'}")).getText()).toMatch(/\{\n  "name": ?"value"\n}/);
+         expect(element(by.id('default-spacing')).getText()).toMatch(/\{\n  "name": ?"value"\n}/);
+         expect(element(by.id('custom-spacing')).getText()).toMatch(/\{\n    "name": ?"value"\n}/);
        });
      </file>
    </example>
  *
  */
 function jsonFilter() {
-  return function(object) {
-    return toJson(object, true);
+  return function(object, spacing) {
+    if (isUndefined(spacing)) {
+        spacing = 2;
+    }
+    return toJson(object, spacing);
   };
 }
 

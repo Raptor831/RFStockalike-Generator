@@ -592,22 +592,42 @@ describe('ngMock', function() {
     }));
 
 
-    it('should log exceptions', module(function($exceptionHandlerProvider) {
-      $exceptionHandlerProvider.mode('log');
-      var $exceptionHandler = $exceptionHandlerProvider.$get();
-      $exceptionHandler('MyError');
-      expect($exceptionHandler.errors).toEqual(['MyError']);
+    it('should log exceptions', function() {
+      module(function($exceptionHandlerProvider) {
+        $exceptionHandlerProvider.mode('log');
+      });
+      inject(function($exceptionHandler) {
+        $exceptionHandler('MyError');
+        expect($exceptionHandler.errors).toEqual(['MyError']);
 
-      $exceptionHandler('MyError', 'comment');
-      expect($exceptionHandler.errors[1]).toEqual(['MyError', 'comment']);
-    }));
+        $exceptionHandler('MyError', 'comment');
+        expect($exceptionHandler.errors[1]).toEqual(['MyError', 'comment']);
+      });
+    });
 
+    it('should log and rethrow exceptions', function() {
+      module(function($exceptionHandlerProvider) {
+        $exceptionHandlerProvider.mode('rethrow');
+      });
+      inject(function($exceptionHandler) {
+        expect(function() { $exceptionHandler('MyError'); }).toThrow('MyError');
+        expect($exceptionHandler.errors).toEqual(['MyError']);
 
-    it('should throw on wrong argument', module(function($exceptionHandlerProvider) {
-      expect(function() {
-        $exceptionHandlerProvider.mode('XXX');
-      }).toThrow("Unknown mode 'XXX', only 'log'/'rethrow' modes are allowed!");
-    }));
+        expect(function() { $exceptionHandler('MyError', 'comment'); }).toThrow('MyError');
+        expect($exceptionHandler.errors[1]).toEqual(['MyError', 'comment']);
+      });
+    });
+
+    it('should throw on wrong argument', function() {
+      module(function($exceptionHandlerProvider) {
+        expect(function() {
+          $exceptionHandlerProvider.mode('XXX');
+        }).toThrow("Unknown mode 'XXX', only 'log'/'rethrow' modes are allowed!");
+      });
+
+      inject(); // Trigger the tests in `module`
+    });
+
   });
 
 
@@ -699,8 +719,6 @@ describe('ngMock', function() {
 
     it('should serialize scope that has overridden "hasOwnProperty"', inject(function($rootScope, $sniffer) {
       /* jshint -W001 */
-      // MS IE8 just doesn't work for this kind of thing, since "for ... in" doesn't return
-      // things like hasOwnProperty even if it is explicitly defined on the actual object!
       $rootScope.hasOwnProperty = 'X';
       expect(d($rootScope)).toMatch(/Scope\(.*\): \{/);
       expect(d($rootScope)).toMatch(/hasOwnProperty: "X"/);
@@ -765,6 +783,39 @@ describe('ngMock', function() {
 
           it('should cleanup hashKey after previous test', function() {
             expect(testFn.$$hashKey).toBeUndefined();
+          });
+        });
+
+        describe('$inject cleanup', function() {
+          function testFn() {
+
+          }
+
+          it('should add $inject when invoking test function', inject(function($injector) {
+            $injector.invoke(testFn);
+            expect(testFn.$inject).toBeDefined();
+          }));
+
+          it('should cleanup $inject after previous test', function() {
+            expect(testFn.$inject).toBeUndefined();
+          });
+
+          it('should add $inject when annotating test function', inject(function($injector) {
+            $injector.annotate(testFn);
+            expect(testFn.$inject).toBeDefined();
+          }));
+
+          it('should cleanup $inject after previous test', function() {
+            expect(testFn.$inject).toBeUndefined();
+          });
+
+          it('should invoke an already annotated function', inject(function($injector) {
+            testFn.$inject = [];
+            $injector.invoke(testFn);
+          }));
+
+          it('should not cleanup $inject after previous test', function() {
+            expect(testFn.$inject).toBeDefined();
           });
         });
       });
@@ -852,10 +903,6 @@ describe('ngMock', function() {
         });
       });
 
-
-      // We don't run the following tests on IE8.
-      // IE8 throws "Object does not support this property or method." error,
-      // when thrown from a function defined on window (which `inject` is).
 
       it('should not change thrown Errors', inject(function($sniffer) {
         expect(function() {
@@ -1173,7 +1220,7 @@ describe('ngMock', function() {
       });
 
 
-      it ('should throw exception when only headers differs from expectation', function() {
+      it('should throw exception when only headers differs from expectation', function() {
         hb.when('GET').respond(200, '', {});
         hb.expect('GET', '/match', undefined, {'Content-Type': 'application/json'});
 
@@ -1184,7 +1231,7 @@ describe('ngMock', function() {
       });
 
 
-      it ('should throw exception when only data differs from expectation', function() {
+      it('should throw exception when only data differs from expectation', function() {
         hb.when('GET').respond(200, '', {});
         hb.expect('GET', '/match', 'some-data');
 
@@ -1195,7 +1242,7 @@ describe('ngMock', function() {
       });
 
 
-      it ('should not throw an exception when parsed body is equal to expected body object', function() {
+      it('should not throw an exception when parsed body is equal to expected body object', function() {
         hb.when('GET').respond(200, '', {});
 
         hb.expect('GET', '/match', {a: 1, b: 2});
@@ -1210,7 +1257,7 @@ describe('ngMock', function() {
       });
 
 
-      it ('should throw exception when only parsed body differs from expected body object', function() {
+      it('should throw exception when only parsed body differs from expected body object', function() {
         hb.when('GET').respond(200, '', {});
         hb.expect('GET', '/match', {a: 1, b: 2});
 
@@ -1308,6 +1355,18 @@ describe('ngMock', function() {
       hb.verifyNoOutstandingExpectation();
       hb.verifyNoOutstandingRequest();
     });
+
+
+    it('should abort requests when timeout passed as a numeric value', inject(function($timeout) {
+      hb.expect('GET', '/url1').respond(200);
+
+      hb('GET', '/url1', null, callback, null, 200);
+      $timeout.flush(300);
+
+      expect(callback).toHaveBeenCalledWith(-1, undefined, '');
+      hb.verifyNoOutstandingExpectation();
+      hb.verifyNoOutstandingRequest();
+    }));
 
 
     it('should throw an exception if no response defined', function() {
@@ -1686,6 +1745,28 @@ describe('ngMock', function() {
       }));
     });
   });
+
+
+  describe('$controllerDecorator', function() {
+    it('should support creating controller with bindings', function() {
+      var called = false;
+      var data = [
+        { name: 'derp1', id: 0 },
+        { name: 'testname', id: 1 },
+        { name: 'flurp', id: 2 }
+      ];
+      module(function($controllerProvider) {
+        $controllerProvider.register('testCtrl', function() {
+          called = true;
+          expect(this.data).toBe(data);
+        });
+      });
+      inject(function($controller, $rootScope) {
+        $controller('testCtrl', { scope: $rootScope }, { data: data });
+        expect(called).toBe(true);
+      });
+    });
+  });
 });
 
 
@@ -1747,4 +1828,190 @@ describe('ngMockE2E', function() {
       }));
     });
   });
+
+  describe('ngAnimateMock', function() {
+
+    beforeEach(module('ngAnimate'));
+    beforeEach(module('ngAnimateMock'));
+
+    var ss, element, trackedAnimations;
+
+    beforeEach(module(function($animateProvider) {
+      trackedAnimations = [];
+      $animateProvider.register('.animate', function($timeout) {
+        return {
+          leave: logFn('leave'),
+          addClass: logFn('addClass')
+        };
+
+        function logFn(method) {
+          return function(element) {
+            trackedAnimations.push(getDoneCallback(arguments));
+            // this will never finish an animation so we'll issue a call
+            // to timeout so that the mock driver won't throw an exception
+            $timeout(angular.noop, 0, false);
+          };
+        }
+
+        function getDoneCallback(args) {
+          for (var i = args.length; i > 0; i--) {
+            if (angular.isFunction(args[i])) return args[i];
+          }
+        }
+      });
+
+      return function($animate, $rootElement, $document, $rootScope, $window) {
+        if (ss) {
+          ss.destroy();
+        }
+        ss = createMockStyleSheet($document, $window);
+
+        element = angular.element('<div class="animate"></div>');
+        $rootElement.append(element);
+        angular.element($document[0].body).append($rootElement);
+        $animate.enabled(true);
+        $rootScope.$digest();
+      };
+    }));
+
+    describe('$animate.queue', function() {
+      it('should maintain a queue of the executed animations', inject(function($animate) {
+        element.removeClass('animate'); // we don't care to test any actual animations
+        var options = {};
+
+        $animate.addClass(element, 'on', options);
+        var first = $animate.queue[0];
+        expect(first.element).toBe(element);
+        expect(first.event).toBe('addClass');
+        expect(first.options).toBe(options);
+
+        $animate.removeClass(element, 'off', options);
+        var second = $animate.queue[1];
+        expect(second.element).toBe(element);
+        expect(second.event).toBe('removeClass');
+        expect(second.options).toBe(options);
+
+        $animate.leave(element, options);
+        var third = $animate.queue[2];
+        expect(third.element).toBe(element);
+        expect(third.event).toBe('leave');
+        expect(third.options).toBe(options);
+      }));
+    });
+
+    describe('$animate.flush()', function() {
+      it('should throw an error if there is nothing to animate', inject(function($animate) {
+        expect(function() {
+          $animate.flush();
+        }).toThrow('No pending animations ready to be closed or flushed');
+      }));
+
+      it('should trigger the animation to start',
+        inject(function($animate) {
+
+        expect(trackedAnimations.length).toBe(0);
+        $animate.leave(element);
+        $animate.flush();
+        expect(trackedAnimations.length).toBe(1);
+      }));
+
+      it('should trigger the animation to end once run and called',
+        inject(function($animate) {
+
+        $animate.leave(element);
+        $animate.flush();
+        expect(element.parent().length).toBe(1);
+
+        trackedAnimations[0]();
+        $animate.flush();
+        expect(element.parent().length).toBe(0);
+      }));
+
+      it('should trigger the animation promise callback to fire once run and closed',
+        inject(function($animate) {
+
+        var doneSpy = jasmine.createSpy();
+        $animate.leave(element).then(doneSpy);
+        $animate.flush();
+
+        trackedAnimations[0]();
+        expect(doneSpy).not.toHaveBeenCalled();
+        $animate.flush();
+        expect(doneSpy).toHaveBeenCalled();
+      }));
+
+      it('should trigger a series of CSS animations to trigger and start once run',
+        inject(function($animate, $rootScope) {
+
+        if (!browserSupportsCssAnimations()) return;
+
+        ss.addRule('.leave-me.ng-leave', 'transition:1s linear all;');
+
+        var i, elm, elms = [];
+        for (i = 0; i < 5; i++) {
+          elm = angular.element('<div class="leave-me"></div>');
+          element.append(elm);
+          elms.push(elm);
+
+          $animate.leave(elm);
+        }
+
+        $rootScope.$digest();
+
+        for (i = 0; i < 5; i++) {
+          elm = elms[i];
+          expect(elm.hasClass('ng-leave')).toBe(true);
+          expect(elm.hasClass('ng-leave-active')).toBe(false);
+        }
+
+        $animate.flush();
+
+        for (i = 0; i < 5; i++) {
+          elm = elms[i];
+          expect(elm.hasClass('ng-leave')).toBe(true);
+          expect(elm.hasClass('ng-leave-active')).toBe(true);
+        }
+      }));
+
+      it('should trigger parent and child animations to run within the same flush',
+        inject(function($animate, $rootScope) {
+
+        var child = angular.element('<div class="animate child"></div>');
+        element.append(child);
+
+        expect(trackedAnimations.length).toBe(0);
+
+        $animate.addClass(element, 'go');
+        $animate.addClass(child, 'start');
+        $animate.flush();
+
+        expect(trackedAnimations.length).toBe(2);
+      }));
+
+      it('should trigger animation callbacks when called',
+        inject(function($animate, $rootScope) {
+
+        var spy = jasmine.createSpy();
+        element.on('$animate:before', spy);
+        element.on('$animate:close', spy);
+
+        $animate.addClass(element, 'on');
+        expect(spy).not.toHaveBeenCalled();
+
+        $animate.flush();
+        expect(spy.callCount).toBe(1);
+
+        trackedAnimations[0]();
+        $animate.flush();
+        expect(spy.callCount).toBe(2);
+      }));
+    });
+  });
+});
+
+describe('make sure that we can create an injector outside of tests', function() {
+  //since some libraries create custom injectors outside of tests,
+  //we want to make sure that this is not breaking the internals of
+  //how we manage annotated function cleanup during tests. See #10967
+  angular.injector([function($injector) {}]);
 });

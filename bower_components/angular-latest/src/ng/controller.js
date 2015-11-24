@@ -1,5 +1,7 @@
 'use strict';
 
+var $controllerMinErr = minErr('$controller');
+
 /**
  * @ngdoc provider
  * @name $controllerProvider
@@ -87,7 +89,12 @@ function $ControllerProvider() {
       }
 
       if (isString(expression)) {
-        match = expression.match(CNTRL_REG),
+        match = expression.match(CNTRL_REG);
+        if (!match) {
+          throw $controllerMinErr('ctrlfmt',
+            "Badly formed controller string '{0}'. " +
+            "Must match `__name__ as __id__` or `__name__`.", expression);
+        }
         constructor = match[1],
         identifier = identifier || match[3];
         expression = controllers.hasOwnProperty(constructor)
@@ -111,7 +118,7 @@ function $ControllerProvider() {
         // Object creation: http://jsperf.com/create-constructor/2
         var controllerPrototype = (isArray(expression) ?
           expression[expression.length - 1] : expression).prototype;
-        instance = Object.create(controllerPrototype);
+        instance = Object.create(controllerPrototype || null);
 
         if (identifier) {
           addIdentifier(locals, identifier, instance, constructor || expression.name);

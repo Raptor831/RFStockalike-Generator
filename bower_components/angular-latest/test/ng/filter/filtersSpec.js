@@ -85,8 +85,10 @@ describe('filters', function() {
     });
 
     it('should format numbers that round to zero as nonnegative', function() {
-      var num = formatNumber(-0.01, pattern, ',', '.', 1);
-      expect(num).toBe('0.0');
+      expect(formatNumber(-0.01, pattern, ',', '.', 1)).toBe('0.0');
+      expect(formatNumber(-1e-10, pattern, ',', '.', 1)).toBe('0.0');
+      expect(formatNumber(-0.0001, pattern, ',', '.', 3)).toBe('0.000');
+      expect(formatNumber(-0.0000001, pattern, ',', '.', 6)).toBe('0.000000');
     });
   });
 
@@ -195,16 +197,21 @@ describe('filters', function() {
       expect(number(1e-50, 0)).toEqual('0');
       expect(number(1e-6, 6)).toEqual('0.000001');
       expect(number(1e-7, 6)).toEqual('0.000000');
+      expect(number(9e-7, 6)).toEqual('0.000001');
 
       expect(number(-1e-50, 0)).toEqual('0');
       expect(number(-1e-6, 6)).toEqual('-0.000001');
-      expect(number(-1e-7, 6)).toEqual('-0.000000');
+      expect(number(-1e-7, 6)).toEqual('0.000000');
+      expect(number(-1e-8, 9)).toEqual('-0.000000010');
     });
   });
 
   describe('json', function() {
     it('should do basic filter', function() {
       expect(filter('json')({a:"b"})).toEqual(toJson({a:"b"}, true));
+    });
+    it('should allow custom indentation', function() {
+      expect(filter('json')({a:"b"}, 4)).toEqual(toJson({a:"b"}, 4));
     });
   });
 
@@ -286,6 +293,18 @@ describe('filters', function() {
 
       expect(date(earlyDate, "MMMM dd, y")).
                       toEqual('September 03, 1');
+
+      expect(date(noon, "MMMM dd, y G")).
+                      toEqual('September 03, 2010 AD');
+
+      expect(date(noon, "MMMM dd, y GG")).
+                      toEqual('September 03, 2010 AD');
+
+      expect(date(noon, "MMMM dd, y GGG")).
+                      toEqual('September 03, 2010 AD');
+
+      expect(date(noon, "MMMM dd, y GGGG")).
+                      toEqual('September 03, 2010 Anno Domini');
     });
 
     it('should accept negative numbers as strings', function() {
@@ -317,6 +336,36 @@ describe('filters', function() {
 
       expect(date(westOfUTCPartial, "yyyy-MM-ddTHH:mm:ssZ")).
                     toEqual('2010-09-03T06:35:08-0530');
+    });
+
+    it('should correctly calculate week number', function() {
+      function formatWeek(dateToFormat) {
+        return date(new angular.mock.TzDate(+5, dateToFormat + 'T12:00:00.000Z'), 'ww (EEE)');
+      }
+
+      expect(formatWeek('2007-01-01')).toEqual('01 (Mon)');
+      expect(formatWeek('2007-12-31')).toEqual('53 (Mon)');
+
+      expect(formatWeek('2008-01-01')).toEqual('01 (Tue)');
+      expect(formatWeek('2008-12-31')).toEqual('53 (Wed)');
+
+      expect(formatWeek('2014-01-01')).toEqual('01 (Wed)');
+      expect(formatWeek('2014-12-31')).toEqual('53 (Wed)');
+
+      expect(formatWeek('2009-01-01')).toEqual('01 (Thu)');
+      expect(formatWeek('2009-12-31')).toEqual('53 (Thu)');
+
+      expect(formatWeek('2010-01-01')).toEqual('00 (Fri)');
+      expect(formatWeek('2010-12-31')).toEqual('52 (Fri)');
+
+      expect(formatWeek('2011-01-01')).toEqual('00 (Sat)');
+      expect(formatWeek('2011-01-02')).toEqual('01 (Sun)');
+      expect(formatWeek('2011-01-03')).toEqual('01 (Mon)');
+      expect(formatWeek('2011-12-31')).toEqual('52 (Sat)');
+
+      expect(formatWeek('2012-01-01')).toEqual('01 (Sun)');
+      expect(formatWeek('2012-01-02')).toEqual('01 (Mon)');
+      expect(formatWeek('2012-12-31')).toEqual('53 (Mon)');
     });
 
     it('should treat single quoted strings as string literals', function() {

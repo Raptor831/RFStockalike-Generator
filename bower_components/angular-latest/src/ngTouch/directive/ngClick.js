@@ -1,6 +1,8 @@
 'use strict';
 
-/* global ngTouch: false */
+/* global ngTouch: false,
+  nodeName_: false
+*/
 
 /**
  * @ngdoc directive
@@ -142,7 +144,7 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
       lastLabelClickCoordinates = null;
     }
     // remember label click coordinates to prevent click busting of trigger click event on input
-    if (event.target.tagName.toLowerCase() === 'label') {
+    if (nodeName_(event.target) === 'label') {
       lastLabelClickCoordinates = [x, y];
     }
 
@@ -158,7 +160,7 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
     event.preventDefault();
 
     // Blur focused form elements
-    event.target && event.target.blur();
+    event.target && event.target.blur && event.target.blur();
   }
 
 
@@ -221,8 +223,10 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
 
       startTime = Date.now();
 
-      var touches = event.touches && event.touches.length ? event.touches : [event];
-      var e = touches[0].originalEvent || touches[0];
+      // Use jQuery originalEvent
+      var originalEvent = event.originalEvent || event;
+      var touches = originalEvent.touches && originalEvent.touches.length ? originalEvent.touches : [originalEvent];
+      var e = touches[0];
       touchStartX = e.clientX;
       touchStartY = e.clientY;
     });
@@ -238,9 +242,12 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
     element.on('touchend', function(event) {
       var diff = Date.now() - startTime;
 
-      var touches = (event.changedTouches && event.changedTouches.length) ? event.changedTouches :
-          ((event.touches && event.touches.length) ? event.touches : [event]);
-      var e = touches[0].originalEvent || touches[0];
+      // Use jQuery originalEvent
+      var originalEvent = event.originalEvent || event;
+      var touches = (originalEvent.changedTouches && originalEvent.changedTouches.length) ?
+          originalEvent.changedTouches :
+          ((originalEvent.touches && originalEvent.touches.length) ? originalEvent.touches : [originalEvent]);
+      var e = touches[0];
       var x = e.clientX;
       var y = e.clientY;
       var dist = Math.sqrt(Math.pow(x - touchStartX, 2) + Math.pow(y - touchStartY, 2));

@@ -1,9 +1,8 @@
-var rfsApp = angular.module( 'rfsApp', ['ui.router', 'rfstockalikeControllers'] );
+angular.module( 'rfsApp', ['ui.router', 'rfstockalikeControllers'] )
 
-rfsApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider){
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider){
 
     $urlRouterProvider.otherwise('/home');
-
 
     $stateProvider
         .state('tabs', {
@@ -36,6 +35,9 @@ rfsApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function
                 'main-tab': {
                     templateUrl: RFS.partials + 'engine-single.html',
                     controller: 'RFEngineController'
+                },
+                'config-sidebar@tabs.singleEngine': {
+                    templateUrl: RFS.partials + 'engine-config.html'
                 }
             }
         });

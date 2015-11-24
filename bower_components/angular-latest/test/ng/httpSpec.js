@@ -432,6 +432,34 @@ describe('$http', function() {
           var httpPromise = $http({url: '/url', method: 'GET'});
           expect(httpPromise.success(callback)).toBe(httpPromise);
         });
+
+
+        it('should error if the callback is not a function', function() {
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).success();
+          }).toThrowMinErr('ng', 'areq');
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).success(undefined);
+          }).toThrowMinErr('ng', 'areq');
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).success(null);
+          }).toThrowMinErr('ng', 'areq');
+
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).success({});
+          }).toThrowMinErr('ng', 'areq');
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).success([]);
+          }).toThrowMinErr('ng', 'areq');
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).success('error');
+          }).toThrowMinErr('ng', 'areq');
+        });
       });
 
 
@@ -455,6 +483,34 @@ describe('$http', function() {
           $httpBackend.expect('GET', '/url').respond(543, 'bad error', {'request-id': '123'});
           var httpPromise = $http({url: '/url', method: 'GET'});
           expect(httpPromise.error(callback)).toBe(httpPromise);
+        });
+
+
+        it('should error if the callback is not a function', function() {
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).error();
+          }).toThrowMinErr('ng', 'areq');
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).error(undefined);
+          }).toThrowMinErr('ng', 'areq');
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).error(null);
+          }).toThrowMinErr('ng', 'areq');
+
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).error({});
+          }).toThrowMinErr('ng', 'areq');
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).error([]);
+          }).toThrowMinErr('ng', 'areq');
+
+          expect(function() {
+            $http({url: '/url', method: 'GET'}).error('error');
+          }).toThrowMinErr('ng', 'areq');
         });
       });
     });
@@ -991,6 +1047,15 @@ describe('$http', function() {
           $http({ method: 'POST', url: '/url', data: blob });
         });
 
+        it('should ignore FormData objects', function() {
+          if (!window.FormData) return;
+
+          var formData = new FormData();
+          formData.append('angular', 'is great');
+
+          $httpBackend.expect('POST', '/url', '[object FormData]').respond('');
+          $http({ method: 'POST', url: '/url', data: formData });
+        });
 
         it('should have access to request headers', function() {
           $httpBackend.expect('POST', '/url', 'header1').respond(200);
@@ -1043,6 +1108,16 @@ describe('$http', function() {
 
             expect(callback).toHaveBeenCalledOnce();
             expect(callback.mostRecentCall.args[0]).toEqual([1, 'abc', {foo: 'bar'}]);
+          });
+
+
+          it('should ignore leading/trailing whitespace', function() {
+            $httpBackend.expect('GET', '/url').respond('  \n  {"foo":"bar","baz":23}  \r\n  \n  ');
+            $http({method: 'GET', url: '/url'}).success(callback);
+            $httpBackend.flush();
+
+            expect(callback).toHaveBeenCalledOnce();
+            expect(callback.mostRecentCall.args[0]).toEqual({foo: 'bar', baz: 23});
           });
 
 
@@ -1132,6 +1207,16 @@ describe('$http', function() {
           });
 
 
+          it('should retain security prefix if response is not json', function() {
+            $httpBackend.expect('GET', '/url').respond(')]}\',\n This is not JSON !');
+            $http({method: 'GET', url: '/url'}).success(callback);
+            $httpBackend.flush();
+
+            expect(callback).toHaveBeenCalledOnce();
+            expect(callback.mostRecentCall.args[0]).toEqual(')]}\',\n This is not JSON !');
+          });
+
+
           it('should not attempt to deserialize json when HEAD request', function() {
             //per http spec for Content-Type, HEAD request should return a Content-Type header
             //set to what the content type would have been if a get was sent
@@ -1173,6 +1258,20 @@ describe('$http', function() {
             expect(callback).toHaveBeenCalledOnce();
             expect(callback.mostRecentCall.args[0]).toEqual('{{some}}');
           });
+
+          it('should not deserialize json when the opening and closing brackets do not match',
+            function() {
+              $httpBackend.expect('GET', '/url1').respond('[Code](url): function() {}');
+              $httpBackend.expect('GET', '/url2').respond('{"is": "not"} ["json"]');
+              $http.get('/url1').success(callback);
+              $http.get('/url2').success(callback);
+              $httpBackend.flush();
+
+              expect(callback.calls.length).toBe(2);
+              expect(callback.calls[0].args[0]).toEqual('[Code](url): function() {}');
+              expect(callback.calls[1].args[0]).toEqual('{"is": "not"} ["json"]');
+            }
+          );
         });
 
 
@@ -1187,6 +1286,19 @@ describe('$http', function() {
 
           expect(callback).toHaveBeenCalledOnce();
           expect(callback.mostRecentCall.args[0]).toBe('header1');
+        });
+
+        it('should have access to response status', function() {
+          $httpBackend.expect('GET', '/url').respond(200, 'response', {h1: 'header1'});
+          $http.get('/url', {
+            transformResponse: function(data, headers, status) {
+              return status;
+            }
+          }).success(callback);
+          $httpBackend.flush();
+
+          expect(callback).toHaveBeenCalledOnce();
+          expect(callback.mostRecentCall.args[0]).toBe(200);
         });
 
 
@@ -1352,6 +1464,24 @@ describe('$http', function() {
       }));
 
 
+      it('should not share the pending cached headers object instance', inject(function($rootScope) {
+        var firstResult;
+        callback.andCallFake(function(result) {
+          expect(result.headers()).toEqual(firstResult.headers());
+          expect(result.headers()).not.toBe(firstResult.headers());
+        });
+
+        $httpBackend.expect('GET', '/url').respond(200, 'content', {'content-encoding': 'gzip', 'server': 'Apache'});
+        $http({method: 'GET', url: '/url', cache: cache}).then(function(result) {
+          firstResult = result;
+        });
+        $http({method: 'GET', url: '/url', cache: cache}).then(callback);
+        $httpBackend.flush();
+
+        expect(callback).toHaveBeenCalledOnce();
+      }));
+
+
       it('should cache status code as well', inject(function($rootScope) {
         doFirstCacheRequest('GET', 201);
         callback.andCallFake(function(r, status, h) {
@@ -1378,6 +1508,40 @@ describe('$http', function() {
         $httpBackend.flush();
         expect(callback).toHaveBeenCalled();
         expect(callback.callCount).toBe(2);
+      });
+
+
+      it('should preserve config object when resolving from cache', function() {
+        $httpBackend.expect('GET', '/url').respond(200, 'content');
+        $http({method: 'GET', url: '/url', cache: cache, headers: {foo: 'bar'}});
+        $httpBackend.flush();
+
+        $http({method: 'GET', url: '/url', cache: cache, headers: {foo: 'baz'}}).then(callback);
+        $rootScope.$digest();
+
+        expect(callback.mostRecentCall.args[0].config.headers.foo).toBe('baz');
+      });
+
+
+      it('should preserve config object when resolving from pending cache', function() {
+        $httpBackend.expect('GET', '/url').respond(200, 'content');
+        $http({method: 'GET', url: '/url', cache: cache, headers: {foo: 'bar'}});
+
+        $http({method: 'GET', url: '/url', cache: cache, headers: {foo: 'baz'}}).then(callback);
+        $httpBackend.flush();
+
+        expect(callback.mostRecentCall.args[0].config.headers.foo).toBe('baz');
+      });
+
+
+      it('should preserve config object when rejecting from pending cache', function() {
+        $httpBackend.expect('GET', '/url').respond(404, 'content');
+        $http({method: 'GET', url: '/url', cache: cache, headers: {foo: 'bar'}});
+
+        $http({method: 'GET', url: '/url', cache: cache, headers: {foo: 'baz'}}).catch(callback);
+        $httpBackend.flush();
+
+        expect(callback.mostRecentCall.args[0].config.headers.foo).toBe('baz');
       });
 
 
@@ -1493,7 +1657,7 @@ describe('$http', function() {
         $http({method: 'GET', url: '/some', timeout: canceler.promise}).error(
             function(data, status, headers, config) {
               expect(data).toBeUndefined();
-              expect(status).toBe(0);
+              expect(status).toBe(-1);
               expect(headers()).toEqual({});
               expect(config.url).toBe('/some');
               callback();

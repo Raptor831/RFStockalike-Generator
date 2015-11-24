@@ -39,7 +39,7 @@
 
 <article>
 
-    <h4 ng-repeat="engine in filteredEngines = (engines | filter: { title: search, type: type, configs: mixSearch }) | startFrom:currentPage*pageSize | limitTo:pageSize">
+    <h4 ng-repeat="engine in filteredEngines = (enginesList | filter: { title: search, type: type, configs: mixSearch }) | startFrom:currentPage*pageSize | limitTo:pageSize">
         <a href="/#/engines/{{engine.id}}"><span ng-bind-html="engine.title"></span></a>
     </h4>
 

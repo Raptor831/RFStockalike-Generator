@@ -367,6 +367,7 @@ describe('angular', function() {
       expect(equals(new Date(undefined), new Date(0))).toBe(false);
       expect(equals(new Date(undefined), new Date(null))).toBe(false);
       expect(equals(new Date(undefined), new Date('wrong'))).toBe(true);
+      expect(equals(new Date(), /abc/)).toBe(false);
     });
 
     it('should correctly test for keys that are present on Object.prototype', function() {
@@ -384,11 +385,21 @@ describe('angular', function() {
       expect(equals(/abc/, /def/)).toBe(false);
       expect(equals(/^abc/, /abc/)).toBe(false);
       expect(equals(/^abc/, '/^abc/')).toBe(false);
+      expect(equals(/abc/, new Date())).toBe(false);
     });
 
     it('should return false when comparing an object and an array', function() {
       expect(equals({}, [])).toBe(false);
       expect(equals([], {})).toBe(false);
+    });
+
+    it('should return false when comparing an object and a RegExp', function() {
+      expect(equals({}, /abc/)).toBe(false);
+      expect(equals({}, new RegExp('abc', 'i'))).toBe(false);
+    });
+
+    it('should return false when comparing an object and a Date', function() {
+      expect(equals({}, new Date())).toBe(false);
     });
   });
 
@@ -1081,6 +1092,26 @@ describe('angular', function() {
         window.name = originalName;
       });
 
+      it('should provide injector for deferred bootstrap', function() {
+        var injector;
+        window.name = 'NG_DEFER_BOOTSTRAP!';
+
+        injector = angular.bootstrap(element);
+        expect(injector).toBeUndefined();
+
+        injector = angular.resumeBootstrap();
+        expect(injector).toBeDefined();
+      });
+
+      it('should resume deferred bootstrap, if defined', function() {
+        var injector;
+        window.name = 'NG_DEFER_BOOTSTRAP!';
+
+        angular.resumeDeferredBootstrap = noop;
+        var spy = spyOn(angular, "resumeDeferredBootstrap");
+        injector = angular.bootstrap(element);
+        expect(spy).toHaveBeenCalled();
+      });
 
       it('should wait for extra modules', function() {
         window.name = 'NG_DEFER_BOOTSTRAP!';
@@ -1191,9 +1222,17 @@ describe('angular', function() {
 
     it('should format objects pretty', function() {
       expect(toJson({a: 1, b: 2}, true)).
-          toBeOneOf('{\n  "a": 1,\n  "b": 2\n}', '{\n  "a":1,\n  "b":2\n}');
+          toBe('{\n  "a": 1,\n  "b": 2\n}');
       expect(toJson({a: {b: 2}}, true)).
-          toBeOneOf('{\n  "a": {\n    "b": 2\n  }\n}', '{\n  "a":{\n    "b":2\n  }\n}');
+          toBe('{\n  "a": {\n    "b": 2\n  }\n}');
+      expect(toJson({a: 1, b: 2}, false)).
+          toBe('{"a":1,"b":2}');
+      expect(toJson({a: 1, b: 2}, 0)).
+          toBe('{"a":1,"b":2}');
+      expect(toJson({a: 1, b: 2}, 1)).
+          toBe('{\n "a": 1,\n "b": 2\n}');
+      expect(toJson({a: 1, b: 2}, {})).
+          toBe('{\n  "a": 1,\n  "b": 2\n}');
     });
 
 

@@ -276,6 +276,10 @@ describe('parser', function() {
         expect(scope.$eval("2>=1")).toEqual(2 >= 1);
         expect(scope.$eval("true==2<3")).toEqual(true == 2 < 3);
         expect(scope.$eval("true===2<3")).toEqual(true === 2 < 3);
+
+        expect(scope.$eval("true===3===3")).toEqual(true === 3 === 3);
+        expect(scope.$eval("3===3===true")).toEqual(3 === 3 === true);
+        expect(scope.$eval("3 >= 3 > 2")).toEqual(3 >= 3 > 2);
       });
 
       it('should parse logical', function() {
@@ -484,6 +488,62 @@ describe('parser', function() {
         expect(scope.b).toEqual(234);
       });
 
+      it('should allow use of locals in the left side of an assignment', inject(function($rootScope) {
+        $rootScope.a = {};
+        $rootScope.key = "value";
+        var localA = {};
+
+        //getterFn
+        $rootScope.$eval('a.value = 1', {a: localA});
+        expect(localA.value).toBe(1);
+
+        $rootScope.$eval('w.a.value = 2', {w: {a: localA}});
+        expect(localA.value).toBe(2);
+
+        //field access
+        $rootScope.$eval('(a).value = 3', {a: localA});
+        expect(localA.value).toBe(3);
+
+        $rootScope.$eval('{c: {b: a}}.c.b.value = 4', {a: localA});
+        expect(localA.value).toBe(4);
+
+        //object index
+        $rootScope.$eval('a[key] = 5', {a: localA});
+        expect(localA.value).toBe(5);
+
+        $rootScope.$eval('w.a[key] = 6', {w: {a: localA}});
+        expect(localA.value).toBe(6);
+
+        $rootScope.$eval('{c: {b: a}}.c.b[key] = 7', {a: localA});
+        expect(localA.value).toBe(7);
+
+        //Nothing should have touched the $rootScope.a
+        expect($rootScope.a.value).toBeUndefined();
+      }));
+
+      it('should allow use of locals in sub expressions of the left side of an assignment', inject(function($rootScope, $parse) {
+        delete $rootScope.x;
+        $rootScope.$eval('x[a][b] = true', {a: 'foo', b: 'bar'});
+        expect($rootScope.x.foo.bar).toBe(true);
+
+        delete $rootScope.x;
+        $rootScope.$eval('x.foo[b] = true', {b: 'bar'});
+        expect($rootScope.x.foo.bar).toBe(true);
+
+        delete $rootScope.x;
+        $rootScope.$eval('x[a].bar = true', {a: 'foo'});
+        expect($rootScope.x.foo.bar).toBe(true);
+      }));
+
+      it('should ignore locals beyond the root object of an assignment expression', inject(function($rootScope) {
+        var a = {};
+        var locals = {a: a};
+        $rootScope.b = {a: {value: 123}};
+        $rootScope.$eval('b.a.value = 1', locals);
+        expect(a.value).toBeUndefined();
+        expect($rootScope.b.a.value).toBe(1);
+      }));
+
         it('should evaluate assignments in ternary operator', function() {
           scope.$eval('a = 1 ? 2 : 3');
           expect(scope.a).toBe(2);
@@ -508,10 +568,17 @@ describe('parser', function() {
       });
 
       it('should evaluate function call from a return value', function() {
-        scope.val = 33;
-        scope.getter = function() { return function() { return this.val; }; };
+        scope.getter = function() { return function() { return 33; }; };
         expect(scope.$eval("getter()()")).toBe(33);
       });
+
+      // There is no "strict mode" in IE9
+      if (!msie || msie > 9) {
+        it('should set no context to functions returned by other functions', function() {
+          scope.getter = function() { return function() { expect(this).toBeUndefined(); }; };
+          scope.$eval("getter()()");
+        });
+      }
 
       it('should evaluate multiplication and division', function() {
         scope.taxRate =  8;
@@ -696,6 +763,7 @@ describe('parser', function() {
           throw "IT SHOULD NOT HAVE RUN";
         };
         expect(scope.$eval('false && run()')).toBe(false);
+        expect(scope.$eval('false && true && run()')).toBe(false);
       });
 
       it('should short-circuit OR operator', function() {
@@ -703,6 +771,7 @@ describe('parser', function() {
           throw "IT SHOULD NOT HAVE RUN";
         };
         expect(scope.$eval('true || run()')).toBe(true);
+        expect(scope.$eval('true || false || run()')).toBe(true);
       });
 
 
@@ -758,7 +827,7 @@ describe('parser', function() {
               scope.$eval('{}.toString.constructor.a = 1');
             }).toThrowMinErr(
                     '$parse', 'isecfn','Referencing Function in Angular expressions is disallowed! ' +
-                    'Expression: {}.toString.constructor.a = 1');
+                    'Expression: toString.constructor.a');
 
             expect(function() {
               scope.$eval('{}.toString["constructor"]["constructor"] = 1');
@@ -786,6 +855,12 @@ describe('parser', function() {
             }).toThrowMinErr(
                     '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
                     'Expression: a.toString.constructor');
+
+            expect(function() {
+              scope.$eval("c.a = 1", {c: Function.prototype.constructor});
+            }).toThrowMinErr(
+                    '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
+                    'Expression: c.a');
           });
 
           it('should disallow traversing the Function object in a setter: E02', function() {
@@ -919,6 +994,14 @@ describe('parser', function() {
             }).toThrowMinErr(
                     '$parse', 'isecobj', 'Referencing Object in Angular expressions is disallowed! ' +
                     'Expression: foo["bar"]["keys"](foo)');
+          });
+
+          it('should NOT allow access to Object constructor in assignment locals', function() {
+            expect(function() {
+              scope.$eval("O.constructor.a = 1", {O: Object});
+            }).toThrowMinErr(
+                    '$parse', 'isecobj', 'Referencing Object in Angular expressions is disallowed! ' +
+                    'Expression: O.constructor.a');
           });
         });
 
@@ -1107,6 +1190,20 @@ describe('parser', function() {
               scope.$eval('{}["__proto__"].foo = 1');
             }).toThrowMinErr('$parse', 'isecfld');
 
+            expect(function() {
+              scope.$eval('{}[["__proto__"]]');
+            }).toThrowMinErr('$parse', 'isecfld');
+            expect(function() {
+              scope.$eval('{}[["__proto__"]].foo = 1');
+            }).toThrowMinErr('$parse', 'isecfld');
+
+            expect(function() {
+              scope.$eval('0[["__proto__"]]');
+            }).toThrowMinErr('$parse', 'isecfld');
+            expect(function() {
+              scope.$eval('0[["__proto__"]].foo = 1');
+            }).toThrowMinErr('$parse', 'isecfld');
+
             scope.a = "__pro";
             scope.b = "to__";
             expect(function() {
@@ -1117,6 +1214,15 @@ describe('parser', function() {
             }).toThrowMinErr('$parse', 'isecfld');
           });
         });
+
+       it('should prevent the exploit', function() {
+          expect(function() {
+            scope.$eval('(1)[{0: "__proto__", 1: "__proto__", 2: "__proto__", 3: "safe", length: 4, toString: [].pop}].foo = 1');
+          });
+          if (!msie || msie > 10) {
+            expect((1)['__proto__'].foo).toBeUndefined();
+          }
+       });
 
         it('should prevent the exploit', function() {
           expect(function() {
@@ -1821,6 +1927,19 @@ describe('parser', function() {
             inject(function($rootScope) {
           $rootScope.fn = function() {};
           expect($rootScope.$eval('foo + "bar" + fn()')).toBe('bar');
+        }));
+
+        it('should treat properties named null/undefined as normal properties', inject(function($rootScope) {
+          expect($rootScope.$eval("a.null.undefined.b", {a:{null:{undefined:{b: 1}}}})).toBe(1);
+        }));
+
+        it('should not allow overriding null/undefined keywords', inject(function($rootScope) {
+          expect($rootScope.$eval('null.a', {null: {a: 42}})).toBeUndefined();
+        }));
+
+        it('should allow accessing null/undefined properties on `this`', inject(function($rootScope) {
+          $rootScope.null = {a: 42};
+          expect($rootScope.$eval('this.null.a')).toBe(42);
         }));
       });
     });

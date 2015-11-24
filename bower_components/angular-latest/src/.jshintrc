@@ -51,6 +51,7 @@
     "isWindow": false,
     "isScope": false,
     "isFile": false,
+    "isFormData": false,
     "isBlob": false,
     "isBoolean": false,
     "isPromiseLike": false,
@@ -93,6 +94,7 @@
     "skipDestroyOnNextJQueryCleanData": true,
 
     "NODE_TYPE_ELEMENT": false,
+    "NODE_TYPE_ATTRIBUTE": false,
     "NODE_TYPE_TEXT": false,
     "NODE_TYPE_COMMENT": false,
     "NODE_TYPE_COMMENT": false,
