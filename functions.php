@@ -180,6 +180,8 @@ function engine_mod_taxonomy() {
 		'show_admin_column' => true,
 		'show_in_nav_menus' => true,
 		'show_tagcloud'     => true,
+		'show_in_rest'      => true,
+		'rest_base'         => 'engine-mod',
 	);
 	register_taxonomy( 'engine_mod', array( 'engine' ), $args );
 

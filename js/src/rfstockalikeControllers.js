@@ -498,19 +498,22 @@ angular.module('rfstockalikeControllers', ['ngSanitize'])
     // Get engines if enginesList doesn't have anything
     if ( $scope.enginesList.length < 1 ) {
 
-        var baseLink = '/wp-json/wp/v2/engines/?filter[posts_per_page]=' + $scope.pageSize;
+        var baseLink = '/wp-json/wp/v2/engines/?filter[posts_per_page]=-1';
 
         $http.get(baseLink).success(function (data, status, headers) {
             angular.forEach(data, function (value, key) {
                 // set up the engines list
                 $scope.enginesList.push($scope.prepareEngineList(value));
                 // push to the global engines as well
-                $scope.engines.push(value);
+                //$scope.engines.push(value);
             });
+
+            $scope.engines = data;
 
             //$scope.enginePages = headers('X-WP-TotalPages');
             $scope.engineCount = headers('X-WP-Total');
 
+            /*
             var pages = Math.ceil($scope.engineCount / $scope.pageSize);
             var count = 2;
 
@@ -525,7 +528,8 @@ angular.module('rfstockalikeControllers', ['ngSanitize'])
             }
             $q.all(promises).then(function () {
                 $scope.loading = false;
-            });
+            });*/
+            $scope.loading = false;
         });
     } else {
         $scope.loading = false;
@@ -732,6 +736,11 @@ angular.module('rfstockalikeControllers', ['ngSanitize'])
         {"config_mixture":888,"config_ratio":0,"config_tech_node":""}
     ];
 
+    $http.get('/wp-json/wp/v2/terms/engine-mod/?per_page=0')
+        .success(function(data){
+           $scope.setMods(data);
+        });
+
     //window.console.log($scope.thrustCurves);
 
     $scope.setEngines = function(engines) {
@@ -745,6 +754,10 @@ angular.module('rfstockalikeControllers', ['ngSanitize'])
     $scope.setMixtures = function(mixtures) {
         $scope.mixtures = mixtures;
     };
+
+    $scope.setMods = function(mods) {
+        $scope.mods = mods;
+    }
 
 }])
 

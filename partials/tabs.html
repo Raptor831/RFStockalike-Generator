@@ -8,7 +8,7 @@
                     <a href="#">Mods</a>
                     <ul class="sub-menu">
                         <li ng-repeat="mod in mods">
-                            {{mod.title.rendered}}
+                            <a href="/#/" ng-bind-html="mod.name"></a>
                         </li>
                     </ul>
                 </li>
