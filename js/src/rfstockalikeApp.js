@@ -1,4 +1,4 @@
-angular.module( 'rfsApp', ['ui.router', 'rfstockalikeControllers'] )
+angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines'] )
 
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider){
 

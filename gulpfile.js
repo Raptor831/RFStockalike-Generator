@@ -40,7 +40,7 @@ gulp.task('sass', function() {
 
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
-    return gulp.src('js/src/*.js')
+    return gulp.src(['js/src/main.js', 'js/src/rfstockalikeApp.js', 'js/src/*.js'])
         .pipe(concat('main.js'))
         .pipe(gulp.dest('js'))
         .pipe(rename('main.min.js'))
