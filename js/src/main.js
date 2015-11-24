@@ -99,8 +99,9 @@
     }
 
     function selectButton() {
-        $('button#select').click(function(e){
+        $('body').on("click", "button#select", function(e){
             e.preventDefault();
+            $('#selectable').click();
             selectText('selectable');
         });
     }
@@ -112,6 +113,7 @@
             range.moveToElementText(document.getElementById(containerid));
             range.select();
         } else if (window.getSelection) {
+            window.getSelection().removeAllRanges();
             range = document.createRange();
             range.selectNode(document.getElementById(containerid));
             window.getSelection().addRange(range);

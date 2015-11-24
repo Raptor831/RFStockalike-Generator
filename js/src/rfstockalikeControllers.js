@@ -534,32 +534,6 @@ angular.module('rfstockalikeControllers', ['ngSanitize'])
     } else {
         $scope.loading = false;
     }
-    /*$q.all(promises).then( function(ret){
-        $scope.mixtures = ret[0].data;
-
-        var i;
-        for (i = 1; i < ret.length; i++) {
-            $scope.data.push.apply($scope.data, ret[i].data);
-        }
-
-        angular.forEach($scope.data, function(value, key){
-            window.console.log(value);
-            var result = {};
-            result.id = value.id;
-            result.link = value.link;
-            result.title = value.title.rendered;
-            result.type = value.ksprfs.ksprfs_type;
-            var configs = [];
-            angular.forEach(value.ksprfs.ksprfs_engine_configs, function(innerValue, innerKey){
-                configs.push(innerValue.config_mixture);
-            });
-            result.configs = configs;
-            $scope.engines.push(result);
-        });
-        //window.console.log($scope.engines);
-        $scope.loading = false;
-    });*/
-
 
 
     // Actions
