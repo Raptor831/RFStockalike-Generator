@@ -37,6 +37,23 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
                     controller: 'RFEngineController'
                 }
             }
+        })
+        .state('tabs.mods', {
+            url: 'mods',
+            views: {
+                'main-tab' : {
+                    templateUrl: RFS.partials + 'mods.html'
+                }
+            }
+        })
+        .state('tabs.singleMod', {
+            url: 'mods/:slug',
+            views: {
+                'main-tab': {
+                    templateUrl: RFS.partials + 'mods-single.html',
+                    controller: 'RFSingleModController'
+                }
+            }
         });
 
     //$urlRouteProvider.otherwise('/');
@@ -58,5 +75,5 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
 .directive('rfConfig', function(){
     return {
         templateUrl: RFS.partials + 'engine-config.html'
-    }
+    };
 });

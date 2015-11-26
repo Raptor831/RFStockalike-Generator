@@ -1,0 +1,9 @@
+<h2>Current Mods</h2>
+
+<p>Click on a mod to generate the configs.</p>
+
+<ul class="mod-list">
+    <li ng-repeat="mod in mods">
+        <a href="/#/mods/{{mod.slug}}" ng-bind-html="mod.name"></a>
+    </li>
+</ul>

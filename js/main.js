@@ -171,6 +171,23 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
                     controller: 'RFEngineController'
                 }
             }
+        })
+        .state('tabs.mods', {
+            url: 'mods',
+            views: {
+                'main-tab' : {
+                    templateUrl: RFS.partials + 'mods.html'
+                }
+            }
+        })
+        .state('tabs.singleMod', {
+            url: 'mods/:slug',
+            views: {
+                'main-tab': {
+                    templateUrl: RFS.partials + 'mods-single.html',
+                    controller: 'RFSingleModController'
+                }
+            }
         });
 
     //$urlRouteProvider.otherwise('/');
@@ -192,7 +209,7 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
 .directive('rfConfig', function(){
     return {
         templateUrl: RFS.partials + 'engine-config.html'
-    }
+    };
 });
 
 angular.module('rfstockalikeBase', [])
@@ -384,7 +401,7 @@ angular.module('rfstockalikeBase', [])
 
 angular.module('rfstockalikeEngines', ['ngSanitize'])
 
-.controller('RFEngineController', ['$scope', '$http', '$q', '$window', '$filter', '$stateParams', function ($scope, $http, $q, $window, $filter, $stateParams) {
+.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
     //var nonce = RFS.nonce;
     //window.console.log(nonce);
     var engineID = $stateParams.id;
@@ -401,7 +418,7 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
             });
         promises.push(promise);
     } else {
-        $scope.engine = $scope.returnSingleEngine(engineID);
+        $scope.engine = $scope.getSingleEngine(engineID);
         $scope.cleanData($scope.engine);
     }
 
@@ -784,7 +801,7 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
         }
     };
 
-    $scope.returnSingleEngine = function(id) {
+    $scope.getSingleEngine = function (id) {
         return $filter('filter')($scope.engines, function (data) {return data.id === id;})[0];
     };
 
@@ -965,6 +982,20 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
             }
         }, 200);
     };
+
+}])
+
+.controller('RFSingleModController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
+
+    window.console.log($stateParams.slug);
+
+    $http.get('/wp-json/wp/v2/engines/?per-page=0&filter[engine_mod]='+$stateParams.slug)
+        .success(function(data){
+            $scope.modEngines = data;
+            window.console.log($scope.modEngines);
+        });
+
+
 
 }])
 
