@@ -169,9 +169,6 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
                 'main-tab': {
                     templateUrl: RFS.partials + 'engine-single.html',
                     controller: 'RFEngineController'
-                },
-                'config-sidebar@tabs.singleEngine': {
-                    templateUrl: RFS.partials + 'engine-config.html'
                 }
             }
         });
@@ -190,7 +187,13 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
         };
     }]);
 
-}]);
+}])
+
+.directive('rfConfig', function(){
+    return {
+        templateUrl: RFS.partials + 'engine-config.html'
+    }
+});
 
 angular.module('rfstockalikeBase', [])
 
@@ -448,7 +451,7 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
 
         // Sanitize data
         engine.ksprfs.ksprfs_engine_vectoring = parseInt(engine.ksprfs.ksprfs_engine_vectoring) ? parseInt(engine.ksprfs.ksprfs_engine_vectoring) : 0;
-        if (engine.ksprfs.ksprfs_engine_type) {
+        if (engine.ksprfs.ksprfs_engine_type && !engine.ksprfs.ksprfs_type) {
             var type = $scope.getType(engine.ksprfs.ksprfs_engine_type[0]);
             engine.ksprfs.ksprfs_type = type.slug;
         }

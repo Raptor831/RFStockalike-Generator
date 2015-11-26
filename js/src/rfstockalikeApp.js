@@ -35,9 +35,6 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
                 'main-tab': {
                     templateUrl: RFS.partials + 'engine-single.html',
                     controller: 'RFEngineController'
-                },
-                'config-sidebar@tabs.singleEngine': {
-                    templateUrl: RFS.partials + 'engine-config.html'
                 }
             }
         });
@@ -56,4 +53,10 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
         };
     }]);
 
-}]);
+}])
+
+.directive('rfConfig', function(){
+    return {
+        templateUrl: RFS.partials + 'engine-config.html'
+    }
+});
