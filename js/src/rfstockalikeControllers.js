@@ -56,7 +56,7 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
     }
 
     $scope.cleanData = function(engine) {
-        window.console.log(engine);
+
         // Checkboxes
         engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === 'on' || engine.ksprfs.ksprfs_engine_mefx == true ? true : false;
         engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === 'on' || engine.ksprfs.ksprfs_engine_bimodal == true ? true : false;
