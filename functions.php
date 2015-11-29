@@ -406,6 +406,18 @@ function slug_register_ksprfs() {
 	);
 }
 
+add_action( 'rest_api_init', 'slug_register_ksprfs_mod' );
+function slug_register_ksprfs_mod() {
+	register_api_field( 'engine',
+		'ksprfs_taxonomy',
+		array(
+			'get_callback'    => 'slug_get_ksprfs_mod',
+			'update_callback' => null,
+			'schema'          => null,
+		)
+	);
+}
+
 /**
  * Handler for getting RFS field data.
  *
@@ -469,6 +481,24 @@ function slug_update_ksprfs( $value, $object, $field_name ) {
 			wp_set_object_terms( $object->ID, array( $meta['value'] ), 'engine_type', false );
 		}
 	}
+}
+
+/**
+ * Handler for getting mod field data.
+ *
+ * @since 0.1.0
+ *
+ * @param array $object The object from the response
+ * @param string $field_name Name of field
+ * @param WP_REST_Request $request Current request
+ *
+ * @return mixed
+ */
+function slug_get_ksprfs_mod( $object, $field_name, $request ) {
+	$tax = array();
+	$obj_id = $object['id'];
+	$tax['engine_mod'] = wp_get_post_terms( $obj_id, 'engine_mod' );
+	return $tax;
 }
 
 function one_time_import() {
