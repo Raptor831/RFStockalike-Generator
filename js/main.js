@@ -214,7 +214,7 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
 
 angular.module('rfstockalikeBase', [])
 
-.controller('RFBaseController', ['$scope', '$http', function($scope, $http) {
+.controller('RFBaseController', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
     $scope.errors = [];
     $scope.successes = [];
     $scope.math = Math;
@@ -375,12 +375,28 @@ angular.module('rfstockalikeBase', [])
         $scope.enginesList = engines;
     };
 
+    $scope.setEngine = function(engine) {
+        $scope.engine = engine;
+    };
+
     $scope.setMixtures = function(mixtures) {
         $scope.mixtures = mixtures;
     };
 
     $scope.setMods = function(mods) {
         $scope.mods = mods;
+    };
+
+    $scope.setTypes = function(types) {
+        $scope.types = types;
+    };
+
+    $scope.setResources = function(resources) {
+        $scope.resources = resources;
+    };
+
+    $scope.getEngine = function() {
+        return $scope.engine;
     };
 
     $scope.prepareEngineList = function(engine) {
@@ -397,68 +413,14 @@ angular.module('rfstockalikeBase', [])
         return result;
     };
 
-}]);
-
-angular.module('rfstockalikeEngines', ['ngSanitize'])
-
-.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
-    //var nonce = RFS.nonce;
-    //window.console.log(nonce);
-    var engineID = $stateParams.id;
-
-    $scope.engine = null;
-    $scope.loading = true;
-    var promises = [];
-
-    if ( $scope.engines.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/engines/'+engineID)
-            .success(function(data){
-                $scope.engine = data;
-                $scope.cleanData($scope.engine);
-            });
-        promises.push(promise);
-    } else {
-        $scope.engine = $scope.getSingleEngine(engineID);
-        $scope.cleanData($scope.engine);
-    }
-
-    if ( $scope.mixtures.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1')
-            .success(function(data){
-                $scope.mixtures = data;
-            });
-        promises.push(promise);
-    }
-
-    if ( $scope.types.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/terms/engine-type/?per_page=0')
-            .success(function(data){
-                $scope.types = data;
-            });
-        promises.push(promise);
-    }
-
-    if ( $scope.resources.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1')
-            .success(function(data){
-                $scope.resources = data;
-            });
-        promises.push(promise);
-    }
-
-    if ( promises.length > 0 ) {
-        $q.all(promises).then(function () {
-            $scope.loading = false;
-            $scope.doCalcs($scope.engine);
-        });
-    } else {
-        $scope.loading = false;
-        $scope.doCalcs($scope.engine);
-    }
+    $scope.getSingleEngine = function (id) {
+        var result = $filter('filter')($scope.engines, function (data) {return parseInt(data.id) === parseInt(id);});
+        return result[0];
+    };
 
     $scope.cleanData = function(engine) {
 
-        // Checkboxes
+        // Checkboxes (checking for all possible values from CMB2 or RFStockalike)
         engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === 'on' || engine.ksprfs.ksprfs_engine_mefx == true ? true : false;
         engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === 'on' || engine.ksprfs.ksprfs_engine_bimodal == true ? true : false;
         engine.ksprfs.ksprfs_engine_ffsc = engine.ksprfs.ksprfs_engine_ffsc === 'on' || engine.ksprfs.ksprfs_engine_ffsc == true ? true : false;
@@ -466,7 +428,7 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
         engine.ksprfs.ksprfs_engine_vectoring_override = engine.ksprfs.ksprfs_engine_vectoring_override === 'on' || engine.ksprfs.ksprfs_engine_vectoring_override == true ? true : false;
         engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === 'on' || engine.ksprfs.ksprfs_engine_vectoring_exists == true ? true : false;
 
-        // Sanitize data
+        // Check for valid data
         engine.ksprfs.ksprfs_engine_vectoring = parseInt(engine.ksprfs.ksprfs_engine_vectoring) ? parseInt(engine.ksprfs.ksprfs_engine_vectoring) : 0;
         if (engine.ksprfs.ksprfs_engine_type && !engine.ksprfs.ksprfs_type) {
             var type = $scope.getType(engine.ksprfs.ksprfs_engine_type[0]);
@@ -490,9 +452,41 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
         engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === true ? 'on' : null;
 
         if (!engine.ksprfs.ksprfs_engine_type) { engine.ksprfs.ksprfs_engine_type = []; }
-        window.console.log(engine.ksprfs.ksprfs_type);
         engine.ksprfs.ksprfs_engine_type[0] = $scope.getTypeBySlug(engine.ksprfs.ksprfs_type).id.toString();
     };
+
+    $scope.getFuel = function(mixture) {
+        return $scope.getResource(mixture.ksprfs.ksprfs_mixture_fuel);
+    };
+
+    $scope.getOxidizer = function(mixture) {
+        return $scope.getResource(mixture.ksprfs.ksprfs_mixture_oxidizer);
+    };
+
+    $scope.getResource = function(ID) {
+        ID = parseInt(ID);
+        return $filter('filter')($scope.resources, function (data) {return data.id === ID;})[0];
+    };
+
+    $scope.getMixture = function(ID) {
+        ID = parseInt(ID);
+        return $filter('filter')($scope.mixtures, function (data) {return data.id === ID;})[0];
+    };
+
+    $scope.getType = function(ID) {
+        ID = parseInt(ID);
+        return $filter('filter')($scope.types, function (data) {return data.id === ID;})[0];
+    };
+
+    $scope.getTypeBySlug = function(slug) {
+        return $filter('filter')($scope.types, function (data) {return data.slug === slug;})[0];
+    };
+
+}]);
+
+angular.module('rfstockalikeEngines', ['ngSanitize'])
+
+.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
 
     $scope.doCalcs = function(engine) {
         $scope.errors = [];
@@ -765,44 +759,11 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
         engine.ksprfs.ksprfs_engine_configs.splice(index, 1);
     };
 
-    $scope.getFuel = function(mixture) {
-        return $scope.getResource(mixture.ksprfs.ksprfs_mixture_fuel);
-    };
-
-    $scope.getOxidizer = function(mixture) {
-        return $scope.getResource(mixture.ksprfs.ksprfs_mixture_oxidizer);
-    };
-
-    $scope.getResource = function(ID) {
-        ID = parseInt(ID);
-        return $filter('filter')($scope.resources, function (data) {return data.id === ID;})[0];
-    };
-
-    $scope.getMixture = function(ID) {
-        ID = parseInt(ID);
-        return $filter('filter')($scope.mixtures, function (data) {return data.id === ID;})[0];
-    };
-
-    $scope.getType = function(ID) {
-        ID = parseInt(ID);
-        return $filter('filter')($scope.types, function (data) {return data.id === ID;})[0];
-    };
-
-    $scope.getTypeBySlug = function(slug) {
-        window.console.log(slug);
-        window.console.log($scope.types);
-        return $filter('filter')($scope.types, function (data) {return data.slug === slug;})[0];
-    };
-
     $scope.changeTitle = function(engine) {
         var newTitle = window.prompt('Change Title', '');
         if ( newTitle !== null && newTitle !== '' ) {
             engine.title = newTitle;
         }
-    };
-
-    $scope.getSingleEngine = function (id) {
-        return $filter('filter')($scope.engines, function (data) {return data.id === id;})[0];
     };
 
     $scope.saveEngine = function(engine) {
@@ -904,6 +865,70 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
 
     };
 
+    //alert('parsed gSE');
+
+    //var nonce = RFS.nonce;
+    //window.console.log(nonce);
+    var engineID = $stateParams.id;
+
+    //$scope.engine = null;
+    $scope.loading = true;
+    var promises = [];
+
+    /*
+     Run through the engines, mixtures, types, and resources.
+     Check to see if they already contain data. If they do,
+     then use the already loaded data. If not, fetch the data
+     from the server.
+     */
+
+    if ( $scope.engines.length < 1 ) {
+        var promise = $http.get('/wp-json/wp/v2/engines/'+engineID)
+            .success(function(data){
+                $scope.setEngine(data);
+                $scope.cleanData($scope.engine);
+            });
+        promises.push(promise);
+    } else {
+        $scope.setEngine($scope.getSingleEngine(engineID));
+        window.console.log($scope.engine);
+        $scope.cleanData($scope.engine);
+    }
+
+    if ( $scope.mixtures.length < 1 ) {
+        var promise = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1')
+            .success(function(data){
+                $scope.setMixtures(data);
+            });
+        promises.push(promise);
+    }
+
+    if ( $scope.types.length < 1 ) {
+        var promise = $http.get('/wp-json/wp/v2/terms/engine-type/?per_page=0')
+            .success(function(data){
+                $scope.setTypes(data);
+            });
+        promises.push(promise);
+    }
+
+    if ( $scope.resources.length < 1 ) {
+        var promise = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1')
+            .success(function(data){
+                $scope.setResources(data);
+            });
+        promises.push(promise);
+    }
+
+    if ( promises.length > 0 ) { // If we had to do requests remove the loading notice when they all complete
+        $q.all(promises).then(function () {
+            $scope.loading = false;
+            $scope.doCalcs($scope.engine);
+        });
+    } else { // else if we had no requests, remove the loading anyway
+        $scope.loading = false;
+        $scope.doCalcs($scope.engine);
+    }
+
 }])
 
 .controller('RFEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', function($scope, $http, $q, $filter, $timeout, $window){
@@ -994,7 +1019,7 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
             });
     } else {
         $scope.modEngines = $filter('filter')($scope.engines, function (data) {
-            if ( data.ksprfs_taxonomy.engine_mod.length != 0 ) {
+            if ( data.ksprfs_taxonomy.engine_mod.length !== 0 ) {
                 return data.ksprfs_taxonomy.engine_mod[0].slug === $stateParams.slug;
             }
         });

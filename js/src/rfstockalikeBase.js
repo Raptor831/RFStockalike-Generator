@@ -1,6 +1,6 @@
 angular.module('rfstockalikeBase', [])
 
-.controller('RFBaseController', ['$scope', '$http', function($scope, $http) {
+.controller('RFBaseController', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
     $scope.errors = [];
     $scope.successes = [];
     $scope.math = Math;
@@ -161,12 +161,28 @@ angular.module('rfstockalikeBase', [])
         $scope.enginesList = engines;
     };
 
+    $scope.setEngine = function(engine) {
+        $scope.engine = engine;
+    };
+
     $scope.setMixtures = function(mixtures) {
         $scope.mixtures = mixtures;
     };
 
     $scope.setMods = function(mods) {
         $scope.mods = mods;
+    };
+
+    $scope.setTypes = function(types) {
+        $scope.types = types;
+    };
+
+    $scope.setResources = function(resources) {
+        $scope.resources = resources;
+    };
+
+    $scope.getEngine = function() {
+        return $scope.engine;
     };
 
     $scope.prepareEngineList = function(engine) {
@@ -181,6 +197,75 @@ angular.module('rfstockalikeBase', [])
         });
         result.configs = configs;
         return result;
+    };
+
+    $scope.getSingleEngine = function (id) {
+        var result = $filter('filter')($scope.engines, function (data) {return parseInt(data.id) === parseInt(id);});
+        return result[0];
+    };
+
+    $scope.cleanData = function(engine) {
+
+        // Checkboxes (checking for all possible values from CMB2 or RFStockalike)
+        engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === 'on' || engine.ksprfs.ksprfs_engine_mefx == true ? true : false;
+        engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === 'on' || engine.ksprfs.ksprfs_engine_bimodal == true ? true : false;
+        engine.ksprfs.ksprfs_engine_ffsc = engine.ksprfs.ksprfs_engine_ffsc === 'on' || engine.ksprfs.ksprfs_engine_ffsc == true ? true : false;
+        engine.ksprfs.ksprfs_engine_dedicated = engine.ksprfs.ksprfs_engine_dedicated === 'on' || engine.ksprfs.ksprfs_engine_dedicated == true ? true : false;
+        engine.ksprfs.ksprfs_engine_vectoring_override = engine.ksprfs.ksprfs_engine_vectoring_override === 'on' || engine.ksprfs.ksprfs_engine_vectoring_override == true ? true : false;
+        engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === 'on' || engine.ksprfs.ksprfs_engine_vectoring_exists == true ? true : false;
+
+        // Check for valid data
+        engine.ksprfs.ksprfs_engine_vectoring = parseInt(engine.ksprfs.ksprfs_engine_vectoring) ? parseInt(engine.ksprfs.ksprfs_engine_vectoring) : 0;
+        if (engine.ksprfs.ksprfs_engine_type && !engine.ksprfs.ksprfs_type) {
+            var type = $scope.getType(engine.ksprfs.ksprfs_engine_type[0]);
+            engine.ksprfs.ksprfs_type = type.slug;
+        }
+
+        if ( !engine.ksprfs.ksprfs_engine_flow ) {
+            engine.ksprfs.ksprfs_engine_flow = 'STACK_PRIORITY_SEARCH';
+        }
+
+        engine.ksprfs.ksprfs_engine_ignition_mode = engine.ksprfs.ksprfs_engine_ignition_mode.toString();
+        engine.ksprfs.ksprfs_engine_tech_level = engine.ksprfs.ksprfs_engine_tech_level.toString();
+    };
+
+    $scope.prepareSaveData = function(engine) {
+        engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === true ? 'on' : null;
+        engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === true ? 'on' : null;
+        engine.ksprfs.ksprfs_engine_ffsc = engine.ksprfs.ksprfs_engine_ffsc === true ? 'on' : null;
+        engine.ksprfs.ksprfs_engine_dedicated = engine.ksprfs.ksprfs_engine_dedicated === true ? 'on' : null;
+        engine.ksprfs.ksprfs_engine_vectoring_override = engine.ksprfs.ksprfs_engine_vectoring_override === true ? 'on' : null;
+        engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === true ? 'on' : null;
+
+        if (!engine.ksprfs.ksprfs_engine_type) { engine.ksprfs.ksprfs_engine_type = []; }
+        engine.ksprfs.ksprfs_engine_type[0] = $scope.getTypeBySlug(engine.ksprfs.ksprfs_type).id.toString();
+    };
+
+    $scope.getFuel = function(mixture) {
+        return $scope.getResource(mixture.ksprfs.ksprfs_mixture_fuel);
+    };
+
+    $scope.getOxidizer = function(mixture) {
+        return $scope.getResource(mixture.ksprfs.ksprfs_mixture_oxidizer);
+    };
+
+    $scope.getResource = function(ID) {
+        ID = parseInt(ID);
+        return $filter('filter')($scope.resources, function (data) {return data.id === ID;})[0];
+    };
+
+    $scope.getMixture = function(ID) {
+        ID = parseInt(ID);
+        return $filter('filter')($scope.mixtures, function (data) {return data.id === ID;})[0];
+    };
+
+    $scope.getType = function(ID) {
+        ID = parseInt(ID);
+        return $filter('filter')($scope.types, function (data) {return data.id === ID;})[0];
+    };
+
+    $scope.getTypeBySlug = function(slug) {
+        return $filter('filter')($scope.types, function (data) {return data.slug === slug;})[0];
     };
 
 }]);
