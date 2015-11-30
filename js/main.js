@@ -937,7 +937,7 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
                 //$scope.engines.push(value);
             });
 
-            $scope.engines = data;
+            $scope.setEngines(data);
 
             //$scope.enginePages = headers('X-WP-TotalPages');
             $scope.engineCount = headers('X-WP-Total');
@@ -987,15 +987,18 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
 
 .controller('RFSingleModController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
 
-    window.console.log($stateParams.slug);
-
-    $http.get('/wp-json/wp/v2/engines/?per-page=0&filter[engine_mod]='+$stateParams.slug)
-        .success(function(data){
-            $scope.modEngines = data;
-            window.console.log($scope.modEngines);
+    if ( $scope.engines.length < 1 ) {
+        $http.get('/wp-json/wp/v2/engines/?per-page=0&filter[engine_mod]=' + $stateParams.slug)
+            .success(function (data) {
+                $scope.modEngines = data;
+            });
+    } else {
+        $scope.modEngines = $filter('filter')($scope.engines, function (data) {
+            if ( data.ksprfs_taxonomy.engine_mod.length != 0 ) {
+                return data.ksprfs_taxonomy.engine_mod[0].slug === $stateParams.slug;
+            }
         });
-
-
+    }
 
 }])
 
