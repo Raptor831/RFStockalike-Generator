@@ -1,4 +1,4 @@
-angular.module('rfstockalikeEngines', ['ngSanitize'])
+angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
 
 .controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
 
@@ -506,10 +506,6 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
 
     // Actions
 
-    $scope.getMixture = function(ID) {
-        return $filter('filter')($scope.mixtures, function (data) {return data.ID === ID;});
-    };
-
     $scope.ceil = function(variable) {
         return Math.ceil(variable);
     };
@@ -530,12 +526,21 @@ angular.module('rfstockalikeEngines', ['ngSanitize'])
         $http.get('/wp-json/wp/v2/engines/?per-page=0&filter[engine_mod]=' + $stateParams.slug)
             .success(function (data) {
                 $scope.modEngines = data;
+                angular.forEach( $scope.modEngines, function(value, key){
+                    $scope.cleanData(value);
+                    //$scope.doCalcs(value);
+                });
             });
     } else {
         $scope.modEngines = $filter('filter')($scope.engines, function (data) {
             if ( data.ksprfs_taxonomy.engine_mod.length !== 0 ) {
                 return data.ksprfs_taxonomy.engine_mod[0].slug === $stateParams.slug;
             }
+        });
+
+        angular.forEach( $scope.modEngines, function(value, key){
+            $scope.cleanData(value);
+            //$scope.doCalcs(value);
         });
     }
 
