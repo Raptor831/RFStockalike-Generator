@@ -226,9 +226,16 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
 angular.module('rfstockalikeBase', [])
 
 .controller('RFBaseController', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
+
+    /*
+    Globals
+     */
+
+    // Notices
     $scope.errors = [];
     $scope.successes = [];
-    $scope.math = Math;
+
+    // Data containers
     $scope.enginesList = [];
     $scope.engines = [];
     $scope.mods = [];
@@ -236,8 +243,10 @@ angular.module('rfstockalikeBase', [])
     $scope.resources = [];
     $scope.mixtures = [];
 
-    //window.console.log(RFS.nonce);
+    // Helpers
+    $scope.math = Math;
 
+    // Constants
     $scope.thrustCurves = {
         '0' : "",
         '1' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 1.00 0 0\r\n        key = 0.95 0.50 0 0\r\n        key = 1.00 0.50",
@@ -257,6 +266,8 @@ angular.module('rfstockalikeBase', [])
         '5' : "DecreasingDip",
         '6' : "PulseSteady"
     };
+
+    // Isp charts for each engine type
     // IspSL, IspV, TWRwTP, AcTWR,  TrMult, MaMult, TWRInc, Throt
     $scope.launchIsp     = {
         'start' : [234,   260,  44.7,   67,     1.00,   1.00,   null,   1.00],
@@ -357,6 +368,7 @@ angular.module('rfstockalikeBase', [])
         '7'     : [456,	  475,	93.4,	140.15,	1.61,  	0.77,   1.03,   0.60]
     };
 
+    // Engine type defaults array
     // type : ['config symbol', ISP table, EI Ignitions, ignore hypergolic ignition requirement]
     $scope.engineTypeConfigs = {'launch':['L',$scope.launchIsp,1,false],
         'launch-plus':['L+',$scope.launchPlusIsp,2,false],
@@ -370,6 +382,7 @@ angular.module('rfstockalikeBase', [])
         'jet':['J',null,0,true],
         'rcs':['L',$scope.rcsIsp,0,true]};
 
+    // RCS default config settings
     $scope.rcsDefaultConfigs = [
         {"config_mixture":135,"config_ratio":0,"config_tech_node":""},
         {"config_mixture":134,"config_ratio":0,"config_tech_node":""},
@@ -387,6 +400,12 @@ angular.module('rfstockalikeBase', [])
         });
 
     //window.console.log($scope.thrustCurves);
+
+    /*
+    Utility Functions
+     */
+
+    // Getters/Setters for global data arrays
 
     $scope.setEngines = function(engines) {
         $scope.engines = engines;
@@ -420,61 +439,7 @@ angular.module('rfstockalikeBase', [])
         return $scope.engine;
     };
 
-    $scope.prepareEngineList = function(engine) {
-        var result = {};
-        result.title = engine.title.rendered;
-        result.link = engine.link;
-        result.id = engine.id;
-        result.type = engine.ksprfs.ksprfs_type;
-        var configs = [];
-        angular.forEach(engine.ksprfs.ksprfs_engine_configs, function(value, key){
-            configs.push(value.config_mixture);
-        });
-        result.configs = configs;
-        return result;
-    };
-
-    $scope.getSingleEngine = function (id) {
-        var result = $filter('filter')($scope.engines, function (data) {return parseInt(data.id) === parseInt(id);});
-        return result[0];
-    };
-
-    $scope.cleanData = function(engine) {
-
-        // Checkboxes (checking for all possible values from CMB2 or RFStockalike)
-        engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === 'on' || engine.ksprfs.ksprfs_engine_mefx == true ? true : false;
-        engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === 'on' || engine.ksprfs.ksprfs_engine_bimodal == true ? true : false;
-        engine.ksprfs.ksprfs_engine_ffsc = engine.ksprfs.ksprfs_engine_ffsc === 'on' || engine.ksprfs.ksprfs_engine_ffsc == true ? true : false;
-        engine.ksprfs.ksprfs_engine_dedicated = engine.ksprfs.ksprfs_engine_dedicated === 'on' || engine.ksprfs.ksprfs_engine_dedicated == true ? true : false;
-        engine.ksprfs.ksprfs_engine_vectoring_override = engine.ksprfs.ksprfs_engine_vectoring_override === 'on' || engine.ksprfs.ksprfs_engine_vectoring_override == true ? true : false;
-        engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === 'on' || engine.ksprfs.ksprfs_engine_vectoring_exists == true ? true : false;
-
-        // Check for valid data
-        engine.ksprfs.ksprfs_engine_vectoring = parseInt(engine.ksprfs.ksprfs_engine_vectoring) ? parseInt(engine.ksprfs.ksprfs_engine_vectoring) : 0;
-        if (engine.ksprfs.ksprfs_engine_type && !engine.ksprfs.ksprfs_type) {
-            var type = $scope.getType(engine.ksprfs.ksprfs_engine_type[0]);
-            engine.ksprfs.ksprfs_type = type.slug;
-        }
-
-        if ( !engine.ksprfs.ksprfs_engine_flow ) {
-            engine.ksprfs.ksprfs_engine_flow = 'STACK_PRIORITY_SEARCH';
-        }
-
-        engine.ksprfs.ksprfs_engine_ignition_mode = engine.ksprfs.ksprfs_engine_ignition_mode.toString();
-        engine.ksprfs.ksprfs_engine_tech_level = engine.ksprfs.ksprfs_engine_tech_level.toString();
-    };
-
-    $scope.prepareSaveData = function(engine) {
-        engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === true ? 'on' : null;
-        engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === true ? 'on' : null;
-        engine.ksprfs.ksprfs_engine_ffsc = engine.ksprfs.ksprfs_engine_ffsc === true ? 'on' : null;
-        engine.ksprfs.ksprfs_engine_dedicated = engine.ksprfs.ksprfs_engine_dedicated === true ? 'on' : null;
-        engine.ksprfs.ksprfs_engine_vectoring_override = engine.ksprfs.ksprfs_engine_vectoring_override === true ? 'on' : null;
-        engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === true ? 'on' : null;
-
-        if (!engine.ksprfs.ksprfs_engine_type) { engine.ksprfs.ksprfs_engine_type = []; }
-        engine.ksprfs.ksprfs_engine_type[0] = $scope.getTypeBySlug(engine.ksprfs.ksprfs_type).id.toString();
-    };
+    // Getters for relationships (i.e. get a mixture's fuel object)
 
     $scope.getFuel = function(mixture) {
         return $scope.getResource(mixture.ksprfs.ksprfs_mixture_fuel);
@@ -503,11 +468,16 @@ angular.module('rfstockalikeBase', [])
         return $filter('filter')($scope.types, function (data) {return data.slug === slug;})[0];
     };
 
+    $scope.getSingleEngine = function (id) {
+        var result = $filter('filter')($scope.engines, function (data) {return parseInt(data.id) === parseInt(id);});
+        return result[0];
+    };
+
 }]);
 
-angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
+angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
-.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
+.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', function ($scope, $http, $q, $filter, $stateParams, rfengineServices) {
 
     $scope.doCalcs = function(engine) {
         $scope.errors = [];
@@ -788,7 +758,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
     };
 
     $scope.saveEngine = function(engine) {
-        $scope.prepareSaveData(engine);
+        rfengineServices.prepareSaveData(engine);
 
         var engineData = [];
 
@@ -823,14 +793,14 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
             $scope.errors.push('Unable to save engine. Be sure you are logged in properly, and try again.');
         });
 
-        $scope.cleanData(engine);
+        rfengineServices.cleanData(engine);
 
     };
 
     $scope.submitEngine = function(engine) {
         engine.engineMod = window.prompt('Mod for this engine:', '');
 
-        $scope.prepareSaveData(engine);
+        rfengineServices.prepareSaveData(engine);
 
         var req = {
             method: 'POST',
@@ -844,7 +814,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
             $scope.errors.push('Unable to submit engine. Please try again.');
         });
 
-        $scope.cleanData(engine);
+        rfengineServices.cleanData(engine);
 
     };
 
@@ -907,13 +877,13 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
         var promise = $http.get('/wp-json/wp/v2/engines/'+engineID)
             .success(function(data){
                 $scope.setEngine(data);
-                $scope.cleanData($scope.engine);
+                rfengineServices.cleanData($scope.engine);
             });
         promises.push(promise);
     } else {
         $scope.setEngine($scope.getSingleEngine(engineID));
         window.console.log($scope.engine);
-        $scope.cleanData($scope.engine);
+        rfengineServices.cleanData($scope.engine);
     }
 
     if ( $scope.mixtures.length < 1 ) {
@@ -959,8 +929,35 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
     $scope.pageSize = 20;
     $scope.loading = true;
 
+    // controller utility functions
+    $scope.prepareEngineList = function(engine) {
+        var result = {};
+        result.title = engine.title.rendered;
+        result.link = engine.link;
+        result.id = engine.id;
+        result.type = engine.ksprfs.ksprfs_type;
+        var configs = [];
+        angular.forEach(engine.ksprfs.ksprfs_engine_configs, function(value, key){
+            configs.push(value.config_mixture);
+        });
+        result.configs = configs;
+        return result;
+    };
+
+    $scope.ceil = function(variable) {
+        return Math.ceil(variable);
+    };
+
+    $scope.checkPage = function() {
+        $timeout( function(){
+            if ( $scope.filteredEngines.length/$scope.pageSize < $scope.currentPage ) {
+                $scope.currentPage = 0;
+            }
+        }, 200);
+    };
+
     // prepare the promises array
-    var promises = [];
+    // var promises = [];
 
     // Get mixtures if they do not already exist
     if( $scope.mixtures.length < 1 ) {
@@ -979,13 +976,10 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
             angular.forEach(data, function (value, key) {
                 // set up the engines list
                 $scope.enginesList.push($scope.prepareEngineList(value));
-                // push to the global engines as well
-                //$scope.engines.push(value);
             });
 
             $scope.setEngines(data);
 
-            //$scope.enginePages = headers('X-WP-TotalPages');
             $scope.engineCount = headers('X-WP-Total');
 
             /*
@@ -1010,21 +1004,6 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
         $scope.loading = false;
     }
 
-
-    // Actions
-
-    $scope.ceil = function(variable) {
-        return Math.ceil(variable);
-    };
-
-    $scope.checkPage = function() {
-        $timeout( function(){
-            if ( $scope.filteredEngines.length/$scope.pageSize < $scope.currentPage ) {
-                $scope.currentPage = 0;
-            }
-        }, 200);
-    };
-
 }])
 
 .controller('RFSingleModController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
@@ -1034,7 +1013,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
             .success(function (data) {
                 $scope.modEngines = data;
                 angular.forEach( $scope.modEngines, function(value, key){
-                    $scope.cleanData(value);
+                    rfengineServices.cleanData(value);
                     //$scope.doCalcs(value);
                 });
             });
@@ -1046,17 +1025,55 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
         });
 
         angular.forEach( $scope.modEngines, function(value, key){
-            $scope.cleanData(value);
+            rfengineServices.cleanData(value);
             //$scope.doCalcs(value);
         });
     }
 
 }]);
 
-angular.module('rfstockalikeServices', ['ngSanitize'])
+angular.module('rfstockalikeServices', [])
 
-.factory('engineCalculations', function(){
+.factory('rfengineServices', function(){
 
-    return
+    return {
+
+        cleanData : function(engine) {
+
+            // Checkboxes (checking for all possible values from CMB2 or RFStockalike)
+            engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === 'on' || engine.ksprfs.ksprfs_engine_mefx == true ? true : false;
+            engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === 'on' || engine.ksprfs.ksprfs_engine_bimodal == true ? true : false;
+            engine.ksprfs.ksprfs_engine_ffsc = engine.ksprfs.ksprfs_engine_ffsc === 'on' || engine.ksprfs.ksprfs_engine_ffsc == true ? true : false;
+            engine.ksprfs.ksprfs_engine_dedicated = engine.ksprfs.ksprfs_engine_dedicated === 'on' || engine.ksprfs.ksprfs_engine_dedicated == true ? true : false;
+            engine.ksprfs.ksprfs_engine_vectoring_override = engine.ksprfs.ksprfs_engine_vectoring_override === 'on' || engine.ksprfs.ksprfs_engine_vectoring_override == true ? true : false;
+            engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === 'on' || engine.ksprfs.ksprfs_engine_vectoring_exists == true ? true : false;
+
+            // Check for valid data
+            engine.ksprfs.ksprfs_engine_vectoring = parseInt(engine.ksprfs.ksprfs_engine_vectoring) ? parseInt(engine.ksprfs.ksprfs_engine_vectoring) : 0;
+            if (engine.ksprfs.ksprfs_engine_type && !engine.ksprfs.ksprfs_type) {
+                var type = $scope.getType(engine.ksprfs.ksprfs_engine_type[0]);
+                engine.ksprfs.ksprfs_type = type.slug;
+            }
+
+            if ( !engine.ksprfs.ksprfs_engine_flow ) {
+                engine.ksprfs.ksprfs_engine_flow = 'STACK_PRIORITY_SEARCH';
+            }
+
+            engine.ksprfs.ksprfs_engine_ignition_mode = engine.ksprfs.ksprfs_engine_ignition_mode.toString();
+            engine.ksprfs.ksprfs_engine_tech_level = engine.ksprfs.ksprfs_engine_tech_level.toString();
+        },
+
+        prepareSaveData : function(engine) {
+            engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === true ? 'on' : null;
+            engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === true ? 'on' : null;
+            engine.ksprfs.ksprfs_engine_ffsc = engine.ksprfs.ksprfs_engine_ffsc === true ? 'on' : null;
+            engine.ksprfs.ksprfs_engine_dedicated = engine.ksprfs.ksprfs_engine_dedicated === true ? 'on' : null;
+            engine.ksprfs.ksprfs_engine_vectoring_override = engine.ksprfs.ksprfs_engine_vectoring_override === true ? 'on' : null;
+            engine.ksprfs.ksprfs_engine_vectoring_exists = engine.ksprfs.ksprfs_engine_vectoring_exists === true ? 'on' : null;
+
+            if (!engine.ksprfs.ksprfs_engine_type) { engine.ksprfs.ksprfs_engine_type = []; }
+            engine.ksprfs.ksprfs_engine_type[0] = $scope.getTypeBySlug(engine.ksprfs.ksprfs_type).id.toString();
+        }
+    };
 
 });

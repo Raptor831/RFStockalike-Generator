@@ -1,6 +1,6 @@
-angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
+angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
-.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
+.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', function ($scope, $http, $q, $filter, $stateParams, rfengineServices) {
 
     $scope.doCalcs = function(engine) {
         $scope.errors = [];
@@ -281,7 +281,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
     };
 
     $scope.saveEngine = function(engine) {
-        $scope.prepareSaveData(engine);
+        rfengineServices.prepareSaveData(engine);
 
         var engineData = [];
 
@@ -316,14 +316,14 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
             $scope.errors.push('Unable to save engine. Be sure you are logged in properly, and try again.');
         });
 
-        $scope.cleanData(engine);
+        rfengineServices.cleanData(engine);
 
     };
 
     $scope.submitEngine = function(engine) {
         engine.engineMod = window.prompt('Mod for this engine:', '');
 
-        $scope.prepareSaveData(engine);
+        rfengineServices.prepareSaveData(engine);
 
         var req = {
             method: 'POST',
@@ -337,7 +337,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
             $scope.errors.push('Unable to submit engine. Please try again.');
         });
 
-        $scope.cleanData(engine);
+        rfengineServices.cleanData(engine);
 
     };
 
@@ -400,13 +400,13 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
         var promise = $http.get('/wp-json/wp/v2/engines/'+engineID)
             .success(function(data){
                 $scope.setEngine(data);
-                $scope.cleanData($scope.engine);
+                rfengineServices.cleanData($scope.engine);
             });
         promises.push(promise);
     } else {
         $scope.setEngine($scope.getSingleEngine(engineID));
         window.console.log($scope.engine);
-        $scope.cleanData($scope.engine);
+        rfengineServices.cleanData($scope.engine);
     }
 
     if ( $scope.mixtures.length < 1 ) {
@@ -452,8 +452,35 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
     $scope.pageSize = 20;
     $scope.loading = true;
 
+    // controller utility functions
+    $scope.prepareEngineList = function(engine) {
+        var result = {};
+        result.title = engine.title.rendered;
+        result.link = engine.link;
+        result.id = engine.id;
+        result.type = engine.ksprfs.ksprfs_type;
+        var configs = [];
+        angular.forEach(engine.ksprfs.ksprfs_engine_configs, function(value, key){
+            configs.push(value.config_mixture);
+        });
+        result.configs = configs;
+        return result;
+    };
+
+    $scope.ceil = function(variable) {
+        return Math.ceil(variable);
+    };
+
+    $scope.checkPage = function() {
+        $timeout( function(){
+            if ( $scope.filteredEngines.length/$scope.pageSize < $scope.currentPage ) {
+                $scope.currentPage = 0;
+            }
+        }, 200);
+    };
+
     // prepare the promises array
-    var promises = [];
+    // var promises = [];
 
     // Get mixtures if they do not already exist
     if( $scope.mixtures.length < 1 ) {
@@ -472,13 +499,10 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
             angular.forEach(data, function (value, key) {
                 // set up the engines list
                 $scope.enginesList.push($scope.prepareEngineList(value));
-                // push to the global engines as well
-                //$scope.engines.push(value);
             });
 
             $scope.setEngines(data);
 
-            //$scope.enginePages = headers('X-WP-TotalPages');
             $scope.engineCount = headers('X-WP-Total');
 
             /*
@@ -503,21 +527,6 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
         $scope.loading = false;
     }
 
-
-    // Actions
-
-    $scope.ceil = function(variable) {
-        return Math.ceil(variable);
-    };
-
-    $scope.checkPage = function() {
-        $timeout( function(){
-            if ( $scope.filteredEngines.length/$scope.pageSize < $scope.currentPage ) {
-                $scope.currentPage = 0;
-            }
-        }, 200);
-    };
-
 }])
 
 .controller('RFSingleModController', ['$scope', '$http', '$q', '$filter', '$stateParams', function ($scope, $http, $q, $filter, $stateParams) {
@@ -527,7 +536,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
             .success(function (data) {
                 $scope.modEngines = data;
                 angular.forEach( $scope.modEngines, function(value, key){
-                    $scope.cleanData(value);
+                    rfengineServices.cleanData(value);
                     //$scope.doCalcs(value);
                 });
             });
@@ -539,7 +548,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices'])
         });
 
         angular.forEach( $scope.modEngines, function(value, key){
-            $scope.cleanData(value);
+            rfengineServices.cleanData(value);
             //$scope.doCalcs(value);
         });
     }
