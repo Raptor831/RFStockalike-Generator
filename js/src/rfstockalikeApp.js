@@ -76,4 +76,15 @@ angular.module( 'rfsApp', ['ui.router', 'rfstockalikeBase', 'rfstockalikeEngines
     return {
         templateUrl: RFS.partials + 'engine-config.html'
     };
+})
+
+.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        if (input.length < start) {
+            return input.slice(0);
+        } else {
+            return input.slice(start);
+        }
+    };
 });
