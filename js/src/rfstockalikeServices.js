@@ -1,6 +1,6 @@
 angular.module('rfstockalikeServices', [])
 
-.factory('rfengineServices', ['$scope', function($scope){
+.factory('rfengineServices', function(){
 
     return {
 
@@ -260,4 +260,4 @@ angular.module('rfstockalikeServices', [])
 
     };
 
-}]);
+});

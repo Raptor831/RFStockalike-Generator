@@ -1,5 +1,9 @@
 angular.module('rfstockalikeBase', [])
 
+.factory('rfstockalikeDefaults', function(){
+
+})
+
 .controller('RFBaseController', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
 
     /*
