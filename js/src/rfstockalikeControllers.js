@@ -1,20 +1,22 @@
 angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
-.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', function ($scope, $http, $q, $filter, $stateParams, rfengineServices) {
+.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', 'rfstockalikeConstants', function ($scope, $http, $q, $filter, $stateParams, rfengineServices, rfstockalikeConstants) {
+
+    $scope.constants = rfstockalikeConstants;
 
     $scope.doCalcs = function(engine) {
         $scope.errors = [];
         $scope.successes = [];
         rfengineServices.doIsp(engine);
-        rfengineServices.doTWR(engine);
+        rfengineServices.doTWR(engine, $scope);
         rfengineServices.doHeat(engine);
-        rfengineServices.doConfigs(engine);
+        rfengineServices.doConfigs(engine, $scope);
         rfengineServices.doCost(engine);
     };
 
     $scope.defaultIgnitions = function(engine) {
-        engine.ksprfs.ksprfs_engine_ignitions = $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][2];
-        if ( $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][3] ) {
+        engine.ksprfs.ksprfs_engine_ignitions = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][2];
+        if ( rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][3] ) {
             engine.ksprfs.ksprfs_engine_ignition_mode = 2;
         } else {
             engine.ksprfs.ksprfs_engine_ignition_mode = 1;
@@ -23,7 +25,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     };
 
     $scope.rcsDefault = function(engine) {
-        engine.ksprfs.ksprfs_engine_configs = $scope.rcsDefaultConfigs;
+        engine.ksprfs.ksprfs_engine_configs = rfstockalikeConstants.rcsDefaultConfigs;
         engine.ksprfs.ksprfs_engine_tech_level = "1";
         engine.ksprfs.ksprfs_engine_ispvm = 1;
         engine.ksprfs.ksprfs_engine_ispslm = 1;
@@ -183,13 +185,12 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
         var promise = $http.get('/wp-json/wp/v2/engines/'+engineID)
             .success(function(data){
                 $scope.setEngine(data);
-                rfengineServices.cleanData($scope.engine);
+                rfengineServices.cleanData($scope.engine, $scope);
             });
         promises.push(promise);
     } else {
         $scope.setEngine($scope.getSingleEngine(engineID));
-        window.console.log($scope.engine);
-        rfengineServices.cleanData($scope.engine);
+        rfengineServices.cleanData($scope.engine, $scope);
     }
 
     if ( $scope.mixtures.length < 1 ) {
@@ -314,13 +315,23 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
 .controller('RFSingleModController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', function ($scope, $http, $q, $filter, $stateParams, rfengineServices) {
 
+    $scope.doCalcs = function(engine) {
+        $scope.errors = [];
+        $scope.successes = [];
+        rfengineServices.doIsp(engine);
+        rfengineServices.doTWR(engine, $scope);
+        rfengineServices.doHeat(engine);
+        rfengineServices.doConfigs(engine, $scope);
+        rfengineServices.doCost(engine);
+    };
+
     if ( $scope.engines.length < 1 ) {
         $http.get('/wp-json/wp/v2/engines/?per-page=0&filter[engine_mod]=' + $stateParams.slug)
             .success(function (data) {
                 $scope.modEngines = data;
                 angular.forEach( $scope.modEngines, function(value, key){
-                    rfengineServices.cleanData(value);
-                    //$scope.doCalcs(value);
+                    rfengineServices.cleanData(value, $scope);
+                    $scope.doCalcs(value);
                 });
             });
     } else {
@@ -331,8 +342,8 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
         });
 
         angular.forEach( $scope.modEngines, function(value, key){
-            rfengineServices.cleanData(value);
-            //$scope.doCalcs(value);
+            rfengineServices.cleanData(value, $scope);
+            $scope.doCalcs(value);
         });
     }
 

@@ -52,7 +52,7 @@
     type = <span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">ModuleEnginesRF</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">ModuleRCSFX</span>
     techLevel = {{displayTechLevel(engine)}}
     origTechLevel = {{displayTechLevel(engine)}}
-    engineType = {{engineTypeConfigs[engine.ksprfs.ksprfs_type][0]}}
+    engineType = {{constants.engineTypeConfigs[engine.ksprfs.ksprfs_type][0]}}
     origMass = {{engine.ksprfs.ksprfs_engine_mass+engine.ksprfs.ksprfs_engine_extra_mass}}
     configuration = {{engine.ksprfs.ksprfs_engine_configs[0].title.rendered}}
     modded = false

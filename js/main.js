@@ -134,11 +134,165 @@
 
 angular.module('rfstockalikeServices', [])
 
-.factory('rfengineServices', function(){
+
+.factory('rfstockalikeConstants', function() {
+
+    var constants = {
+        thrustCurves : {
+            '0' : "",
+            '1' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 1.00 0 0\r\n        key = 0.95 0.50 0 0\r\n        key = 1.00 0.50",
+            '2' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 1.00 0 0\r\n        key = 0.95 1.00 0 0\r\n        key = 1.00 0.50",
+            '3' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.20 1.00 6 -0.2\r\n     key = 0.95 1.00 0  0.0\r\n     key = 1.00 0.50",
+            '4' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.95 1.00 0 0\r\n        key = 1.00 0.50",
+            '5' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 0.50 0 0\r\n        key = 0.95 1.00 0 0\r\n        key = 1.00 0.50",
+            '6' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 0.10 0.1 0.1\r\n    key = 0.88 0.10 0.1 0.1\r\n    key = 0.92 1.00\r\n        key = 0.95 1.00\r\n        key = 1.00 0.50"
+        },
+        thrustCurveNames : {
+            '0' : "Stock",
+            '1' : "Increasing",
+            '2' : "Steady",
+            '3' : "SteadyDip",
+            '4' : "Decreasing",
+            '5' : "DecreasingDip",
+            '6' : "PulseSteady"
+        },
+        // Isp charts for each engine type
+        //             IspSL, IspV, TWRwTP, AcTWR,  TrMult, MaMult, TWRInc, Throt
+        launchIsp : {
+            'start' : [234,   260,  44.7,   67,     1.00,   1.00,   null,   1.00],
+            '1'     : [248,   275,  54.2,   81.25,  1.15,   0.95,   1.21,   1.00],
+            '2'     : [266,   295,	66.8,   100.25,	1.32,  	0.88,  	1.23,  	1.00],
+            '3'     : [279,	  310,	76.3,   114.5,	1.43,	0.84,	1.14,   1.00],
+            '4'     : [288,	  320,	82.7,	124,	1.50,	0.81,	1.08,	0.80],
+            '5'     : [295,	  327,	87.1,	130.65,	1.55,   0.80,	1.05,	0.70],
+            '6'     : [299,	  332,	90.3,	135.4,	1.58,	0.78,	1.04,	0.60],
+            '7'     : [304,	  337,	93.4,	140.15,	1.61,  	0.77,   1.03,	0.60]
+        },
+        launchPlusIsp : {
+            'start' : [220,	268,	38.3,	 53.6,	1.00,	1.00,	null,	1.00],
+            '1'     : [233,	283,	46.4,	 65,	  1.15,	0.95,	1.21,	1.00],
+            '2'     : [250,	304,	57.3,	 80.2,	1.32,	0.88,	1.23,	0.80],
+            '3'     : [262,	319,	65.4,	 91.6,	1.43,	0.84,	1.14,	0.75],
+            '4'     : [271,	330,	70.9,	 99.2,	1.50,	0.81,	1.08,	0.70],
+            '5'     : [277,	337,	74.6,	 104.5,	1.55,	0.80,	1.05,	0.65],
+            '6'     : [281,	342,	77.4,	 108.3,	1.58,	0.78,	1.04,	0.60],
+            '7'     : [285,	347,	80.1,	 112.1,	1.62,	0.77,	1.03,	0.50]
+        },
+        upperIsp : {
+            'start' : [168,	280,	35.2,	44,	1.00,	1.00,	null,	1.00],
+            '1'     : [185,	308,	48.8,	61,	1.26,	0.91,	1.39,	1.00],
+            '2'     : [195,	325,	56.8,	71,	1.39,	0.86,	1.16,	1.00],
+            '3'     : [201,	335,	61.6,	77,	1.46,	0.84,	1.08,	1.00],
+            '4'     : [204,	340,	64,	    80,	1.50,	0.82,	1.04,	0.80],
+            '5'     : [207,	345,	66.4,	83,	1.53,	0.81,	1.04,	0.75],
+            '6'     : [210,	350,	68.8,	86,	1.56,	0.80,	1.04,	0.70],
+            '7'     : [213,	355,	71.2,	89,	1.60,	0.79,	1.03,	0.60]
+        },
+        upperPlusIsp : {
+            'start' : [102,	291,	25.4,	30.47,	1.00,	1.00,	null,	1.00],
+            '1'     : [112,	320,	38.5,	46.20,	1.38,	0.91,	1.52,	1.00],
+            '2'     : [118,	338,	46.2,	55.47,	1.57,	0.86,	1.20,	0.75],
+            '3'     : [122,	348,	50.9,	61.02,	1.68,	0.84,	1.10,	0.40],
+            '4'     : [124,	354,	53.2,	63.81,	1.72,	0.82,	1.05,	0.30],
+            '5'     : [126,	359,	55.5,	66.59,	1.77,	0.81,	1.04,	0.20],
+            '6'     : [127,	364,	57.8,	69.36,	1.82,	0.80,	1.04,	0.15],
+            '7'     : [129,	369,	60.1,	72.14,	1.87,	0.79,	1.04,	0.10]
+        },
+        orbitalIsp : {
+            'start' : [100,	286,	18.9,	21.71,	1.00,	1.00,	null,	1.00],
+            '1'     : [110,	314,	25.8,	29.71,	1.24,	0.91,	1.37,	1.00],
+            '2'     : [116,	332,	30.3,	34.86,	1.38,	0.86,	1.17,	0.75],
+            '3'     : [120,	342,	32.8,	37.71,	1.45,	0.84,	1.08,	0.40],
+            '4'     : [121,	347,	34,	    39.14,	1.48,	0.82,	1.04,	0.20],
+            '5'     : [123,	352,	35.3,	40.57,	1.52,	0.81,	1.04,	0.15],
+            '6'     : [125,	357,	36.5,	42.00,	1.55,	0.80,	1.03,	0.10],
+            '7'     : [127,	362,	37.8,	43.43,	1.58,	0.79,	1.04,	0.10]
+        },
+        solidIsp : {
+            'start' : [200,	220,	4.347826087,	23,  1],
+            '1'     : [215,	235,	5.263157895,	19,  1],
+            '2'     : [230,	250,	6.25,	        16,  1],
+            '3'     : [240,	260,	7.142857143,	14,  1],
+            '4'     : [245,	268,	8.333333333,	12,  1],
+            '5'     : [255,	276,	10,	            10,  1],
+            '6'     : [260,	284,	11.11111111,	9,   1],
+            '7'     : [265,	290,	12.5,	        8,   1]
+        },
+        solidPlusIsp : {
+            'start' : [160,	231,	4.761904762,	21,	 1],
+            '1'     : [172,	247,	5.882352941,	17,	 1],
+            '2'     : [184,	263,	7.142857143,	14,	 1],
+            '3'     : [192,	273,	8.333333333,	12,	 1],
+            '4'     : [196,	281,	10,	          10,	 1],
+            '5'     : [204,	290,	12.5,	        8,	 1],
+            '6'     : [208,	298,	14.28571429,	7,	 1],
+            '7'     : [212,	305,	16.66666667,	6,	 1]
+        },
+        nuclearIsp : {
+            '3'     : [380,	850,	1.46,	 1.679,      1.00,	1.00,	null,	1.00],
+            '4'     : [391,	875,	2,	     2.3,	     1.33,	0.97,	1.37,	1.00],
+            '5'     : [407,	910,	2.4241,	 2.787715,   1.55,	0.93,	1.21,	1.00],
+            '6'     : [416,	930,	4,   	 4.6,	     2.50,	0.91,	1.65,	1.00],
+            '7'     : [429,	960,	6,	     6.9,	     3.64,	0.89,	1.50,	1.00],
+            '8'     : [452,	1010,	8,	     9.2,	     4.61,	0.84,	1.33,	1.00]
+        },
+        aerospikeIsp : {
+            'start' : [252,	280,	20.7,	28.94175,	1.00,	1.00,	null,	1.00],
+            '1'     : [277,	308,	31.4,	43.89,	    1.38,	0.91,	1.52,	1.00],
+            '2'     : [293,	325,	37.6,	52.6965,	1.56,	0.86,	1.20,	0.80],
+            '3'     : [302,	335,	41.4,	57.969,	    1.67,	0.84,	1.10,	0.70],
+            '4'     : [306,	340,	43.3,	60.6195,	1.72,	0.82,	1.05,	0.60],
+            '5'     : [311,	345,	45.2,	63.25575,	1.77,	0.81,	1.04,	0.50],
+            '6'     : [315,	350,	47.1,	65.892,	    1.82,	0.80,	1.04,	0.40],
+            '7'     : [320,	355,	48.9,	68.52825,	1.86,	0.79,	1.04,	0.30]
+        },
+        rcsIsp : {
+            'start' : [351,   366,  44.7,   67,     1.00,   1.00,   null,   1.00],
+            '1'     : [370,   390,  54.2,   81.25,  1.15,   0.95,   1.21,   1.00],
+            '2'     : [399,   416,	66.8,   100.25,	1.32,  	0.88,  	1.23,  	1.00],
+            '3'     : [418,	  437,	76.3,   114.5,	1.43,	0.84,	1.14,   1.00],
+            '4'     : [432,	  451,	82.7,	124,    1.50,	0.81,   1.08,   0.80],
+            '5'     : [442,	  461,	87.1,	130.65,	1.55,   0.80,	1.05,   0.70],
+            '6'     : [448,	  468,	90.3,	135.4,	1.58,	0.78,	1.04,   0.60],
+            '7'     : [456,	  475,	93.4,	140.15,	1.61,  	0.77,   1.03,   0.60]
+        },
+        // RCS default config settings
+        rcsDefaultConfigs : [
+            {"config_mixture":135,"config_ratio":0,"config_tech_node":""},
+            {"config_mixture":134,"config_ratio":0,"config_tech_node":""},
+            {"config_mixture":178,"config_ratio":1.6,"config_tech_node":""},
+            {"config_mixture":138,"config_ratio":0,"config_tech_node":""},
+            {"config_mixture":137,"config_ratio":0,"config_tech_node":""},
+            {"config_mixture":177,"config_ratio":2,"config_tech_node":""},
+            {"config_mixture":180,"config_ratio":1.7,"config_tech_node":""},
+            {"config_mixture":888,"config_ratio":0,"config_tech_node":""}
+        ]
+    };
+    constants.engineTypeConfigs =
+        // Engine type defaults array
+        // type : ['config symbol', ISP table, EI Ignitions, ignore hypergolic ignition requirement]
+        {
+            'launch'            : ['L',  constants.launchIsp,     1,  false],
+            'launch-plus'       : ['L+', constants.launchPlusIsp, 2,  false],
+            'upper'             : ['U',  constants.upperIsp,      4,  false],
+            'upper-plus'        : ['U+', constants.upperPlusIsp,  12, true],
+            'orbital'           : ['O',  constants.orbitalIsp,    24, true],
+            'nuclear-thermal'   : ['N',  constants.nuclearIsp,    0,  false],
+            'solid'             : ['S',  constants.solidIsp,      1,  true],
+            'solid-plus'        : ['S+', constants.solidPlusIsp,  1,  true],
+            'aerospike'         : ['A',  constants.aerospikeIsp,  0,  true],
+            'jet'               : ['J',  null,                    0,  true],
+            'rcs'               : ['L',  constants.rcsIsp,        0,  true]
+        };
+
+    return constants;
+})
+
+.factory('rfengineServices', ['rfstockalikeConstants', function(rfstockalikeConstants){
 
     return {
 
-        cleanData : function(engine) {
+        cleanData : function(engine, $scope) {
 
             // Checkboxes (checking for all possible values from CMB2 or RFStockalike)
             engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === 'on' || engine.ksprfs.ksprfs_engine_mefx == true ? true : false;
@@ -163,7 +317,7 @@ angular.module('rfstockalikeServices', [])
             engine.ksprfs.ksprfs_engine_tech_level = engine.ksprfs.ksprfs_engine_tech_level.toString();
         },
 
-        prepareSaveData : function(engine) {
+        prepareSaveData : function(engine, $scope) {
             engine.ksprfs.ksprfs_engine_mefx = engine.ksprfs.ksprfs_engine_mefx === true ? 'on' : null;
             engine.ksprfs.ksprfs_engine_bimodal = engine.ksprfs.ksprfs_engine_bimodal === true ? 'on' : null;
             engine.ksprfs.ksprfs_engine_ffsc = engine.ksprfs.ksprfs_engine_ffsc === true ? 'on' : null;
@@ -175,7 +329,7 @@ angular.module('rfstockalikeServices', [])
             engine.ksprfs.ksprfs_engine_type[0] = $scope.getTypeBySlug(engine.ksprfs.ksprfs_type).id.toString();
         },
 
-        doTWR : function(engine) {
+        doTWR : function(engine, $scope) {
             // TWR
             engine.ksprfs.engine_twr = engine.ksprfs.ksprfs_engine_thrust / 9.81 / engine.ksprfs.ksprfs_engine_mass;
 
@@ -194,7 +348,7 @@ angular.module('rfstockalikeServices', [])
             ispv_factor  = Math.min( Math.max( Math.pow(engine.ksprfs.ksprfs_engine_ispvm,  ispv_exponent),  0.5 ), 10 );
 
             // Calculate the GTWR finally
-            engine.ksprfs.engine_gtwr = $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][2] / ispsl_factor / ispv_factor * ffsc_factor;
+            engine.ksprfs.engine_gtwr = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][2] / ispsl_factor / ispv_factor * ffsc_factor;
 
             // Compare actual to goal, set variable to true if within 5%
             if ( engine.ksprfs.engine_twr > ( engine.ksprfs.engine_gtwr * 0.95 ) && engine.ksprfs.engine_twr < ( engine.ksprfs.engine_gtwr * 1.05 ) ) {
@@ -237,7 +391,7 @@ angular.module('rfstockalikeServices', [])
                     engine.finalThrottle = -1;
                     break;
                 case 'use-default':
-                    engine.finalThrottle = $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][7];
+                    engine.finalThrottle = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][7];
                     break;
                 case 'use-default-tech':
                     var tech = $scope.engine.ksprfs.ksprfs_engine_throttle_tl;
@@ -246,7 +400,7 @@ angular.module('rfstockalikeServices', [])
                     if ( ! parseInt(engine.finalThrottle) ) { engine.finalThrottle = 0; }
                     break;
                 case 'custom-throttle':
-                    engine.finalThrottle = Math.round( (engine.ksprfs.ksprfs_engine_throttle * $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][7])*1000) / 1000;
+                    engine.finalThrottle = Math.round( (engine.ksprfs.ksprfs_engine_throttle * rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][7])*1000) / 1000;
                     if ( ! parseFloat(engine.finalThrottle) ) { engine.finalThrottle = 0; }
                     break;
                 default:
@@ -263,8 +417,8 @@ angular.module('rfstockalikeServices', [])
 
             // Get resultant base Isp from inputs
             var ispV, ispSL;
-            ispV = $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][1] * engine.ksprfs.ksprfs_engine_ispvm;
-            ispSL = $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][0] * engine.ksprfs.ksprfs_engine_ispslm;
+            ispV = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][1] * engine.ksprfs.ksprfs_engine_ispvm;
+            ispSL = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][0] * engine.ksprfs.ksprfs_engine_ispslm;
             if ( engine.ksprfs.ksprfs_engine_ffsc ) {
                 ispV *= 1.07;
                 ispSL *= 1.07;
@@ -291,7 +445,7 @@ angular.module('rfstockalikeServices', [])
             // Maximum heat for the engine
             if ( engine.ksprfs.ksprfs_type !== 'solid' && engine.ksprfs.ksprfs_type !== 'solid-plus' ) {
                 var result;
-                maxFactor = $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][6];
+                maxFactor = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][1][engine.ksprfs.ksprfs_engine_tech_level][6];
                 result = Math.pow(500 + (8 * factor) / maxFactor, 1.03);
                 engine.ksprfs.max_heat = Math.max(1450, Math.min(2400, result));
             } else {
@@ -301,7 +455,7 @@ angular.module('rfstockalikeServices', [])
             engine.ksprfs.max_heat = Math.round(engine.ksprfs.max_heat, 0);
         },
 
-        doConfigs : function(engine) {
+        doConfigs : function(engine, $scope) {
             // Do all the work for each engine config in this loop
             var i;
             for(i = 0; i < engine.ksprfs.ksprfs_engine_configs.length; i++) {
@@ -364,7 +518,7 @@ angular.module('rfstockalikeServices', [])
                     if ( engine.ksprfs.ksprfs_engine_configs[i].config_thrust_curve === '-1' ) {
                         engine.ksprfs.ksprfs_engine_configs[i].title += 'Custom'+(i+1);
                     } else {
-                        engine.ksprfs.ksprfs_engine_configs[i].title += $scope.thrustCurveNames[engine.ksprfs.ksprfs_engine_configs[i].config_thrust_curve];
+                        engine.ksprfs.ksprfs_engine_configs[i].title += rfstockalikeConstants.thrustCurveNames[engine.ksprfs.ksprfs_engine_configs[i].config_thrust_curve];
                     }
                 }
             }
@@ -394,7 +548,7 @@ angular.module('rfstockalikeServices', [])
 
     };
 
-});
+}]);
 angular.module('rfstockalikeBase', [])
 
 .controller('RFBaseController', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
@@ -417,154 +571,6 @@ angular.module('rfstockalikeBase', [])
 
     // Helpers
     $scope.math = Math;
-
-    // Constants
-    $scope.thrustCurves = {
-        '0' : "",
-        '1' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 1.00 0 0\r\n        key = 0.95 0.50 0 0\r\n        key = 1.00 0.50",
-        '2' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 1.00 0 0\r\n        key = 0.95 1.00 0 0\r\n        key = 1.00 0.50",
-        '3' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.20 1.00 6 -0.2\r\n     key = 0.95 1.00 0  0.0\r\n     key = 1.00 0.50",
-        '4' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.95 1.00 0 0\r\n        key = 1.00 0.50",
-        '5' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 0.50 0 0\r\n        key = 0.95 1.00 0 0\r\n        key = 1.00 0.50",
-        '6' : "key = 0.00 0.01\r\n        key = 0.01 0.01\r\n        key = 0.05 0.10 0.1 0.1\r\n    key = 0.88 0.10 0.1 0.1\r\n    key = 0.92 1.00\r\n        key = 0.95 1.00\r\n        key = 1.00 0.50"
-    };
-
-    $scope.thrustCurveNames = {
-        '0' : "Stock",
-        '1' : "Increasing",
-        '2' : "Steady",
-        '3' : "SteadyDip",
-        '4' : "Decreasing",
-        '5' : "DecreasingDip",
-        '6' : "PulseSteady"
-    };
-
-    // Isp charts for each engine type
-    // IspSL, IspV, TWRwTP, AcTWR,  TrMult, MaMult, TWRInc, Throt
-    $scope.launchIsp     = {
-        'start' : [234,   260,  44.7,   67,     1.00,   1.00,   null,   1.00],
-        '1'     : [248,   275,  54.2,   81.25,  1.15,   0.95,   1.21,   1.00],
-        '2'     : [266,   295,	66.8,   100.25,	1.32,  	0.88,  	1.23,  	1.00],
-        '3'     : [279,	  310,	76.3,   114.5,	1.43,	0.84,	1.14,   1.00],
-        '4'     : [288,	  320,	82.7,	124,	1.50,	0.81,	1.08,	0.80],
-        '5'     : [295,	  327,	87.1,	130.65,	1.55,   0.80,	1.05,	0.70],
-        '6'     : [299,	  332,	90.3,	135.4,	1.58,	0.78,	1.04,	0.60],
-        '7'     : [304,	  337,	93.4,	140.15,	1.61,  	0.77,   1.03,	0.60]
-    };
-    $scope.launchPlusIsp = {
-        'start' : [220,	268,	38.3,	 53.6,	1.00,	1.00,	null,	1.00],
-        '1'     : [233,	283,	46.4,	 65,	  1.15,	0.95,	1.21,	1.00],
-        '2'     : [250,	304,	57.3,	 80.2,	1.32,	0.88,	1.23,	0.80],
-        '3'     : [262,	319,	65.4,	 91.6,	1.43,	0.84,	1.14,	0.75],
-        '4'     : [271,	330,	70.9,	 99.2,	1.50,	0.81,	1.08,	0.70],
-        '5'     : [277,	337,	74.6,	 104.5,	1.55,	0.80,	1.05,	0.65],
-        '6'     : [281,	342,	77.4,	 108.3,	1.58,	0.78,	1.04,	0.60],
-        '7'     : [285,	347,	80.1,	 112.1,	1.62,	0.77,	1.03,	0.50]
-    };
-    $scope.upperIsp      = {
-        'start' : [168,	280,	35.2,	44,	1.00,	1.00,	null,	1.00],
-        '1'     : [185,	308,	48.8,	61,	1.26,	0.91,	1.39,	1.00],
-        '2'     : [195,	325,	56.8,	71,	1.39,	0.86,	1.16,	1.00],
-        '3'     : [201,	335,	61.6,	77,	1.46,	0.84,	1.08,	1.00],
-        '4'     : [204,	340,	64,	    80,	1.50,	0.82,	1.04,	0.80],
-        '5'     : [207,	345,	66.4,	83,	1.53,	0.81,	1.04,	0.75],
-        '6'     : [210,	350,	68.8,	86,	1.56,	0.80,	1.04,	0.70],
-        '7'     : [213,	355,	71.2,	89,	1.60,	0.79,	1.03,	0.60]
-    };
-    $scope.upperPlusIsp  = {
-        'start' : [102,	291,	25.4,	30.47,	1.00,	1.00,	null,	1.00],
-        '1'     : [112,	320,	38.5,	46.20,	1.38,	0.91,	1.52,	1.00],
-        '2'     : [118,	338,	46.2,	55.47,	1.57,	0.86,	1.20,	0.75],
-        '3'     : [122,	348,	50.9,	61.02,	1.68,	0.84,	1.10,	0.40],
-        '4'     : [124,	354,	53.2,	63.81,	1.72,	0.82,	1.05,	0.30],
-        '5'     : [126,	359,	55.5,	66.59,	1.77,	0.81,	1.04,	0.20],
-        '6'     : [127,	364,	57.8,	69.36,	1.82,	0.80,	1.04,	0.15],
-        '7'     : [129,	369,	60.1,	72.14,	1.87,	0.79,	1.04,	0.10]
-    };
-    $scope.orbitalIsp    = {
-        'start' : [100,	286,	18.9,	21.71,	1.00,	1.00,	null,	1.00],
-        '1'     : [110,	314,	25.8,	29.71,	1.24,	0.91,	1.37,	1.00],
-        '2'     : [116,	332,	30.3,	34.86,	1.38,	0.86,	1.17,	0.75],
-        '3'     : [120,	342,	32.8,	37.71,	1.45,	0.84,	1.08,	0.40],
-        '4'     : [121,	347,	34,	    39.14,	1.48,	0.82,	1.04,	0.20],
-        '5'     : [123,	352,	35.3,	40.57,	1.52,	0.81,	1.04,	0.15],
-        '6'     : [125,	357,	36.5,	42.00,	1.55,	0.80,	1.03,	0.10],
-        '7'     : [127,	362,	37.8,	43.43,	1.58,	0.79,	1.04,	0.10]
-    };
-    $scope.solidIsp      = {
-        'start' : [200,	220,	4.347826087,	23,  1],
-        '1'     : [215,	235,	5.263157895,	19,  1],
-        '2'     : [230,	250,	6.25,	        16,  1],
-        '3'     : [240,	260,	7.142857143,	14,  1],
-        '4'     : [245,	268,	8.333333333,	12,  1],
-        '5'     : [255,	276,	10,	            10,  1],
-        '6'     : [260,	284,	11.11111111,	9,   1],
-        '7'     : [265,	290,	12.5,	        8,   1]
-    };
-    $scope.solidPlusIsp  = {
-        'start' : [160,	231,	4.761904762,	21,	 1],
-        '1'     : [172,	247,	5.882352941,	17,	 1],
-        '2'     : [184,	263,	7.142857143,	14,	 1],
-        '3'     : [192,	273,	8.333333333,	12,	 1],
-        '4'     : [196,	281,	10,	          10,	 1],
-        '5'     : [204,	290,	12.5,	        8,	 1],
-        '6'     : [208,	298,	14.28571429,	7,	 1],
-        '7'     : [212,	305,	16.66666667,	6,	 1]
-    };
-    $scope.nuclearIsp    = {
-        '3'     : [380,	850,	1.46,	 1.679,      1.00,	1.00,	null,	1.00],
-        '4'     : [391,	875,	2,	     2.3,	     1.33,	0.97,	1.37,	1.00],
-        '5'     : [407,	910,	2.4241,	 2.787715,   1.55,	0.93,	1.21,	1.00],
-        '6'     : [416,	930,	4,   	 4.6,	     2.50,	0.91,	1.65,	1.00],
-        '7'     : [429,	960,	6,	     6.9,	     3.64,	0.89,	1.50,	1.00],
-        '8'     : [452,	1010,	8,	     9.2,	     4.61,	0.84,	1.33,	1.00]
-    };
-    $scope.aerospikeIsp  = {
-        'start' : [252,	280,	20.7,	28.94175,	1.00,	1.00,	null,	1.00],
-        '1'     : [277,	308,	31.4,	43.89,	    1.38,	0.91,	1.52,	1.00],
-        '2'     : [293,	325,	37.6,	52.6965,	1.56,	0.86,	1.20,	0.80],
-        '3'     : [302,	335,	41.4,	57.969,	    1.67,	0.84,	1.10,	0.70],
-        '4'     : [306,	340,	43.3,	60.6195,	1.72,	0.82,	1.05,	0.60],
-        '5'     : [311,	345,	45.2,	63.25575,	1.77,	0.81,	1.04,	0.50],
-        '6'     : [315,	350,	47.1,	65.892,	    1.82,	0.80,	1.04,	0.40],
-        '7'     : [320,	355,	48.9,	68.52825,	1.86,	0.79,	1.04,	0.30]
-    };
-    $scope.rcsIsp        = {
-        'start' : [351,   366,  44.7,   67,     1.00,   1.00,   null,   1.00],
-        '1'     : [370,   390,  54.2,   81.25,  1.15,   0.95,   1.21,   1.00],
-        '2'     : [399,   416,	66.8,   100.25,	1.32,  	0.88,  	1.23,  	1.00],
-        '3'     : [418,	  437,	76.3,   114.5,	1.43,	0.84,	1.14,   1.00],
-        '4'     : [432,	  451,	82.7,	124,    1.50,	0.81,   1.08,   0.80],
-        '5'     : [442,	  461,	87.1,	130.65,	1.55,   0.80,	1.05,   0.70],
-        '6'     : [448,	  468,	90.3,	135.4,	1.58,	0.78,	1.04,   0.60],
-        '7'     : [456,	  475,	93.4,	140.15,	1.61,  	0.77,   1.03,   0.60]
-    };
-
-    // Engine type defaults array
-    // type : ['config symbol', ISP table, EI Ignitions, ignore hypergolic ignition requirement]
-    $scope.engineTypeConfigs = {'launch':['L',$scope.launchIsp,1,false],
-        'launch-plus':['L+',$scope.launchPlusIsp,2,false],
-        'upper':['U',$scope.upperIsp,4,false],
-        'upper-plus':['U+',$scope.upperPlusIsp,12,true],
-        'orbital':['O',$scope.orbitalIsp,24,true],
-        'nuclear-thermal':['N',$scope.nuclearIsp,0,false],
-        'solid':['S',$scope.solidIsp,1,true],
-        'solid-plus':['S+',$scope.solidPlusIsp,1,true],
-        'aerospike':['A',$scope.aerospikeIsp,0,true],
-        'jet':['J',null,0,true],
-        'rcs':['L',$scope.rcsIsp,0,true]};
-
-    // RCS default config settings
-    $scope.rcsDefaultConfigs = [
-        {"config_mixture":135,"config_ratio":0,"config_tech_node":""},
-        {"config_mixture":134,"config_ratio":0,"config_tech_node":""},
-        {"config_mixture":178,"config_ratio":1.6,"config_tech_node":""},
-        {"config_mixture":138,"config_ratio":0,"config_tech_node":""},
-        {"config_mixture":137,"config_ratio":0,"config_tech_node":""},
-        {"config_mixture":177,"config_ratio":2,"config_tech_node":""},
-        {"config_mixture":180,"config_ratio":1.7,"config_tech_node":""},
-        {"config_mixture":888,"config_ratio":0,"config_tech_node":""}
-    ];
 
     $http.get('/wp-json/wp/v2/terms/engine-mod/?per_page=0')
         .success(function(data){
@@ -607,10 +613,6 @@ angular.module('rfstockalikeBase', [])
         $scope.resources = resources;
     };
 
-    $scope.getEngine = function() {
-        return $scope.engine;
-    };
-
     // Getters for relationships (i.e. get a mixture's fuel object)
 
     $scope.getFuel = function(mixture) {
@@ -649,21 +651,23 @@ angular.module('rfstockalikeBase', [])
 
 angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
-.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', function ($scope, $http, $q, $filter, $stateParams, rfengineServices) {
+.controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', 'rfstockalikeConstants', function ($scope, $http, $q, $filter, $stateParams, rfengineServices, rfstockalikeConstants) {
+
+    $scope.constants = rfstockalikeConstants;
 
     $scope.doCalcs = function(engine) {
         $scope.errors = [];
         $scope.successes = [];
         rfengineServices.doIsp(engine);
-        rfengineServices.doTWR(engine);
+        rfengineServices.doTWR(engine, $scope);
         rfengineServices.doHeat(engine);
-        rfengineServices.doConfigs(engine);
+        rfengineServices.doConfigs(engine, $scope);
         rfengineServices.doCost(engine);
     };
 
     $scope.defaultIgnitions = function(engine) {
-        engine.ksprfs.ksprfs_engine_ignitions = $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][2];
-        if ( $scope.engineTypeConfigs[engine.ksprfs.ksprfs_type][3] ) {
+        engine.ksprfs.ksprfs_engine_ignitions = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][2];
+        if ( rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][3] ) {
             engine.ksprfs.ksprfs_engine_ignition_mode = 2;
         } else {
             engine.ksprfs.ksprfs_engine_ignition_mode = 1;
@@ -672,7 +676,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     };
 
     $scope.rcsDefault = function(engine) {
-        engine.ksprfs.ksprfs_engine_configs = $scope.rcsDefaultConfigs;
+        engine.ksprfs.ksprfs_engine_configs = rfstockalikeConstants.rcsDefaultConfigs;
         engine.ksprfs.ksprfs_engine_tech_level = "1";
         engine.ksprfs.ksprfs_engine_ispvm = 1;
         engine.ksprfs.ksprfs_engine_ispslm = 1;
@@ -832,13 +836,12 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
         var promise = $http.get('/wp-json/wp/v2/engines/'+engineID)
             .success(function(data){
                 $scope.setEngine(data);
-                rfengineServices.cleanData($scope.engine);
+                rfengineServices.cleanData($scope.engine, $scope);
             });
         promises.push(promise);
     } else {
         $scope.setEngine($scope.getSingleEngine(engineID));
-        window.console.log($scope.engine);
-        rfengineServices.cleanData($scope.engine);
+        rfengineServices.cleanData($scope.engine, $scope);
     }
 
     if ( $scope.mixtures.length < 1 ) {
@@ -963,13 +966,23 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
 .controller('RFSingleModController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', function ($scope, $http, $q, $filter, $stateParams, rfengineServices) {
 
+    $scope.doCalcs = function(engine) {
+        $scope.errors = [];
+        $scope.successes = [];
+        rfengineServices.doIsp(engine);
+        rfengineServices.doTWR(engine, $scope);
+        rfengineServices.doHeat(engine);
+        rfengineServices.doConfigs(engine, $scope);
+        rfengineServices.doCost(engine);
+    };
+
     if ( $scope.engines.length < 1 ) {
         $http.get('/wp-json/wp/v2/engines/?per-page=0&filter[engine_mod]=' + $stateParams.slug)
             .success(function (data) {
                 $scope.modEngines = data;
                 angular.forEach( $scope.modEngines, function(value, key){
-                    rfengineServices.cleanData(value);
-                    //$scope.doCalcs(value);
+                    rfengineServices.cleanData(value, $scope);
+                    $scope.doCalcs(value);
                 });
             });
     } else {
@@ -980,8 +993,8 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
         });
 
         angular.forEach( $scope.modEngines, function(value, key){
-            rfengineServices.cleanData(value);
-            //$scope.doCalcs(value);
+            rfengineServices.cleanData(value, $scope);
+            $scope.doCalcs(value);
         });
     }
 
