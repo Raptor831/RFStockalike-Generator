@@ -1,5 +1,8 @@
 angular.module('rfstockalikeServices', [])
 
+.value( 'blankEngine', {
+
+})
 
 .factory('rfstockalikeConstants', function() {
 
