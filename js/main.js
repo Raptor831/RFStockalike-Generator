@@ -572,10 +572,12 @@ angular.module('rfstockalikeBase', [])
     // Helpers
     $scope.math = Math;
 
-    $http.get('/wp-json/wp/v2/terms/engine-mod/?per_page=0')
-        .success(function(data){
-            $scope.setMods(data);
-        });
+    if( $scope.mods.length < 1 ) {
+        $http.get('/wp-json/wp/v2/terms/engine-mod/?per_page=0')
+            .success(function (data) {
+                $scope.setMods(data);
+            });
+    }
 
     //window.console.log($scope.thrustCurves);
 
