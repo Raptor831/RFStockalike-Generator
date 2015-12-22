@@ -396,7 +396,7 @@ include_once( 'cmb-functions.php' );
 // Add custom handlers to the REST API
 add_action( 'rest_api_init', 'slug_register_ksprfs' );
 function slug_register_ksprfs() {
-	register_api_field( array( 'engine', 'mixture', 'resource' ),
+	register_rest_field( array( 'engine', 'mixture', 'resource' ),
 		'ksprfs',
 		array(
 			'get_callback'    => 'slug_get_ksprfs',
@@ -408,7 +408,7 @@ function slug_register_ksprfs() {
 
 add_action( 'rest_api_init', 'slug_register_ksprfs_mod' );
 function slug_register_ksprfs_mod() {
-	register_api_field( 'engine',
+	register_rest_field( 'engine',
 		'ksprfs_taxonomy',
 		array(
 			'get_callback'    => 'slug_get_ksprfs_mod',
