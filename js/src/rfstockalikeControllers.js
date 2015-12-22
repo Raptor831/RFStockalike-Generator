@@ -164,10 +164,6 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
     };
 
-    //alert('parsed gSE');
-
-    //var nonce = RFS.nonce;
-    //window.console.log(nonce);
     var engineID = $stateParams.id;
 
     //$scope.engine = null;
@@ -182,12 +178,16 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
      */
 
     if ( $scope.engines.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/engines/'+engineID)
-            .success(function(data){
-                $scope.setEngine(data);
-                rfengineServices.cleanData($scope.engine, $scope);
-            });
-        promises.push(promise);
+        if ( parseInt(engineID) !== 0 ) {
+            var promise = $http.get('/wp-json/wp/v2/engines/' + engineID)
+                .success(function (data) {
+                    $scope.setEngine(data);
+                    rfengineServices.cleanData($scope.engine, $scope);
+                });
+            promises.push(promise);
+        } else {
+
+        }
     } else {
         $scope.setEngine($scope.getSingleEngine(engineID));
         rfengineServices.cleanData($scope.engine, $scope);
