@@ -576,7 +576,7 @@ angular.module('rfstockalikeBase', [])
     $scope.math = Math;
 
     if( $scope.mods.length < 1 ) {
-        $http.get('/wp-json/wp/v2/terms/engine-mod/?per_page=0')
+        $http.get('/wp-json/wp/v2/engine-mod/?per_page=0')
             .success(function (data) {
                 $scope.setMods(data);
             });
@@ -858,7 +858,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     if ( $scope.types.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/terms/engine-type/?per_page=0')
+        var promise = $http.get('/wp-json/wp/v2/engine-type/?per_page=0')
             .success(function(data){
                 $scope.setTypes(data);
             });
@@ -982,7 +982,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     };
 
     if ( $scope.engines.length < 1 ) {
-        $http.get('/wp-json/wp/v2/engines/?per-page=0&filter[engine_mod]=' + $stateParams.slug)
+        $http.get('/wp-json/wp/v2/engines/?per_page=0&filter[engine_mod]=' + $stateParams.slug)
             .success(function (data) {
                 $scope.modEngines = data;
                 angular.forEach( $scope.modEngines, function(value, key){
