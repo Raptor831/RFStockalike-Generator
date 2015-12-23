@@ -278,13 +278,26 @@ CONTENT STYLES
 
 .spinner {
   display: inline-block;
-  width: 5px;
-  background: $mainColor;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  //background: #000;
+  overflow: hidden;
   content: "";
-  height: 20px;
-  margin: 0 7.5px;
+  //margin: 0 7.5px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  text-align: center;
   -webkit-animation: load 1.4s infinite linear;
   animation: load 1.4s infinite linear;
+  &:after {
+    content: "";
+    height: 9px;
+    width: 3px;
+    background: #000;
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 @-webkit-keyframes load {
