@@ -279,7 +279,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     // Get engines if enginesList doesn't have anything
-    if ( $scope.enginesList.length < 1 ) {
+    if ( $scope.enginesList.length < 1  ) {
 
         var baseLink = '/wp-json/wp/v2/engines/?filter[posts_per_page]=-1';
 
@@ -291,24 +291,8 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
             $scope.setEngines(data);
 
-            $scope.engineCount = headers('X-WP-Total');
+            $scope.engineCount = data.length;
 
-            /*
-            var pages = Math.ceil($scope.engineCount / $scope.pageSize);
-            var count = 2;
-
-            for (count; count <= pages; count++) {
-                var promise = $http.get(baseLink + '?filter[posts_per_page]=' + $scope.pageSize + '&page=' + count)
-                    .success(function (data) {
-                        angular.forEach(data, function (value, key) {
-                            $scope.enginesList.push($scope.prepareEngineList(value));
-                        });
-                    });
-                promises.push(promise);
-            }
-            $q.all(promises).then(function () {
-                $scope.loading = false;
-            });*/
             $scope.loading = false;
         });
     } else {
