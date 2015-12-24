@@ -175,7 +175,7 @@ angular.module('rfstockalikeServices', [])
             engine.ksprfs.ksprfs_engine_vectoring = parseInt(engine.ksprfs.ksprfs_engine_vectoring) ? parseInt(engine.ksprfs.ksprfs_engine_vectoring) : 0;
             if (engine.ksprfs.ksprfs_engine_type && !engine.ksprfs.ksprfs_type) {
                 var type = $scope.getType(engine.ksprfs.ksprfs_engine_type[0]);
-                engine.ksprfs.ksprfs_type = type.slug;
+                engine.ksprfs.ksprfs_type = type ? type.slug : 'launch';
             }
 
             if ( !engine.ksprfs.ksprfs_engine_flow ) {

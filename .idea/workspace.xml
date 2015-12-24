@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f4980c64-88c2-4ebc-87a7-126e546205fe" name="Default" comment="">
+    <list default="true" id="f4980c64-88c2-4ebc-87a7-126e546205fe" name="Default" comment="Improve loading spinner">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/blank.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/engines.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/mixtures.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/mods.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/types.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.scss" afterPath="$PROJECT_DIR$/css/style.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css.map" afterPath="$PROJECT_DIR$/style.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.min.js" afterPath="$PROJECT_DIR$/js/main.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" afterPath="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/src/rfstockalikeServices.js" afterPath="$PROJECT_DIR$/js/src/rfstockalikeServices.js" />
     </list>
     <ignored path="rfstockalike.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,20 +53,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rfstockalikeControllers.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="rfstockalikeControllers.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeControllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="328" column="47" selection-start-line="328" selection-start-column="47" selection-end-line="328" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.3939745">
+              <caret line="192" column="15" selection-start-line="192" selection-start-column="15" selection-end-line="192" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.scss" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/style.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.66865313">
+            <state vertical-scroll-proportion="-192.23077">
               <caret line="294" column="13" selection-start-line="294" selection-start-column="13" selection-end-line="294" selection-end-column="13" />
               <folding />
             </state>
@@ -77,21 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cmb-functions.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmb-functions.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="677" column="0" selection-start-line="677" selection-start-column="0" selection-end-line="677" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="rfstockalikeBase.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeBase.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="41" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
+              <caret line="24" column="56" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -110,8 +106,18 @@
       <file leaf-file-name="rfstockalikeServices.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeServices.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="285" column="0" selection-start-line="285" selection-start-column="0" selection-end-line="285" selection-end-column="0" />
+            <state vertical-scroll-proportion="-5.7777777">
+              <caret line="177" column="72" selection-start-line="177" selection-start-column="72" selection-end-line="177" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="blank.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/blank.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="40" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -167,13 +173,14 @@
         <option value="$PROJECT_DIR$/js/src/rfstockalikeEngineService.js" />
         <option value="$PROJECT_DIR$/gulpfile.js" />
         <option value="$PROJECT_DIR$/js/src/rfstockalikeApp.js" />
-        <option value="$PROJECT_DIR$/js/src/rfstockalikeServices.js" />
         <option value="$PROJECT_DIR$/partials/engine-config.html" />
         <option value="$PROJECT_DIR$/functions.php" />
-        <option value="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" />
         <option value="$PROJECT_DIR$/partials/engine-list.html" />
         <option value="$PROJECT_DIR$/js/src/rfstockalikeBase.js" />
         <option value="$PROJECT_DIR$/css/style.scss" />
+        <option value="$PROJECT_DIR$/js/src/rfstockalikeServices.js" />
+        <option value="$PROJECT_DIR$/data/blank.json" />
+        <option value="$PROJECT_DIR$/js/src/rfstockalikeControllers.js" />
       </list>
     </option>
   </component>
@@ -237,7 +244,7 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="184" />
+    <option name="x" value="156" />
     <option name="y" value="23" />
     <option name="width" value="2121" />
     <option name="height" value="1333" />
@@ -307,6 +314,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rfstockalike" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rfstockalike" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -320,11 +341,14 @@
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$USER_HOME$/GIT/gravity-icrm" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../wp-vagrant/www/hra/htdocs" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -352,6 +376,18 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -363,12 +399,6 @@
       <created>1446668863781</created>
       <option name="number" value="Default" />
       <updated>1446668863781</updated>
-    </task>
-    <task id="LOCAL-00001" summary="Updating Readme for new repo">
-      <created>1446669384670</created>
-      <option name="number" value="00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1446669384670</updated>
     </task>
     <task id="LOCAL-00002" summary="Cleaning up functions.php">
       <created>1446733906968</created>
@@ -658,28 +688,34 @@
       <option name="project" value="LOCAL" />
       <updated>1450821087553</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Improve loading spinner">
+      <created>1450886535478</created>
+      <option name="number" value="00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1450886535478</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="184" y="23" width="2121" height="1333" extended-state="0" />
-    <editor active="true" />
+    <frame x="156" y="23" width="2121" height="1333" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.49797103" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.502029" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25275362" sideWeight="0.5035398" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28157684" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2820306" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917467" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22943723" sideWeight="0.36954087" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22943723" sideWeight="0.37037036" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22943723" sideWeight="0.63045913" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22943723" sideWeight="0.6296296" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24985507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25275362" sideWeight="0.5035398" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920355" sideWeight="0.49797103" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -728,7 +764,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../../../../../.." />
     </ignored-roots>
-    <MESSAGE value="Reformat functions.php to clean up spacing, add a few comments" />
     <MESSAGE value="Save PHPStorm options again" />
     <MESSAGE value="First shot at routes" />
     <MESSAGE value="Add bower.json with appropriate dependencies." />
@@ -753,7 +788,8 @@
     <MESSAGE value="Add proper constants to the services module, then integrate with controllers/view" />
     <MESSAGE value="Add loading animation, update for new beta version of the WP API plugin" />
     <MESSAGE value="Update API link lost in merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update API link lost in merge" />
+    <MESSAGE value="Improve loading spinner" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve loading spinner" />
   </component>
   <component name="WordPressConfiguration" doNotAskConfigAgain="true" enabled="true">
     <wordpressPath>$PROJECT_DIR$/../../..</wordpressPath>
@@ -765,14 +801,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeControllers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1072,14 +1100,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeServices.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="285" column="0" selection-start-line="285" selection-start-column="0" selection-end-line="285" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/partials/engine-config.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1112,22 +1132,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeControllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="328" column="47" selection-start-line="328" selection-start-column="47" selection-end-line="328" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeBase.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="41" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/partials/engine-list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.615385">
@@ -1138,8 +1142,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/style.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.66865313">
+        <state vertical-scroll-proportion="-192.23077">
           <caret line="294" column="13" selection-start-line="294" selection-start-column="13" selection-end-line="294" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeBase.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="56" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/blank.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="40" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeServices.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.7777777">
+          <caret line="177" column="72" selection-start-line="177" selection-start-column="72" selection-end-line="177" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/rfstockalikeControllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3939745">
+          <caret line="192" column="15" selection-start-line="192" selection-start-column="15" selection-end-line="192" selection-end-column="15" />
           <folding />
         </state>
       </provider>

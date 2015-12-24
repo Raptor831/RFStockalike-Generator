@@ -177,17 +177,21 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
      from the server.
      */
 
-    if ( $scope.engines.length < 1 ) {
-        if ( parseInt(engineID) !== 0 ) {
-            var promise = $http.get('/wp-json/wp/v2/engines/' + engineID)
-                .success(function (data) {
-                    $scope.setEngine(data);
-                    rfengineServices.cleanData($scope.engine, $scope);
-                });
-            promises.push(promise);
-        } else {
 
-        }
+    if ( $scope.engines.length < 1 && parseInt(engineID) !== 0 ) {
+        var promise = $http.get('/wp-json/wp/v2/engines/' + engineID)
+            .success(function (data) {
+                $scope.setEngine(data);
+                rfengineServices.cleanData($scope.engine, $scope);
+            });
+        promises.push(promise);
+    } else if( parseInt(engineID) === 0 ) {
+        var promise = $http.get('/wp-content/themes/rfstockalike/data/blank.json')
+            .success(function (data) {
+                $scope.setEngine(data);
+                rfengineServices.cleanData($scope.engine, $scope);
+            });
+        promises.push(promise);
     } else {
         $scope.setEngine($scope.getSingleEngine(engineID));
         rfengineServices.cleanData($scope.engine, $scope);

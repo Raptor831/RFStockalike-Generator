@@ -309,7 +309,7 @@ angular.module('rfstockalikeServices', [])
             engine.ksprfs.ksprfs_engine_vectoring = parseInt(engine.ksprfs.ksprfs_engine_vectoring) ? parseInt(engine.ksprfs.ksprfs_engine_vectoring) : 0;
             if (engine.ksprfs.ksprfs_engine_type && !engine.ksprfs.ksprfs_type) {
                 var type = $scope.getType(engine.ksprfs.ksprfs_engine_type[0]);
-                engine.ksprfs.ksprfs_type = type.slug;
+                engine.ksprfs.ksprfs_type = type ? type.slug : 'launch';
             }
 
             if ( !engine.ksprfs.ksprfs_engine_flow ) {
@@ -833,17 +833,21 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
      from the server.
      */
 
-    if ( $scope.engines.length < 1 ) {
-        if ( parseInt(engineID) !== 0 ) {
-            var promise = $http.get('/wp-json/wp/v2/engines/' + engineID)
-                .success(function (data) {
-                    $scope.setEngine(data);
-                    rfengineServices.cleanData($scope.engine, $scope);
-                });
-            promises.push(promise);
-        } else {
 
-        }
+    if ( $scope.engines.length < 1 && parseInt(engineID) !== 0 ) {
+        var promise = $http.get('/wp-json/wp/v2/engines/' + engineID)
+            .success(function (data) {
+                $scope.setEngine(data);
+                rfengineServices.cleanData($scope.engine, $scope);
+            });
+        promises.push(promise);
+    } else if( parseInt(engineID) === 0 ) {
+        var promise = $http.get('/wp-content/themes/rfstockalike/data/blank.json')
+            .success(function (data) {
+                $scope.setEngine(data);
+                rfengineServices.cleanData($scope.engine, $scope);
+            });
+        promises.push(promise);
     } else {
         $scope.setEngine($scope.getSingleEngine(engineID));
         rfengineServices.cleanData($scope.engine, $scope);
