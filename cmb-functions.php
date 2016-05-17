@@ -436,7 +436,7 @@ function cmb2_ksprfs_metaboxes( array $meta_boxes ) {
 							'escape_cb'       => 'validate_int'
 					),
 					array(
-							'name'    => 'EI Ignition Mode',
+							'name'    => 'Ignition Mode',
 							'desc'    => 'Check the box to override the derived number of ignitions',
 							'id'      => $prefix . 'engine_ignition_mode',
 							'type'    => 'select',
@@ -447,12 +447,18 @@ function cmb2_ksprfs_metaboxes( array $meta_boxes ) {
 							)
 					),
 					array(
-							'name'            => 'EI Ignitions',
+							'name'            => 'Ignitions',
 							'desc'            => 'Number of ignitions available to the engine (see above). If >0, that many. If 0, unlimited. If <0, engine will have (current TL - this) ignitions, with a minimum of 1.',
 							'id'              => $prefix . 'engine_ignitions',
 							'type'            => 'text_small',
 							'sanitization_cb' => 'validate_ignitions',
 							'escape_cb'       => 'validate_ignitions'
+					),
+					array(
+						'name' => 'Pressure Fed',
+						'desc' => 'Is this engine pressure fed?',
+						'id'   => $prefix . 'engine_pressure_fed',
+						'type' => 'checkbox'
 					),
 					array(
 							'name' => 'Override Vectoring',

@@ -42,12 +42,6 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
         $scope.doCalcs(engine);
     };
 
-    $scope.displayTechLevel = function(engine) {
-        var tl = engine.ksprfs.ksprfs_engine_tech_level;
-        if (tl === 'start') { tl = '0'; }
-        return tl;
-    };
-
     // Actions
 
     $scope.addConfig = function(engine) {
@@ -66,7 +60,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     };
 
     $scope.saveEngine = function(engine) {
-        rfengineServices.prepareSaveData(engine);
+        rfengineServices.prepareSaveData(engine, $scope);
 
         var engineData = [];
 
@@ -206,7 +200,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     if ( $scope.types.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/engine-type/?per_page=0')
+        var promise = $http.get('/wp-json/wp/v2/engine-type/?filter[posts_per_page]=-1')
             .success(function(data){
                 $scope.setTypes(data);
             });
@@ -301,7 +295,10 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
 }])
 
-.controller('RFSingleModController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', function ($scope, $http, $q, $filter, $stateParams, rfengineServices) {
+.controller('RFSingleModController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', 'rfstockalikeConstants', function ($scope, $http, $q, $filter, $stateParams, rfengineServices, rfstockalikeConstants) {
+
+    $scope.constants = rfstockalikeConstants;
+    $scope.rfengineServices = rfengineServices;
 
     $scope.doCalcs = function(engine) {
         $scope.errors = [];
@@ -313,14 +310,51 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
         rfengineServices.doCost(engine);
     };
 
+    $scope.loading = true;
+    var promises = [];
+    if ( $scope.mixtures.length < 1 ) {
+        var promise = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1')
+            .success(function(data){
+                $scope.setMixtures(data);
+            });
+        promises.push(promise);
+    }
+
+    if ( $scope.types.length < 1 ) {
+        var promise = $http.get('/wp-json/wp/v2/engine-type/?filter[posts_per_page]=-1')
+            .success(function(data){
+                $scope.setTypes(data);
+            });
+        promises.push(promise);
+    }
+
+    if ( $scope.resources.length < 1 ) {
+        var promise = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1')
+            .success(function(data){
+                $scope.setResources(data);
+            });
+        promises.push(promise);
+    }
+    if ( promises.length > 0 ) { // If we had to do requests remove the loading notice when they all complete
+        $q.all(promises).then(function () {
+            $scope.loading = false;
+            //$scope.doCalcs($scope.engine);
+        });
+    } else { // else if we had no requests, remove the loading anyway
+        //$scope.loading = false;
+        //$scope.doCalcs($scope.engine);
+    }
+
     if ( $scope.engines.length < 1 ) {
-        $http.get('/wp-json/wp/v2/engines/?per_page=0&filter[engine_mod]=' + $stateParams.slug)
+        $http.get('/wp-json/wp/v2/engines/?filter[posts_per_page]=-1&filter[engine_mod]=' + $stateParams.slug)
             .success(function (data) {
                 $scope.modEngines = data;
                 angular.forEach( $scope.modEngines, function(value, key){
                     rfengineServices.cleanData(value, $scope);
+                    window.console.log('engine');
                     $scope.doCalcs(value);
                 });
+                window.console.log($scope.modEngines);
             });
     } else {
         $scope.modEngines = $filter('filter')($scope.engines, function (data) {
@@ -329,10 +363,17 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
             }
         });
 
+        //window.console.log($scope.modEngines);
+        //alert('hi');
         angular.forEach( $scope.modEngines, function(value, key){
             rfengineServices.cleanData(value, $scope);
+            window.console.log('engine');
             $scope.doCalcs(value);
         });
+        window.console.log($scope.modEngines);
     }
+
+
+
 
 }]);

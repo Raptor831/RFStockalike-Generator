@@ -345,11 +345,11 @@ FOOTER STYLES
 /*------------
 HOMEPAGE STYLES
 ------------*/
-#content.front-page {
+#content .front-page {
   .main-content, #main-sidebar {
     @include span-columns(4);
   }
-  .main-sidebar {
+  #main-sidebar {
     .widget {
       @include span-columns(4);
       @include media($tablet) {

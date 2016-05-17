@@ -1,3 +1,23 @@
-<div>
-    This is my home content for the state.
+<div class="front-page">
+    <h1>Welcome to the RFStockalike config app!</h1>
+    <p>This is the place to check out the current configs for the RealFuels Stockalike package. You can browse the engines, see their stats, and copy the configs to custom files if you like. You can also create new configs for your uses, or edit current configs to add your own tweaks. Enjoy!</p>
+    <aside id="main-sidebar">
+        <div id="nav_menu-4" class="widget widget_nav_menu">
+            <h3>Quick Links</h3>
+            <ul id="menu-quick-links" class="menu">
+                <li class="menu-item"><a href="/#/engines/0">Blank Template Engine</a></li>
+                <li class="menu-item"><a href="/#/engines/">All Engines</a></li>
+                <li class="menu-item"><a href="https://github.com/Raptor831/RFStockalike">GitHub Repository</a></li>
+                <li class="menu-item"><a href="http://forum.kerbalspaceprogram.com/threads/81239">KSP Forum RFSTockalike Thread</a></li>
+            </ul>
+        </div>
+        <div class="widget widget_nav_menu">
+            <h3>Mod List</h3>
+            <ul class="menu">
+                <li ng-repeat="mod in mods">
+                    <a href="/#/mods/{{mod.slug}}" ng-bind-html="mod.name"></a>
+                </li>
+            </ul>
+        </div>
+    </aside>
 </div>

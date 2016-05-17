@@ -50,8 +50,8 @@
   {
     name = <span ng-show="!engine.ksprfs.ksprfs_engine_bimodal">ModuleEngineConfigs</span><span ng-show="engine.ksprfs.ksprfs_engine_bimodal">ModuleHybridEngine</span>
     type = <span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">ModuleEnginesRF</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">ModuleRCSFX</span>
-    techLevel = {{displayTechLevel(engine)}}
-    origTechLevel = {{displayTechLevel(engine)}}
+    techLevel = {{rfengineServices.displayTechLevel(engine)}}
+    origTechLevel = {{rfengineServices.displayTechLevel(engine)}}
     engineType = {{constants.engineTypeConfigs[engine.ksprfs.ksprfs_type][0]}}
     origMass = {{engine.ksprfs.ksprfs_engine_mass+engine.ksprfs.ksprfs_engine_extra_mass}}
     configuration = {{engine.ksprfs.ksprfs_engine_configs[0].title.rendered}}
@@ -83,17 +83,13 @@
       IspSL = {{config.ispSL_mult | number:4}}
       IspV = {{config.ispV_mult | number:4}}
       throttle = {{engine.finalThrottle}}
-      <span ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != '0'">ModuleEngineIgnitor
+      <span ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != '0'">ignitions = {{config.ignitions}}
+      ullage = {{config.ullage}}
+      pressureFed = {{engine.ksprfs.ksprfs_engine_pressure_fed}}
+      <span ng-show="config.ullage">IGNITOR_RESOURCE
       {
-        ignitionsAvailable = {{config.ignitions}}
-        useUllageSimulation = {{config.ullage}}
-        autoIgnitionTemperature = 800
-        <span ng-show="config.ullage">ignitorType = Electric
-        IGNITOR_RESOURCE
-        {
-          name = ElectricCharge
-          amount = {{engine.ksprfs.ksprfs_engine_thrust/100}}
-        }</span>
+        name = ElectricCharge
+        amount = {{engine.ksprfs.ksprfs_engine_thrust/100}}
       }</span>
       <span ng-show="(config.config_thrust_curve != '0' && config.config_thrust_curve)">curveResource = {{getFuel(getMixture(config.config_mixture)).title.rendered}}
       thrustCurve

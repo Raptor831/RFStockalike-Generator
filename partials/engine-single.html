@@ -235,7 +235,7 @@
             </div>
         </div>
         <h2>Ullage</h2>
-        <div class="half">
+        <div class="third">
             <div class="field cb">
                 <label for="engine_ignition_mode">Ullage Mode</label>
                 <select id="engine_ignition_mode" name="engine_ignition_mode" ng-model="engine.ksprfs.ksprfs_engine_ignition_mode" ng-change="doCalcs(engine)">
@@ -248,6 +248,10 @@
             <div class="field" ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != 0">
                 <label for="engine_ignitions">EI Ignitions</label>
                 <input type="number" min="-1" id="engine_ignitions" name="engine_ignitions" ng-model="engine.ksprfs.ksprfs_engine_ignitions" ng-change="doCalcs(engine)" />
+            </div>
+            <div class="field">
+                <label for="engine_pressure_fed">Pressure Fed</label>
+                <input type="checkbox" id="engine_pressure_fed" name="engine_pressure_fed" ng-model="engine.ksprfs.ksprfs_engine_pressure_fed" ng-change="doCalcs(engine)" />
             </div>
         </div>
         <button id="default-ignitions" ng-click="defaultIgnitions(engine)">Use Default Ignitions</button>
