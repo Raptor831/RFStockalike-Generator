@@ -99,18 +99,13 @@
       {{engine.ksprfs.ksprfs_engine_config_patch}}
     }</span>
   }
-  <span ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != 0">!MODULE[ModuleEngineIgnitor] {}
-  ModuleEngineIgnitor
+  <span ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != '0'">ignitions = {{engine.ksprfs.ksprfs_engine_configs[0].ignitions}}
+  ullage = {{engine.ksprfs.ksprfs_engine_configs[0].ullage}}
+  pressureFed = {{engine.ksprfs.ksprfs_engine_pressure_fed}}
+  <span ng-show="engine.ksprfs.ksprfs_engine_configs[0].ullage">IGNITOR_RESOURCE
   {
-    ignitionsAvailable = {{engine.ksprfs.ksprfs_engine_configs[0].ignitions}}
-    autoIgnitionTemperature = 800
-    useUllageSimulation = {{engine.ksprfs.ksprfs_engine_configs[0].ullage}}
-    <span ng-show="config.ullage">ignitorType = Electric
-    IGNITOR_RESOURCE
-    {
-      name = ElectricCharge
-      amount = {{engine.ksprfs.ksprfs_engine_thrust/100}}
-    }</span>
+    name = ElectricCharge
+    amount = {{engine.ksprfs.ksprfs_engine_thrust/100}}
   }</span>
 <span ng-show="engine.ksprfs.ksprfs_engine_mft && engine.ksprfs.ksprfs_engine_mft_volume">
   !RESOURCE[LiquidFuel] {}
