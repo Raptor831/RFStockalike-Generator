@@ -97,7 +97,7 @@
         {{thrustCurves[config.config_thrust_curve]}}{{config.config_custom_curve}}
       }</span>
       {{engine.ksprfs.ksprfs_engine_config_patch}}
-    }</span>
+    }</span></span>
   }
   <span ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != '0'">ignitions = {{engine.ksprfs.ksprfs_engine_configs[0].ignitions}}
   ullage = {{engine.ksprfs.ksprfs_engine_configs[0].ullage}}
@@ -106,7 +106,7 @@
   {
     name = ElectricCharge
     amount = {{engine.ksprfs.ksprfs_engine_thrust/100}}
-  }</span>
+  }</span></span>
 <span ng-show="engine.ksprfs.ksprfs_engine_mft && engine.ksprfs.ksprfs_engine_mft_volume">
   !RESOURCE[LiquidFuel] {}
   !RESOURCE[Oxidizer] {}
