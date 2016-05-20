@@ -3,6 +3,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 .controller('RFEngineController', ['$scope', '$http', '$q', '$filter', '$stateParams', 'rfengineServices', 'rfstockalikeConstants', function ($scope, $http, $q, $filter, $stateParams, rfengineServices, rfstockalikeConstants) {
 
     $scope.constants = rfstockalikeConstants;
+    $scope.rfengineServices = rfengineServices;
 
     $scope.doCalcs = function(engine) {
         $scope.errors = [];
@@ -53,9 +54,10 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     };
 
     $scope.changeTitle = function(engine) {
-        var newTitle = window.prompt('Change Title', '');
+        var newTitle = window.prompt('Change Title To...', '');
         if ( newTitle !== null && newTitle !== '' ) {
-            engine.title = newTitle;
+            engine.title.rendered = newTitle;
+            window.console.log(engine.title);
         }
     };
 
