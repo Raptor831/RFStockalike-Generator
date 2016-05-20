@@ -18,10 +18,11 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     $scope.defaultIgnitions = function(engine) {
         engine.ksprfs.ksprfs_engine_ignitions = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][2];
         if ( rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][3] ) {
-            engine.ksprfs.ksprfs_engine_ignition_mode = 2;
+            engine.ksprfs.ksprfs_engine_ignition_mode = '2';
         } else {
-            engine.ksprfs.ksprfs_engine_ignition_mode = 1;
+            engine.ksprfs.ksprfs_engine_ignition_mode = '1';
         }
+        if ( rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][2] )
         $scope.doCalcs(engine);
     };
 

@@ -273,19 +273,19 @@ angular.module('rfstockalikeServices', [])
     };
     constants.engineTypeConfigs =
         // Engine type defaults array
-        // type : ['config symbol', ISP table, EI Ignitions, ignore hypergolic ignition requirement]
+        // type : ['config symbol', ISP table, EI Ignitions, ignore hypergolic ignition requirement, pressure fed]
         {
-            'launch'            : ['L',  constants.launchIsp,     1,  false],
-            'launch-plus'       : ['L+', constants.launchPlusIsp, 2,  false],
-            'upper'             : ['U',  constants.upperIsp,      4,  false],
-            'upper-plus'        : ['U+', constants.upperPlusIsp,  12, true],
-            'orbital'           : ['O',  constants.orbitalIsp,    24, true],
-            'nuclear-thermal'   : ['N',  constants.nuclearIsp,    0,  false],
-            'solid'             : ['S',  constants.solidIsp,      1,  true],
-            'solid-plus'        : ['S+', constants.solidPlusIsp,  1,  true],
-            'aerospike'         : ['A',  constants.aerospikeIsp,  0,  true],
-            'jet'               : ['J',  null,                    0,  true],
-            'rcs'               : ['L',  constants.rcsIsp,        0,  true]
+            'launch'            : ['L',  constants.launchIsp,     1,  false,    false],
+            'launch-plus'       : ['L+', constants.launchPlusIsp, 2,  false,    false],
+            'upper'             : ['U',  constants.upperIsp,      4,  false,    false],
+            'upper-plus'        : ['U+', constants.upperPlusIsp,  12, true,     false],
+            'orbital'           : ['O',  constants.orbitalIsp,    24, true,     true],
+            'nuclear-thermal'   : ['N',  constants.nuclearIsp,    0,  false,    false],
+            'solid'             : ['S',  constants.solidIsp,      1,  true,     false],
+            'solid-plus'        : ['S+', constants.solidPlusIsp,  1,  true,     false],
+            'aerospike'         : ['A',  constants.aerospikeIsp,  0,  true,     false],
+            'jet'               : ['J',  null,                    0,  true,     false],
+            'rcs'               : ['L',  constants.rcsIsp,        0,  true,     true]
         };
 
     return constants;
@@ -521,12 +521,12 @@ angular.module('rfstockalikeServices', [])
                     engine.ksprfs.ksprfs_engine_configs[i].ullage = true;
                 }
 
-                engine.ksprfs.ksprfs_engine_configs[i].title = mixture.title;
+                engine.ksprfs.ksprfs_engine_configs[i].title = JSON.parse(JSON.stringify( mixture.title ));
                 if ( engine.ksprfs.ksprfs_engine_configs[i].config_thrust_curve && engine.ksprfs.ksprfs_engine_configs[i].config_thrust_curve != '0' ) {
                     if ( engine.ksprfs.ksprfs_engine_configs[i].config_thrust_curve === '-1' ) {
-                        engine.ksprfs.ksprfs_engine_configs[i].title += 'Custom'+(i+1);
+                        engine.ksprfs.ksprfs_engine_configs[i].title.rendered += 'Custom'+(i+1);
                     } else {
-                        engine.ksprfs.ksprfs_engine_configs[i].title += rfstockalikeConstants.thrustCurveNames[engine.ksprfs.ksprfs_engine_configs[i].config_thrust_curve];
+                        engine.ksprfs.ksprfs_engine_configs[i].title.rendered += rfstockalikeConstants.thrustCurveNames[engine.ksprfs.ksprfs_engine_configs[i].config_thrust_curve];
                     }
                 }
             }
@@ -685,10 +685,11 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     $scope.defaultIgnitions = function(engine) {
         engine.ksprfs.ksprfs_engine_ignitions = rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][2];
         if ( rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][3] ) {
-            engine.ksprfs.ksprfs_engine_ignition_mode = 2;
+            engine.ksprfs.ksprfs_engine_ignition_mode = '2';
         } else {
-            engine.ksprfs.ksprfs_engine_ignition_mode = 1;
+            engine.ksprfs.ksprfs_engine_ignition_mode = '1';
         }
+        if ( rfstockalikeConstants.engineTypeConfigs[engine.ksprfs.ksprfs_type][2] )
         $scope.doCalcs(engine);
     };
 

@@ -12,7 +12,7 @@
   @MODULE[<span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">ModuleEngine*</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">ModuleRCS*</span>]
   {
     <span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">@name = ModuleEnginesRF
-    @maxThrust = {{math.round(engine.ksprfs.ksprfs_engine_thrust * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_thrust_mult)}}</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">@name = ModuleRCSFX
+    @maxThrust = {{math.round(engine.ksprfs.ksprfs_engine_thrust * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_thrust_mult)}}</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">@name = ModuleRCS
     @thrusterPower = {{math.round(1000 * engine.ksprfs.ksprfs_engine_thrust * getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_thrust_mult) / 1000}}</span>
     @heatProduction = {{math.round(engine.ksprfs.engine_heat)}}
     @atmosphereCurve
@@ -49,7 +49,7 @@
   MODULE
   {
     name = <span ng-show="!engine.ksprfs.ksprfs_engine_bimodal">ModuleEngineConfigs</span><span ng-show="engine.ksprfs.ksprfs_engine_bimodal">ModuleHybridEngine</span>
-    type = <span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">ModuleEnginesRF</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">ModuleRCSFX</span>
+    type = <span ng-show="engine.ksprfs.ksprfs_type !== 'rcs'">ModuleEnginesRF</span><span ng-show="engine.ksprfs.ksprfs_type === 'rcs'">ModuleRCS</span>
     techLevel = {{rfengineServices.displayTechLevel(engine)}}
     origTechLevel = {{rfengineServices.displayTechLevel(engine)}}
     engineType = {{constants.engineTypeConfigs[engine.ksprfs.ksprfs_type][0]}}
@@ -94,7 +94,7 @@
       <span ng-show="(config.config_thrust_curve != '0' && config.config_thrust_curve)">curveResource = {{getFuel(getMixture(config.config_mixture)).title.rendered}}
       thrustCurve
       {
-        {{thrustCurves[config.config_thrust_curve]}}{{config.config_custom_curve}}
+        {{constants.thrustCurves[config.config_thrust_curve]}}{{config.config_custom_curve}}
       }</span>
       {{engine.ksprfs.ksprfs_engine_config_patch}}
     }</span></span>
