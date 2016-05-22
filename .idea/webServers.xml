@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c5ba46db-bd32-40ee-b22c-273ba66c2835" name="JWO KSP" url="http://ksp.joshuawagneronline.com">
+        <fileTransfer host="joshuawagneronline.com" port="22" rootFolder="/home/joshuawa/public_html" accessType="SFTP" password="df93dffbdfc2dfcfdff0dffddffadf84dfdfdf94dfefdfc8dff5df80dfeedfc8df86" username="joshuawa">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

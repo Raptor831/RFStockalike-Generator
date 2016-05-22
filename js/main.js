@@ -804,7 +804,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
             method: 'POST',
             url: '/wp-json/wp/v2/engines',
             headers: {
-                'X-WP-Nonce': nonce
+                'X-WP-Nonce': RFS.nonce
             },
             data: {
                 'title': engine.title.rendered,
