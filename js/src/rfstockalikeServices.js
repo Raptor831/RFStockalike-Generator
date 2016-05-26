@@ -368,7 +368,7 @@ angular.module('rfstockalikeServices', [])
                 var ignitions, typeOverride, finalIgnitions;
                 ignitions = engine.ksprfs.ksprfs_engine_ignitions;
                 typeOverride = parseInt(engine.ksprfs.ksprfs_engine_ignition_mode);
-                if ( !ignitions ) { ignitions = 0; }
+                if ( typeof ignitions === 'undefined' && ignitions !== '' ) { ignitions = 0; }
                 if ( typeOverride > 1 ) {
                     finalIgnitions = ignitions;
                 } else {
@@ -385,6 +385,12 @@ angular.module('rfstockalikeServices', [])
                     engine.ksprfs.ksprfs_engine_configs[i].ignitions = 1;
                 } else {
                     engine.ksprfs.ksprfs_engine_configs[i].ullage = true;
+                }
+
+                // For the outer config, if ignitions aren't 0 use abs value, else use -1 for infinite
+                engine.ksprfs.ksprfs_engine_configs[i].ignitionsPart = engine.ksprfs.ksprfs_engine_configs[i].ignitions ? Math.abs(engine.ksprfs.ksprfs_engine_configs[i].ignitions) : -1;
+                if ( ignitions < 0 ) {
+                    engine.ksprfs.ksprfs_engine_configs[i].ignitionsPart = Math.max(1, parseInt(this.displayTechLevel(engine)) + ignitions);
                 }
 
                 engine.ksprfs.ksprfs_engine_configs[i].title = JSON.parse(JSON.stringify( mixture.title ));

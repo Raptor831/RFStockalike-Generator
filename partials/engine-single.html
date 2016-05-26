@@ -239,15 +239,16 @@
             <div class="field cb">
                 <label for="engine_ignition_mode">Ullage Mode</label>
                 <select id="engine_ignition_mode" name="engine_ignition_mode" ng-model="engine.ksprfs.ksprfs_engine_ignition_mode" ng-change="doCalcs(engine)">
-                    <option value="0">None</option>
+                    <option value="0">No Ullage/Unlimited Ignitions</option>
                     <option value="1">Use Hypergolic Rules</option>
                     <option value="2">Ignore Hypergolic Rules</option>
                 </select>
                 <p class="description">None turns off ullage. Using hypergolic rules will set ignitions to 1 unless hypergolic fuels are used. Ignoring hypergolic rules will use the defined number of ignitions regardless of fuel types.</p>
             </div>
             <div class="field" ng-show="engine.ksprfs.ksprfs_engine_ignition_mode != 0">
-                <label for="engine_ignitions">EI Ignitions</label>
-                <input type="number" min="-1" id="engine_ignitions" name="engine_ignitions" ng-model="engine.ksprfs.ksprfs_engine_ignitions" ng-change="doCalcs(engine)" />
+                <label for="engine_ignitions">Ignitions</label>
+                <input type="number" min="-8" id="engine_ignitions" name="engine_ignitions" ng-model="engine.ksprfs.ksprfs_engine_ignitions" ng-change="doCalcs(engine)" />
+                <p class="description">0 is unlimited ignitions. Negative integers indicate tech-level dependent ignitons, where the # of ignitions is TL + ignitions (with a minimum of 1 ignition), so -2 means 2 ignitions at TL4.</p>
             </div>
             <div class="field">
                 <label for="engine_pressure_fed">Pressure Fed</label>
