@@ -28,13 +28,13 @@
       name = {{getFuel(getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture)).title.rendered}}
       ratio = {{engine.ksprfs.ksprfs_engine_configs[0].fuelRatio | number:6}}
       DrawGauge = True
-      <span ng-show="engine.ksprfs.ksprfs_type !== 'solid' && engine.ksprfs.ksprfs_type !== 'solid-plus'">%ResourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}</span>
+      <span ng-show="engine.ksprfs.ksprfs_type !== 'solid' && engine.ksprfs.ksprfs_type !== 'solid-plus'">%resourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}</span>
     }
     <span ng-show="getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture).ksprfs.ksprfs_mixture_oxidizer">PROPELLANT
     {
       name = {{getOxidizer(getMixture(engine.ksprfs.ksprfs_engine_configs[0].config_mixture)).title.rendered}}
       ratio = {{engine.ksprfs.ksprfs_engine_configs[0].oxyRatio | number:6}}
-      %ResourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}
+      %resourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}
     }</span>
   }
   <span ng-show="engine.ksprfs.ksprfs_engine_vectoring_override"><span ng-show="engine.ksprfs.ksprfs_engine_vectoring_exists">MODULE
@@ -67,13 +67,13 @@
         name = {{getFuel(getMixture(config.config_mixture)).title.rendered}}
         ratio = {{config.fuelRatio}}
         DrawGauge = True
-        <span ng-show="engine.ksprfs.ksprfs_type !== 'solid' && engine.ksprfs.ksprfs_type !== 'solid-plus'">%ResourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}</span>
+        <span ng-show="engine.ksprfs.ksprfs_type !== 'solid' && engine.ksprfs.ksprfs_type !== 'solid-plus'">%resourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}</span>
       }<span ng-show="getMixture(config.config_mixture).ksprfs.ksprfs_mixture_oxidizer">
       PROPELLANT
       {
         name = {{getOxidizer(getMixture(config.config_mixture)).title.rendered}}
         ratio = {{config.oxyRatio}}
-        %ResourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}
+        %resourceFlowMode = {{engine.ksprfs.ksprfs_engine_flow}}
       }</span><span ng-show="engine.ksprfs.ksprfs_type === 'nuclear-thermal'">
       PROPELLANT
       {
