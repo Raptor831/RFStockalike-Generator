@@ -195,7 +195,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     if ( $scope.mixtures.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1')
+        var promise = $http.get('/wp-json/wp/v2/mixtures/?per_page=100')
             .success(function(data){
                 $scope.setMixtures(data);
             });
@@ -203,7 +203,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     if ( $scope.types.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/engine-type/?filter[posts_per_page]=-1')
+        var promise = $http.get('/wp-json/wp/v2/engine-type/?per_page=100')
             .success(function(data){
                 $scope.setTypes(data);
             });
@@ -211,7 +211,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     if ( $scope.resources.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1')
+        var promise = $http.get('/wp-json/wp/v2/resources/?per_page=100')
             .success(function(data){
                 $scope.setResources(data);
             });
@@ -269,7 +269,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
     // Get mixtures if they do not already exist
     if( $scope.mixtures.length < 1 ) {
-        $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1&filter[order]=ASC&filter[orderby]=title')
+        $http.get('/wp-json/wp/v2/mixtures/?per_page=100&filter[order]=ASC&filter[orderby]=title')
             .success(function (data) {
                 $scope.setMixtures(data);
             });
@@ -278,7 +278,10 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     // Get engines if enginesList doesn't have anything
     if ( $scope.enginesList.length < 1  ) {
 
-        var baseLink = '/wp-json/wp/v2/engines/?filter[posts_per_page]=-1';
+        var baseLink = '/wp-json/wp/v2/engines/?per_page=' + $scope.pageSize;
+
+        var resultPages;
+        var promises = [];
 
         $http.get(baseLink).success(function (data, status, headers) {
             angular.forEach(data, function (value, key) {
@@ -286,11 +289,24 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
                 $scope.enginesList.push($scope.prepareEngineList(value));
             });
 
-            $scope.setEngines(data);
+            //$scope.enginePages = headers('X-WP-TotalPages');
+            $scope.engineCount = headers('X-WP-Total');
 
-            $scope.engineCount = data.length;
+            var pages = Math.ceil($scope.engineCount / $scope.pageSize);
+            var count = 2;
 
-            $scope.loading = false;
+            for (count; count <= pages; count++) {
+                var promise = $http.get(baseLink + '&page=' + count)
+                    .success(function (data) {
+                        angular.forEach(data, function (value, key) {
+                            $scope.enginesList.push($scope.prepareEngineList(value));
+                        });
+                    });
+                promises.push(promise);
+            }
+            $q.all(promises).then(function () {
+                $scope.loading = false;
+            });
         });
     } else {
         $scope.loading = false;
@@ -316,7 +332,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     $scope.loading = true;
     var promises = [];
     if ( $scope.mixtures.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/mixtures/?filter[posts_per_page]=-1')
+        var promise = $http.get('/wp-json/wp/v2/mixtures/?per_page=100')
             .success(function(data){
                 $scope.setMixtures(data);
             });
@@ -324,7 +340,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     if ( $scope.types.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/engine-type/?filter[posts_per_page]=-1')
+        var promise = $http.get('/wp-json/wp/v2/engine-type/?per_page=100')
             .success(function(data){
                 $scope.setTypes(data);
             });
@@ -332,7 +348,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     if ( $scope.resources.length < 1 ) {
-        var promise = $http.get('/wp-json/wp/v2/resources/?filter[posts_per_page]=-1')
+        var promise = $http.get('/wp-json/wp/v2/resources/?per_page=100')
             .success(function(data){
                 $scope.setResources(data);
             });
@@ -349,7 +365,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
     }
 
     if ( $scope.engines.length < 1 ) {
-        $http.get('/wp-json/wp/v2/engines/?filter[posts_per_page]=-1&filter[engine_mod]=' + $stateParams.slug)
+        $http.get('/wp-json/wp/v2/engines/?per_page=100&filter[engine_mod]=' + $stateParams.slug)
             .success(function (data) {
                 $scope.modEngines = data;
                 angular.forEach( $scope.modEngines, function(value, key){
