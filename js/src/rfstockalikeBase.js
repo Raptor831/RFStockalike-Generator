@@ -94,8 +94,7 @@ angular.module('rfstockalikeBase', [])
     };
 
     $scope.getSingleEngine = function (id) {
-        var result = $filter('filter')($scope.engines, function (data) {return parseInt(data.id) === parseInt(id);});
-        return result[0];
+        return $filter('filter')($scope.engines, function (data) {return parseInt(data.id) === parseInt(id);})[0];
     };
 
 }]);

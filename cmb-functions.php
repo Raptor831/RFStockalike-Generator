@@ -21,7 +21,7 @@ global $cmb2_prefix, $meta_boxes;
  *
  * @return array             An array of options that matches the CMB options array
  */
-function cmb_get_post_options( $query_args, $add_blank ) {
+function cmb_get_post_options( $query_args, $add_blank = false ) {
 
 	$args = wp_parse_args( $query_args, array(
 			'post_type'      => 'post',

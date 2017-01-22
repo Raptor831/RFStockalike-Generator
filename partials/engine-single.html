@@ -287,13 +287,13 @@
                 <input type="text" id="mm_duplicate" name="mm_duplicate" ng-model="engine.ksprfs.ksprfs_mm_duplicate" />
             </div>
         </div>
-        <?php if ( is_user_logged_in() ) { ?>
+        <!--<?php if ( is_user_logged_in() ) { ?>
         <button id="save" ng-click="saveEngine(engine)">Save Engine</button>
         <button id="create" ng-click="createEngine(engine)">Create Engine</button>
-        <?php } else { ?>
+        <?php } else { ?>-->
         <button id="submit" ng-click="submitEngine(engine)">Submit Engine</button>
         <!--<input type="submit" value="Submit"/>-->
-        <?php } ?>
+        <!--<?php } ?>-->
         <p><span class="flasherror" ng-repeat="error in errors" ng-bind="error"></span><span class="flashsuccess" ng-repeat="success in successes" ng-bind="success"></span></p>
     </form>
 </section>

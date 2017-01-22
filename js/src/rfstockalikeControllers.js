@@ -191,6 +191,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
         promises.push(promise);
     } else {
         $scope.setEngine($scope.getSingleEngine(engineID));
+        console.log($scope.engines);
         rfengineServices.cleanData($scope.engine, $scope);
     }
 
@@ -230,7 +231,9 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
 
 }])
 
-.controller('RFEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', function($scope, $http, $q, $filter, $timeout, $window){
+.controller('RFEngineListController', ['$scope', '$http', '$q', '$filter', '$timeout', '$window', 'rfengineServices', function($scope, $http, $q, $filter, $timeout, $window, rfengineServices){
+
+    $scope.rfengineServices = rfengineServices;
 
     // Set some global List variables
     $scope.currentPage = 0;
@@ -286,6 +289,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
         $http.get(baseLink).success(function (data, status, headers) {
             angular.forEach(data, function (value, key) {
                 // set up the engines list
+                $scope.engines.push(value);
                 $scope.enginesList.push($scope.prepareEngineList(value));
             });
 
@@ -299,6 +303,7 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
                 var promise = $http.get(baseLink + '&page=' + count)
                     .success(function (data) {
                         angular.forEach(data, function (value, key) {
+                            $scope.engines.push(value);
                             $scope.enginesList.push($scope.prepareEngineList(value));
                         });
                     });
@@ -354,45 +359,38 @@ angular.module('rfstockalikeEngines', ['rfstockalikeServices', 'ngSanitize'])
             });
         promises.push(promise);
     }
-    if ( promises.length > 0 ) { // If we had to do requests remove the loading notice when they all complete
-        $q.all(promises).then(function () {
-            $scope.loading = false;
-            //$scope.doCalcs($scope.engine);
-        });
-    } else { // else if we had no requests, remove the loading anyway
-        //$scope.loading = false;
-        //$scope.doCalcs($scope.engine);
-    }
 
     if ( $scope.engines.length < 1 ) {
-        $http.get('/wp-json/wp/v2/engines/?per_page=100&filter[engine_mod]=' + $stateParams.slug)
+        var promise = $http.get('/wp-json/wp/v2/engines/?per_page=100&filter[engine_mod]=' + $stateParams.slug)
             .success(function (data) {
                 $scope.modEngines = data;
-                angular.forEach( $scope.modEngines, function(value, key){
-                    rfengineServices.cleanData(value, $scope);
-                    window.console.log('engine');
-                    $scope.doCalcs(value);
-                });
                 window.console.log($scope.modEngines);
             });
+        promises.push(promise);
     } else {
         $scope.modEngines = $filter('filter')($scope.engines, function (data) {
             if ( data.ksprfs_taxonomy.engine_mod.length !== 0 ) {
                 return data.ksprfs_taxonomy.engine_mod[0].slug === $stateParams.slug;
             }
         });
-
-        //window.console.log($scope.modEngines);
-        //alert('hi');
-        angular.forEach( $scope.modEngines, function(value, key){
-            rfengineServices.cleanData(value, $scope);
-            window.console.log('engine');
-            $scope.doCalcs(value);
-        });
-        window.console.log($scope.modEngines);
     }
 
-
+    if ( promises.length > 0 ) { // If we had to do requests remove the loading notice when they all complete
+        $q.all(promises).then(function () {
+            $scope.loading = false;
+            angular.forEach( $scope.modEngines, function(value, key){
+                rfengineServices.cleanData(value, $scope);
+                window.console.log('engine');
+                $scope.doCalcs(value);
+            });
+        });
+    } else { // else if we had no requests, remove the loading anyway
+      angular.forEach( $scope.modEngines, function(value, key){
+          rfengineServices.cleanData(value, $scope);
+          window.console.log('engine');
+          $scope.doCalcs(value);
+      });
+    }
 
 
 }]);

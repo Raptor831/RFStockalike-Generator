@@ -431,7 +431,7 @@ function slug_register_ksprfs_mod() {
  */
 function slug_get_ksprfs( $object, $field_name, $request ) {
 	global $cmb2_prefix;
-	$cf_data  = get_post_custom( $object->ID );
+	$cf_data  = get_post_custom( $object['id'] );
 	$new_data = array();
 	foreach ( $cf_data as $key => $single ) {
 		if ( 0 === strpos( $key, $cmb2_prefix ) ) {
